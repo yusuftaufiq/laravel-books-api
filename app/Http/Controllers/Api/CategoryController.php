@@ -10,9 +10,8 @@ use Illuminate\Http\Response;
 final class CategoryController extends Controller
 {
     final public function __construct(
-        private Category $category = new Category(),
-    )
-    {
+        private Category $category,
+    ) {
     }
 
     /**
