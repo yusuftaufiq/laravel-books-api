@@ -23,15 +23,4 @@ final class CategoryController extends Controller
     {
         return response($this->category->all(), Response::HTTP_OK);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
 }
