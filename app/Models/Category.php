@@ -6,13 +6,13 @@ use App\Enums\CategoryEnum;
 
 final class Category
 {
-    final public function all()
+    final public function all(): array
     {
         $categories = collect(CategoryEnum::cases())->map(fn (CategoryEnum $category) => [
             'slug' => $category->value,
             'name' => $category->name(),
         ]);
 
-        return $categories;
+        return $categories->toArray();
     }
 }
