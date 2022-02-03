@@ -20,9 +20,9 @@ final class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    final public function index(): Response
     {
-        //
+        return response($this->category->all(), Response::HTTP_OK);
     }
 
     /**

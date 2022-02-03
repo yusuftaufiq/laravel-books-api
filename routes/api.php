@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +17,8 @@
 \Route::middleware('auth:sanctum')->get('/user', function (\Request $request) {
     return $request->user();
 });
+
+\Route::resource('categories', CategoryController::class)->only(['index']);
 
 // api/v1/books
 // api/v1/books/{book}
