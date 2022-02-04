@@ -20,10 +20,8 @@ final class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category): Response
+    public function index(Category $category, int $page): Response
     {
-        $page = request()->query('page', 1);
-
         return response($category->books($page), Response::HTTP_OK);
     }
 
