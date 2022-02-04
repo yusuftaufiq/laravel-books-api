@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Enums\CategoryEnum;
 use Illuminate\Contracts\Routing\UrlRoutable;
+use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class Category implements UrlRoutable
+final class Category implements UrlRoutable, Arrayable
 {
-    public string $slug;
+    public ?string $slug = null;
 
-    public string $name;
+    public ?string $name = null;
 
     private function setProperties(CategoryEnum $categoryEnum): self
     {
@@ -88,5 +89,26 @@ final class Category implements UrlRoutable
     final public function resolveChildRouteBinding($childType, $value, $field): void
     {
         throw new \Exception(self::class . ' does not support child bindings.');
+    }
+
+    final public function isEmpty(): bool
+    {
+        return $this->slug === null && $this->name === null;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    final public function toArray(): array
+    {
+        return match ($this->isEmpty()) {
+            false => [
+                'slug' => $this->slug,
+                'name' => $this->name,
+            ],
+            default => [],
+        };
     }
 }
