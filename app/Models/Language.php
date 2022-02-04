@@ -46,7 +46,7 @@ final class Language extends AbstractCrawler
 
     final public function getRouteKeyName(): string
     {
-        return 'category';
+        return 'language';
     }
 
     final public function isEmpty(): bool
