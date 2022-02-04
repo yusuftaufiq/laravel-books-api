@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\CategoryController;
     return $request->user();
 });
 
-\Route::apiResource('categories', CategoryController::class)->only(['index']);
+\Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
 
 \Route::apiResource('books', BookController::class)->only(['index', 'show'])->middleware('query.string');
