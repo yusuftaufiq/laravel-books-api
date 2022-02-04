@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\LanguageEnum;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 final class QueryStringLanguage
@@ -16,10 +16,15 @@ final class QueryStringLanguage
      */
     final public function handle(Request $request, \Closure $next)
     {
-        $language = $request->query('language');
+        $queryStringLanguage = $request->query('language');
 
-        if ($language === null || LanguageEnum::tryFrom($language) !== null) {
-            return $next($request);
+        if ($queryStringLanguage !== null) {
+            $language = new Language();
+            $language->find($queryStringLanguage);
+
+            $request->route()->setParameter('language', $language);
         }
+
+        return $next($request);
     }
 }
