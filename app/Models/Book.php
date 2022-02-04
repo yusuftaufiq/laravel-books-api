@@ -9,7 +9,7 @@ final class Book extends AbstractCrawler
 {
     private const URL = 'https://ebooks.gramedia.com/books/';
 
-    public ?string $originalUrl = null;
+    public ?string $originUrl = null;
 
     public ?string $slug = null;
 
@@ -29,7 +29,7 @@ final class Book extends AbstractCrawler
         ]]);
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
-            'originalUrl' => $node->filter('.title a')->attr('href'),
+            'originUrl' => $node->filter('.title a')->attr('href'),
             'slug' => \Str::substr($node->filter('.title a')->attr('href'), \Str::length(self::URL)),
             'title' => $node->filter('.title a')->text(),
             'image' => $node->filter('.imgwrap img')->attr('src'),
@@ -48,7 +48,7 @@ final class Book extends AbstractCrawler
             throw new NotFoundHttpException('Book not found');
         }
 
-        $this->originalUrl = self::URL . $slug;
+        $this->originUrl = self::URL . $slug;
         $this->slug = $slug;
         $this->title = $request->filter('#big')->text();
         $this->image = $request->filter('#zoom img')->attr('src');
@@ -70,7 +70,7 @@ final class Book extends AbstractCrawler
 
     final public function isEmpty(): bool
     {
-        return $this->originalUrl === null
+        return $this->originUrl === null
             && $this->slug === null
             && $this->title === null
             && $this->writer === null;
@@ -80,7 +80,7 @@ final class Book extends AbstractCrawler
     {
         return match ($this->isEmpty()) {
             false => [
-                'original_url' => $this->originalUrl,
+                'origin_url' => $this->originUrl,
                 'slug' => $this->slug,
                 'title' => $this->title,
                 'image' => $this->image,
