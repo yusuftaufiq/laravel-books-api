@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\LanguageEnum;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-final class EnsureLanguageIsValid
+final class QueryStringCategory
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,15 @@ final class EnsureLanguageIsValid
      */
     final public function handle(Request $request, \Closure $next)
     {
-        $language = $request->query('language');
+        $queryStringCategory = $request->query('category');
 
-        if ($language === null || LanguageEnum::tryFrom($language) !== null) {
-            return $next($request);
+        if ($queryStringCategory !== null) {
+            $category = new Category();
+            $category->find($queryStringCategory);
+
+            $request->route()->setParameter('category', $category);
         }
+
+        return $next($request);
     }
 }
