@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\CategoryEnum;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 final class EnsureCategoryIsValid
@@ -16,10 +16,15 @@ final class EnsureCategoryIsValid
      */
     final public function handle(Request $request, \Closure $next)
     {
-        $category = $request->query('category');
+        $queryStringCategory = $request->query('category');
 
-        if ($category === null || CategoryEnum::tryFrom($category) !== null) {
-            return $next($request);
+        if ($queryStringCategory !== null) {
+            $category = new Category();
+            $category->find($queryStringCategory);
+
+            $request->route()->setParameter('category', $category);
         }
+
+        return $next($request);
     }
 }
