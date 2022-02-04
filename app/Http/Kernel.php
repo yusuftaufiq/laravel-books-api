@@ -44,6 +44,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'query.string' => [
+            \App\Http\Middleware\EnsureCategoryIsValid::class,
+            \App\Http\Middleware\EnsureLanguageIsValid::class,
+        ],
     ];
 
     /**

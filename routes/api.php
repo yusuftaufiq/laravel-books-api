@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\CategoryController;
 \Route::apiResource('categories', CategoryController::class)->only(['index']);
 \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
 
-\Route::apiResource('books', BookController::class)->only(['index', 'show']);
+\Route::apiResource('books', BookController::class)->only(['index', 'show'])->middleware('query.string');
 
 // api/v1/books
 // api/v1/books/{book}
