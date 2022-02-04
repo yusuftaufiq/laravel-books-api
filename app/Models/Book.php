@@ -21,11 +21,12 @@ final class Book extends AbstractCrawler
 
     public ?string $writer = null;
 
-    final public function all(int $page = 1, ?Category $category = null): array
+    final public function all(?Category $category = null, ?Language $language = null, int $page = 1): array
     {
         $request = \Goutte::request('GET', self::URL . '?' . http_build_query([
             'page' => $page,
             'category' => $category?->slug,
+            'language' => $language?->value,
         ]));
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [

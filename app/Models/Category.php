@@ -35,9 +35,9 @@ final class Category extends AbstractCrawler
         return $this;
     }
 
-    final public function books(int $page = 1): array
+    final public function books(?Language $language = null, int $page = 1): array
     {
-        return (new Book())->all($page, $this);
+        return (new Book())->all($this, $language, $page);
     }
 
     final public function getRouteKey(): string

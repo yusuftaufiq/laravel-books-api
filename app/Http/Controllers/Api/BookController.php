@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Language;
 use Illuminate\Http\Response;
 
 final class BookController extends Controller
@@ -20,9 +21,9 @@ final class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category, int $page): Response
+    public function index(Category $category, Language $language, int $page = 1): Response
     {
-        return response($category->books($page), Response::HTTP_OK);
+        return response($category->books($language, $page), Response::HTTP_OK);
     }
 
     /**
