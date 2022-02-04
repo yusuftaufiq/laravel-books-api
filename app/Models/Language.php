@@ -51,7 +51,7 @@ final class Language extends AbstractCrawler
 
     final public function isEmpty(): bool
     {
-        return $this->slug === null && $this->value === null;
+        return $this->slug === null && $this->value === null && $this->name === null;
     }
 
     final public function toArray(): array
