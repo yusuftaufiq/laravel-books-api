@@ -12,7 +12,7 @@ final class Category implements UrlRoutable
 
     public string $name;
 
-    private function setCategoryProperties(CategoryEnum $categoryEnum): self
+    private function setProperties(CategoryEnum $categoryEnum): self
     {
         $this->slug = $categoryEnum->value;
         $this->name = $categoryEnum->name();
@@ -38,7 +38,7 @@ final class Category implements UrlRoutable
             throw new NotFoundHttpException('Category not found');
         }
 
-        $this->setCategoryProperties($categoryEnum);
+        $this->setProperties($categoryEnum);
 
         return $this;
     }
@@ -46,9 +46,9 @@ final class Category implements UrlRoutable
     /**
      * Get the value of the model's route key.
      *
-     * @return mixed
+     * @return string
      */
-    public function getRouteKey()
+    final public function getRouteKey(): string
     {
         return $this->slug;
     }
@@ -58,7 +58,7 @@ final class Category implements UrlRoutable
      *
      * @return string
      */
-    public function getRouteKeyName()
+    final public function getRouteKeyName(): string
     {
         return 'category';
     }
@@ -70,9 +70,9 @@ final class Category implements UrlRoutable
      * @param  string|null  $field
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding($value, $field = null)
+    final public function resolveRouteBinding($value, $field = null): self
     {
-        return tap(new self, function (self $instance) use ($value) {
+        return tap(new self(), function (self $instance) use ($value) {
             $instance->find($value);
         });
     }
@@ -85,7 +85,7 @@ final class Category implements UrlRoutable
      * @param  string|null  $field
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveChildRouteBinding($childType, $value, $field): void
+    final public function resolveChildRouteBinding($childType, $value, $field): void
     {
         throw new \Exception(self::class . ' does not support child bindings.');
     }
