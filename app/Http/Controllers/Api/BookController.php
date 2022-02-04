@@ -22,7 +22,9 @@ final class BookController extends Controller
      */
     public function index(Category $category): Response
     {
-        dd($category);
+        $page = request()->query('page', 1);
+
+        return response($category->books($page));
     }
 
     /**

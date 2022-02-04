@@ -44,6 +44,11 @@ final class Category implements UrlRoutable, Arrayable
         return $this;
     }
 
+    final public function books(int $page = 1): array
+    {
+        return (new Book())->all($page, $this);
+    }
+
     /**
      * Get the value of the model's route key.
      *
