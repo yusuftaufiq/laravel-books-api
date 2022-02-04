@@ -30,7 +30,7 @@ final class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category): Response
+    final public function show(Category $category): Response
     {
         return response($category, Response::HTTP_OK);
     }

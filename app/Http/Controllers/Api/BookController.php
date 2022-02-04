@@ -21,7 +21,7 @@ final class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category, Language $language, int $page = 1): Response
+    final public function index(Category $category, Language $language, int $page = 1): Response
     {
         return response($category->books($language, $page), Response::HTTP_OK);
     }
@@ -32,7 +32,7 @@ final class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book): Response
+    final public function show(Book $book): Response
     {
         return response($book, Response::HTTP_OK);
     }
