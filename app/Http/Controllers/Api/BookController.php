@@ -24,7 +24,7 @@ final class BookController extends Controller
     {
         $page = request()->query('page', 1);
 
-        return response($category->books($page));
+        return response($category->books($page), Response::HTTP_OK);
     }
 
     /**
