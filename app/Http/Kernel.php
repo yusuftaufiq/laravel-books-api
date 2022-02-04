@@ -46,8 +46,9 @@ class Kernel extends HttpKernel
         ],
 
         'query.string' => [
-            \App\Http\Middleware\EnsureCategoryIsValid::class,
-            \App\Http\Middleware\EnsureLanguageIsValid::class,
+            'query.string.category',
+            'query.string.language',
+            'query.string.page',
         ],
     ];
 
@@ -65,6 +66,9 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'query.string.category' => \App\Http\Middleware\QueryStringCategory::class,
+        'query.string.language' => \App\Http\Middleware\QueryStringLanguage::class,
+        'query.string.page' => \App\Http\Middleware\QueryStringPage::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
