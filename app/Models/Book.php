@@ -23,10 +23,10 @@ final class Book extends AbstractCrawler
 
     final public function all(int $page = 1, ?Category $category = null): array
     {
-        $request = \Goutte::request('GET', self::URL, ['query' => [
+        $request = \Goutte::request('GET', self::URL . '?' . http_build_query([
             'page' => $page,
             'category' => $category?->slug,
-        ]]);
+        ]));
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
             'originUrl' => $node->filter('.title a')->attr('href'),
