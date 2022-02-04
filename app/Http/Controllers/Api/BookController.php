@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 final class BookController extends Controller
@@ -33,8 +32,8 @@ final class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show(Book $book): Response
     {
-        //
+        return response($book, Response::HTTP_OK);
     }
 }
