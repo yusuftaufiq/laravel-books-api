@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\BookDetailController;
 use App\Http\Controllers\Api\CategoryController;
 
 /*
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\CategoryController;
 \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
 
 \Route::apiResource('books', BookController::class)->only(['index', 'show']);
+\Route::apiResource('books.details', BookDetailController::class)->shallow()->only(['index']);
 
 // api/v1/books
 // api/v1/books/{book}
