@@ -12,6 +12,7 @@ final class BookController extends Controller
     final public function __construct(
         private Book $book,
     ) {
+        $this->middleware('query.string')->only('index');
     }
 
     /**
