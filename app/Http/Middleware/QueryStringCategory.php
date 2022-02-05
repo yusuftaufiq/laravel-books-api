@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 final class QueryStringCategory
 {
+    public function __construct(
+        private Category $category,
+    ) {
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -19,10 +24,9 @@ final class QueryStringCategory
         $queryStringCategory = $request->query('category');
 
         if ($queryStringCategory !== null) {
-            $category = new Category();
-            $category->find($queryStringCategory);
+            $this->category->find($queryStringCategory);
 
-            $request->route()->setParameter('category', $category);
+            $request->route()->setParameter('category', $this->category);
         }
 
         return $next($request);

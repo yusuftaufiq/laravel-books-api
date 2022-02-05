@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 final class QueryStringLanguage
 {
+    public function __construct(
+        private Language $language,
+    ) {
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -19,10 +24,9 @@ final class QueryStringLanguage
         $queryStringLanguage = $request->query('language');
 
         if ($queryStringLanguage !== null) {
-            $language = new Language();
-            $language->find($queryStringLanguage);
+            $this->language->find($queryStringLanguage);
 
-            $request->route()->setParameter('language', $language);
+            $request->route()->setParameter('language', $this->language);
         }
 
         return $next($request);
