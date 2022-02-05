@@ -32,6 +32,6 @@ final class CategoryController extends Controller
      */
     final public function show(Category $category): Response
     {
-        return response($category, Response::HTTP_OK);
+        return response($category->toArray(), Response::HTTP_OK);
     }
 }

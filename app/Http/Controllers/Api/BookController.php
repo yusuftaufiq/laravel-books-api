@@ -34,6 +34,6 @@ final class BookController extends Controller
      */
     final public function show(Book $book): Response
     {
-        return response($book, Response::HTTP_OK);
+        return response($book->toArray(), Response::HTTP_OK);
     }
 }
