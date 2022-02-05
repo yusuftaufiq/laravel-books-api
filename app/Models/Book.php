@@ -9,6 +9,8 @@ final class Book extends AbstractCrawler
 {
     private const URL = 'https://ebooks.gramedia.com/books/';
 
+    public ?Crawler $crawler = null;
+
     public ?string $originUrl = null;
 
     public ?string $slug = null;
@@ -43,18 +45,18 @@ final class Book extends AbstractCrawler
 
     final public function find(string $slug): static
     {
-        $request = \Goutte::request('GET', self::URL . $slug);
+        $this->crawler = \Goutte::request('GET', self::URL . $slug);
 
-        if (\Str::contains($request->getUri(), '?ref')) {
+        if (\Str::contains($this->crawler->getUri(), '?ref')) {
             throw new NotFoundHttpException('Book not found');
         }
 
         $this->originUrl = self::URL . $slug;
         $this->slug = $slug;
-        $this->title = $request->filter('#big')->text();
-        $this->image = $request->filter('#zoom img')->attr('src');
-        $this->price = $request->filter('#content_data_trigger .plan_list div')->text();
-        $this->author = $request->filter('.auth a')->text();
+        $this->title = $this->crawler->filter('#big')->text();
+        $this->image = $this->crawler->filter('#zoom img')->attr('src');
+        $this->price = \Str::afterLast($this->crawler->filter('#content_data_trigger .plan_list div')->text(), ')');
+        $this->author = $this->crawler->filter('.auth a')->text();
 
         return $this;
     }
