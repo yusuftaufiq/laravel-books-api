@@ -7,6 +7,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class Category extends AbstractCrawler
 {
+    public const URL = 'https://ebooks.gramedia.com/books/categories/';
+
     public ?string $slug = null;
 
     public ?string $name = null;
