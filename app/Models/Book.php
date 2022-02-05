@@ -19,7 +19,7 @@ final class Book extends AbstractCrawler
 
     public ?string $price = null;
 
-    public ?string $writer = null;
+    public ?string $author = null;
 
     final public function all(?Category $category = null, ?Language $language = null, int $page = 1): array
     {
@@ -35,7 +35,7 @@ final class Book extends AbstractCrawler
             'title' => $node->filter('.title a')->text(),
             'image' => $node->filter('.imgwrap img')->attr('src'),
             'price' => $node->filter('.price')->text(),
-            'writer' => $node->filter('.date')->text(),
+            'author' => $node->filter('.date')->text(),
         ]);
 
         return $books;
@@ -54,7 +54,7 @@ final class Book extends AbstractCrawler
         $this->title = $request->filter('#big')->text();
         $this->image = $request->filter('#zoom img')->attr('src');
         $this->price = $request->filter('#content_data_trigger .plan_list div')->text();
-        $this->writer = $request->filter('.auth a')->text();
+        $this->author = $request->filter('.auth a')->text();
 
         return $this;
     }
@@ -74,7 +74,7 @@ final class Book extends AbstractCrawler
         return $this->originUrl === null
             && $this->slug === null
             && $this->title === null
-            && $this->writer === null;
+            && $this->author === null;
     }
 
     final public function toArray(): array
@@ -86,7 +86,7 @@ final class Book extends AbstractCrawler
                 'title' => $this->title,
                 'image' => $this->image,
                 'price' => $this->price,
-                'writer' => $this->writer,
+                'author' => $this->author,
             ],
             default => [],
         };
