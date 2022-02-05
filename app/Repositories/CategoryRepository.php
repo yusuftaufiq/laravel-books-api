@@ -1,17 +1,30 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
 
+use App\Contracts\CategoryInterface;
+use App\Contracts\LanguageInterface;
 use App\Enums\CategoryEnum;
+use App\Repositories\CrawlerRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class Category extends AbstractCrawler
+final class CategoryRepository extends CrawlerRepository implements CategoryInterface
 {
-    public const URL = 'https://ebooks.gramedia.com/books/categories/';
+    final public const BASE_URL = 'https://ebooks.gramedia.com/books/categories/';
 
-    public ?string $slug = null;
+    private ?string $slug = null;
 
-    public ?string $name = null;
+    private ?string $name = null;
+
+    final public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    final public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
 
     final public function all(): array
     {
@@ -37,34 +50,24 @@ final class Category extends AbstractCrawler
         return $this;
     }
 
-    final public function books(?Language $language = null, int $page = 1): array
+    final public function books(LanguageInterface $language, int $page = 1): array
     {
-        return (new Book())->all($this, $language, $page);
+        return (new BookRepository())->all($this, $language, $page);
     }
 
-    final public function getRouteKey(): string
+    final public function count(): int
     {
-        return $this->slug;
-    }
-
-    final public function getRouteKeyName(): string
-    {
-        return 'category';
-    }
-
-    final public function isEmpty(): bool
-    {
-        return $this->slug === null && $this->name === null;
+        return $this->slug !== null && $this->name !== null;
     }
 
     final public function toArray(): array
     {
-        return match ($this->isEmpty()) {
-            false => [
+        return match ($this->count()) {
+            0 => [],
+            default => [
                 'slug' => $this->slug,
                 'name' => $this->name,
             ],
-            default => [],
         };
     }
 }

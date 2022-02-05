@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
 
-abstract class AbstractCrawler implements CrawlerInterface
+use App\Contracts\CrawlerInterface;
+use App\Traits\RouteBinding;
+
+abstract class CrawlerRepository implements CrawlerInterface
 {
-    abstract public function isEmpty(): bool;
+    use RouteBinding;
 
-    public function resolveRouteBinding($value, $field = null): static
-    {
-        return tap(new static(), function (self $instance) use ($value) {
-            $instance->find($value);
-        });
-    }
+    abstract public function find(string $slug): static;
 
-    public function resolveChildRouteBinding($childType, $value, $field): void
-    {
-        throw new \Exception(self::class . ' does not support child bindings.');
-    }
+    abstract public function count(): int;
+
+    abstract public function toArray(): array;
 }

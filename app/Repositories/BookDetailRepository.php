@@ -1,103 +1,129 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
 
-use Symfony\Component\DomCrawler\Crawler;
+use App\Contracts\BookDetailInterface;
+use App\Contracts\BookInterface;
+use App\Repositories\CrawlerRepository;
 
-final class BookDetail
+final class BookDetailRepository extends CrawlerRepository implements BookDetailInterface
 {
-    public ?Crawler $crawler = null;
+    private ?BookInterface $book = null;
 
-    public ?string $originUrl = null;
+    private ?string $slug = null;
 
-    public ?string $slug = null;
+    private ?string $releaseDate = null;
 
-    public ?string $title = null;
+    private ?string $description = null;
 
-    public ?string $image = null;
+    private ?string $language = null;
 
-    public ?string $price = null;
+    private ?string $country = null;
 
-    public ?string $author = null;
+    private ?string $publisher = null;
 
-    public ?string $releaseDate = null;
+    private ?int $pageCount = null;
 
-    public ?string $description = null;
+    private ?string $category = null;
 
-    public ?string $language = null;
+    final public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
 
-    public ?string $country = null;
+    final public function getReleaseDate(): ?string
+    {
+        return $this->releaseDate;
+    }
 
-    public ?string $publisher = null;
+    final public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-    public ?int $pageCount = null;
+    final public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
 
-    public ?string $category = null;
+    final public function getCountry(): ?string
+    {
+        return $this->country;
+    }
 
-    public ?string $categorySlug = null;
+    final public function getPublisher(): ?string
+    {
+        return $this->publisher;
+    }
+
+    final public function getPageCount(): int
+    {
+        return $this->pageCount;
+    }
+
+    final public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    final public function setBook(BookInterface $book): static
+    {
+        $this->book = $book;
+
+        return $this;
+    }
 
     private function getDetailOf(string $type): string
     {
-        return $this->crawler->filter(".switch_content.sc_2 td:contains(\"$type\")")
+        return $this->book->getCrawler()->filter(".switch_content.sc_2 td:contains(\"$type\")")
             ->closest('tr')
             ->filter('td')
             ->last()
             ->text();
     }
 
-    final public function find(?Book $book = null, ?string $slug = null): static
+    final public function find(string $slug): static
     {
-        $book = $book ?: (new Book())->find($slug);
+        if ($this->book === null) {
+            $this->book = new BookRepository();
+            $this->book->find($slug);
+        }
 
-        $this->crawler = $book->crawler;
-        $this->originUrl = $book->originUrl;
-        $this->slug = $book->slug;
-        $this->title = $book->title;
-        $this->image = $book->image;
-        $this->price = $book->price;
-        $this->author = $book->author;
-        $this->releaseDate = $this->crawler->filter('.switch_content.sc_1')->first()->text();
-        $this->description = $this->crawler->filter('[itemprop="description"]')->text();
+        $this->releaseDate = $this->book->getCrawler()->filter('.switch_content.sc_1')->first()->text();
+        $this->description = $this->book->getCrawler()->filter('[itemprop="description"]')->text();
         $this->language = $this->getDetailOf('Language');
         $this->country = $this->getDetailOf('Country');
         $this->publisher = $this->getDetailOf('Publisher');
         $this->pageCount = $this->getDetailOf('Page Count');
-        $this->category = $this->crawler->filter('[itemprop="title"]')->eq(2)->text();
+        $this->category = $this->book->getCrawler()->filter('[itemprop="title"]')->eq(2)->text();
         $this->categorySlug = \Str::afterLast(
-            $this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href'),
-            Category::URL,
+            $this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'),
+            CategoryRepository::BASE_URL,
         );
 
         return $this;
     }
 
-    final public function isEmpty(): bool
+    final public function count(): int
     {
-        return $this->originUrl === null
-            && $this->slug === null
-            && $this->title === null
-            && $this->author === null;
+        return $this->description !== null
+            && $this->language !== null
+            && $this->publisher !== null;
     }
 
     final public function toArray(): array
     {
-        return match ($this->isEmpty()) {
-            false => [
-                'origin_url' => $this->originUrl,
-                'slug' => $this->slug,
-                'title' => $this->title,
-                'image' => $this->image,
-                'price' => $this->price,
-                'author' => $this->author,
-                'release_date' => $this->releaseDate,
+        return match ($this->count()) {
+            0 => [],
+            default => [
+                'releaseDate' => $this->releaseDate,
+                'description' => $this->description,
                 'language' => $this->language,
                 'country' => $this->country,
                 'publisher' => $this->publisher,
-                'page_count' => $this->pageCount,
+                'pageCount' => $this->pageCount,
                 'category' => $this->category,
-                'category_slug' => $this->categorySlug,
             ],
-            default => [],
         };
     }
 }

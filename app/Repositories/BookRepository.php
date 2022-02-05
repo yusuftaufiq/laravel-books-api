@@ -1,39 +1,83 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
 
+use App\Contracts\BookDetailInterface;
+use App\Contracts\BookInterface;
+use App\Contracts\CategoryInterface;
+use App\Contracts\LanguageInterface;
+use App\Repositories\CrawlerRepository;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class Book extends AbstractCrawler
+final class BookRepository extends CrawlerRepository implements BookInterface
 {
-    public const URL = 'https://ebooks.gramedia.com/books/';
+    final public const BASE_URL = 'https://ebooks.gramedia.com/books/';
 
-    public ?Crawler $crawler = null;
+    private ?Crawler $crawler = null;
 
-    public ?string $originUrl = null;
+    private ?string $url = null;
 
-    public ?string $slug = null;
+    private ?string $slug = null;
 
-    public ?string $title = null;
+    private ?string $title = null;
 
-    public ?string $image = null;
+    private ?string $image = null;
 
-    public ?string $price = null;
+    private ?string $price = null;
 
-    public ?string $author = null;
+    private ?string $author = null;
 
-    final public function all(?Category $category = null, ?Language $language = null, int $page = 1): array
+    private ?BookDetailInterface $detail = null;
+
+    final public function getCrawler(): ?Crawler
     {
-        $request = \Goutte::request('GET', self::URL . '?' . http_build_query([
+        return $this->crawler;
+    }
+    final public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    final public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    final public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    final public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    final public function getImageUrl(): ?string
+    {
+        return $this->image;
+    }
+
+    final public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    final public function all(
+        ?CategoryInterface $category = null,
+        ?LanguageInterface $language = null,
+        int $page = 1
+    ): array {
+        $request = \Goutte::request('GET', self::BASE_URL . '?' . http_build_query([
             'page' => $page,
-            'category' => $category?->slug,
-            'language' => $language?->value,
+            'category' => $category->getSlug(),
+            'language' => $language->getValue(),
         ]));
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
-            'originUrl' => $node->filter('.title a')->attr('href'),
-            'slug' => \Str::substr($node->filter('.title a')->attr('href'), \Str::length(self::URL)),
+            'url' => $node->filter('.title a')->attr('href'),
+            'slug' => \Str::substr($node->filter('.title a')->attr('href'), \Str::length(self::BASE_URL)),
             'title' => $node->filter('.title a')->text(),
             'image' => $node->filter('.imgwrap img')->attr('src'),
             'price' => $node->filter('.price')->text(),
@@ -45,13 +89,13 @@ final class Book extends AbstractCrawler
 
     final public function find(string $slug): static
     {
-        $this->crawler = \Goutte::request('GET', self::URL . $slug);
+        $this->crawler = \Goutte::request('GET', self::BASE_URL . $slug);
 
         if (\Str::contains($this->crawler->getUri(), '?ref')) {
             throw new NotFoundHttpException('Book not found');
         }
 
-        $this->originUrl = self::URL . $slug;
+        $this->url = self::BASE_URL . $slug;
         $this->slug = $slug;
         $this->title = $this->crawler->filter('#big')->text();
         $this->image = $this->crawler->filter('#zoom img')->attr('src');
@@ -61,41 +105,40 @@ final class Book extends AbstractCrawler
         return $this;
     }
 
-    public function details(): array
+    final public function details(): array
     {
-        return (new BookDetail())->find($this)->toArray();
+        if ($this->detail === null) {
+            $this->detail = new BookDetailRepository();
+            $this->detail->setBook($this);
+        }
+
+        if ($this->detail->getSlug() !== $this->slug) {
+            $this->detail->find($this->slug);
+        }
+
+        return \Arr::collapse($this->toArray(), $this->detail->toArray());
     }
 
-    final public function getRouteKey(): string
+    final public function count(): int
     {
-        return $this->slug;
-    }
-
-    final public function getRouteKeyName(): string
-    {
-        return 'book';
-    }
-
-    final public function isEmpty(): bool
-    {
-        return $this->originUrl === null
-            && $this->slug === null
-            && $this->title === null
-            && $this->author === null;
+        return $this->url !== null
+            && $this->slug !== null
+            && $this->title !== null
+            && $this->author !== null;
     }
 
     final public function toArray(): array
     {
-        return match ($this->isEmpty()) {
-            false => [
-                'origin_url' => $this->originUrl,
+        return match ($this->count()) {
+            0 => [],
+            default => [
+                'url' => $this->url,
                 'slug' => $this->slug,
                 'title' => $this->title,
                 'image' => $this->image,
                 'price' => $this->price,
                 'author' => $this->author,
             ],
-            default => [],
         };
     }
 }
