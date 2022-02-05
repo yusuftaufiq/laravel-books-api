@@ -61,6 +61,11 @@ final class Book extends AbstractCrawler
         return $this;
     }
 
+    public function details(): array
+    {
+        return (new BookDetail())->find($this)->toArray();
+    }
+
     final public function getRouteKey(): string
     {
         return $this->slug;
