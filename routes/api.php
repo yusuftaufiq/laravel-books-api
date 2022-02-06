@@ -20,14 +20,16 @@ use App\Http\Controllers\Api\LanguageController;
     return $request->user();
 });
 
-\Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
-\Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
+\Route::middleware('cache.response')->group(function () {
+    \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+    \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
 
-\Route::apiResource('books', BookController::class)->only(['index', 'show']);
-\Route::apiResource('books.details', BookDetailController::class)->shallow()->only(['index']);
+    \Route::apiResource('books', BookController::class)->only(['index', 'show']);
+    \Route::apiResource('books.details', BookDetailController::class)->shallow()->only(['index']);
 
-\Route::apiResource('languages', LanguageController::class)->only(['index', 'show']);
-\Route::apiResource('languages.books', BookController::class)->shallow()->only(['index']);
+    \Route::apiResource('languages', LanguageController::class)->only(['index', 'show']);
+    \Route::apiResource('languages.books', BookController::class)->shallow()->only(['index']);
+});
 
 // api/v1/books
 // api/v1/books/{book}
