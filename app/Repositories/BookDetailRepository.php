@@ -126,4 +126,14 @@ final class BookDetailRepository extends CrawlerRepository implements BookDetail
             ],
         };
     }
+
+    final public function getRouteKey(): int|string
+    {
+        return $this->slug;
+    }
+
+    final public function getRouteKeyName(): string
+    {
+        return 'bookDetail';
+    }
 }

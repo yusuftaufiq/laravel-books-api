@@ -70,4 +70,14 @@ final class CategoryRepository extends CrawlerRepository implements CategoryInte
             ],
         };
     }
+
+    final public function getRouteKey(): int|string
+    {
+        return $this->slug;
+    }
+
+    final public function getRouteKeyName(): string
+    {
+        return 'category';
+    }
 }

@@ -141,4 +141,14 @@ final class BookRepository extends CrawlerRepository implements BookInterface
             ],
         };
     }
+
+    final public function getRouteKey(): int|string
+    {
+        return $this->slug;
+    }
+
+    final public function getRouteKeyName(): string
+    {
+        return 'book';
+    }
 }

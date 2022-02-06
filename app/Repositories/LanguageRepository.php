@@ -72,4 +72,14 @@ final class LanguageRepository extends CrawlerRepository implements LanguageInte
             ],
         };
     }
+
+    final public function getRouteKey(): int|string
+    {
+        return $this->slug;
+    }
+
+    final public function getRouteKeyName(): string
+    {
+        return 'language';
+    }
 }
