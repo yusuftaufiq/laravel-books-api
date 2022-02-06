@@ -118,7 +118,7 @@ final class BookRepository extends CrawlerRepository implements BookInterface
             $this->detail->find($this->slug);
         }
 
-        return \Arr::collapse($this->toArray(), $this->detail->toArray());
+        return \Arr::collapse([$this->toArray(), $this->detail->toArray()]);
     }
 
     final public function count(): int
