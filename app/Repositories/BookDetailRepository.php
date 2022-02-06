@@ -73,6 +73,13 @@ final class BookDetailRepository extends CrawlerRepository implements BookDetail
         return $this;
     }
 
+    /**
+     * Get the book detail type.
+     *
+     * @param  string  $type    The type of book detail part.
+     *
+     * @return string
+     */
     private function getDetailOf(string $type): string
     {
         return $this->book->getCrawler()->filter(".switch_content.sc_2 td:contains(\"$type\")")

@@ -20,7 +20,8 @@ final class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    final public function index(CategoryInterface $category, LanguageInterface $language): Response {
+    final public function index(CategoryInterface $category, LanguageInterface $language): Response
+    {
         return response($category->books($language, request()->query('page', 1)), Response::HTTP_OK);
     }
 
