@@ -69,11 +69,13 @@ final class BookRepository extends CrawlerRepository implements BookInterface
         ?LanguageInterface $language = null,
         int $page = 1
     ): array {
-        $request = \Goutte::request('GET', self::BASE_URL . '?' . http_build_query([
+        $queryString = \Arr::query([
             'page' => $page,
             'category' => $category->getSlug(),
             'language' => $language->getValue(),
-        ]));
+        ]);
+
+        $request = \Goutte::request('GET', self::BASE_URL . "?$queryString");
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
             'url' => $node->filter('.title a')->attr('href'),
