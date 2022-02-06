@@ -18,7 +18,7 @@ final class CacheResponseMiddleware
     {
         return \Cache::remember(
             key: "{$request->method()}:{$request->getUri()}",
-            ttl: now()->addMinutes(10),
+            ttl: now()->addSeconds(config('cache.ttl')),
             callback: fn () => $next($request),
         );
     }

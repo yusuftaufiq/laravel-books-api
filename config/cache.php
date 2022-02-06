@@ -107,4 +107,14 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cache TTL
+    |--------------------------------------------------------------------------
+    |
+    | The maximum amount of time in seconds which a resource will be considered
+    | fresh.
+    |
+    */
+    'ttl' => (int) env('CACHE_TTL', 0),
 ];
