@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\BookRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\LanguageRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -29,12 +32,24 @@ class RouteServiceProvider extends ServiceProvider
     // protected $namespace = 'App\\Http\\Controllers';
 
     /**
+     * Custom route model bindings.
+     *
+     * @var array
+     */
+    protected $routeModelBindings = [
+        'book' => BookRepository::class,
+        'category' => CategoryRepository::class,
+        'language' => LanguageRepository::class,
+    ];
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
+        $this->configureModelBinding();
         $this->configureRateLimiting();
 
         $this->routes(function () {
@@ -46,6 +61,18 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+        });
+    }
+
+    /**
+     * Configure route model binding parameters.
+     *
+     * @return void
+     */
+    protected function configureModelBinding(): void
+    {
+        collect($this->routeModelBindings)->each(function ($class, $key) {
+            Route::model($key, $class);
         });
     }
 
