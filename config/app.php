@@ -175,7 +175,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\BindCategoryServiceProvider::class,
+        App\Providers\BindLanguageServiceProvider::class,
     ],
 
     /*
