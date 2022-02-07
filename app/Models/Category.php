@@ -10,7 +10,7 @@ final class Category extends BaseModel implements CategoryInterface
 {
     final public const BASE_URL = 'https://ebooks.gramedia.com/books/categories/';
 
-    protected $primaryKey = 'slug';
+    protected string $primaryKey = 'slug';
 
     protected array $arrayable = [
         'slug',

@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class Language extends BaseModel implements LanguageInterface
 {
-    protected $primaryKey = 'slug';
+    protected string $primaryKey = 'slug';
 
     protected array $arrayable = [
         'slug',

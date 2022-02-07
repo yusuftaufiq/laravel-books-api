@@ -7,9 +7,9 @@ use App\Contracts\BookInterface;
 
 final class BookDetail extends BaseModel implements BookDetailInterface
 {
-    protected $primaryKey = 'slug';
+    protected string $primaryKey = 'slug';
 
-    protected $arrayable = [
+    protected array $arrayable = [
         'releaseDate',
         'description',
         'language',
@@ -19,7 +19,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         'category',
     ];
 
-    protected $countable = [
+    protected array $countable = [
         'description',
         'language',
         'publisher',

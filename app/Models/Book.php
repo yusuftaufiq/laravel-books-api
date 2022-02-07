@@ -13,9 +13,9 @@ final class Book extends BaseModel implements BookInterface
 {
     final public const BASE_URL = 'https://ebooks.gramedia.com/books/';
 
-    protected $primaryKey = 'slug';
+    protected string $primaryKey = 'slug';
 
-    protected $arrayable = [
+    protected array $arrayable = [
         'url',
         'slug',
         'title',
@@ -24,7 +24,7 @@ final class Book extends BaseModel implements BookInterface
         'author',
     ];
 
-    protected $countable = [
+    protected array $countable = [
         'url',
         'slug',
         'title',
