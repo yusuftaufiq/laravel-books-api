@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
+use App\Contracts\CategoryInterface;
+use App\Contracts\LanguageInterface;
 use App\Models\Book;
 use App\Models\BookDetail;
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public $bindings = [
         BookInterface::class => Book::class,
         BookDetailInterface::class => BookDetail::class,
+        CategoryInterface::class => Category::class,
+        LanguageInterface::class => Language::class,
     ];
 
     /**

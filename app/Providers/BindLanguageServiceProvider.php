@@ -17,16 +17,18 @@ class BindLanguageServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function register()
     {
-        $this->app->bind(LanguageInterface::class, function (Application $app) {
-            $language = new Language();
-            $queryStringLanguage = request()->query('language');
+        if (request()->route()->hasParameter('language') === false) {
+            $this->app->bind(LanguageInterface::class, function (Application $app) {
+                $language = new Language();
+                $queryStringLanguage = request()->query('language');
 
-            if ($queryStringLanguage !== null) {
-                $language->resolveRouteBinding($queryStringLanguage);
-            }
+                if ($queryStringLanguage !== null) {
+                    $language->resolveRouteBinding($queryStringLanguage);
+                }
 
-            return $language;
-        });
+                return $language;
+            });
+        }
     }
 
     /**
