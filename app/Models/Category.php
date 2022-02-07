@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Contracts\CategoryInterface;
-use App\Contracts\LanguageInterface;
 use App\Enums\CategoryEnum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -54,10 +53,5 @@ final class Category extends BaseModel implements CategoryInterface
         $this->name = $categoryEnum->name();
 
         return $this;
-    }
-
-    final public function books(LanguageInterface $language, int $page = 1): array
-    {
-        return (new Book())->all($this, $language, $page);
     }
 }

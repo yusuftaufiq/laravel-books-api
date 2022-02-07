@@ -24,14 +24,4 @@ interface CategoryInterface extends BaseModelInterface
      * @return static
      */
     public function find(mixed $slug): static;
-
-    /**
-     * Get the category's books.
-     *
-     * @param  \App\Contracts\LanguageInterface  $language
-     * @param  int  $page
-     *
-     * @return array
-     */
-    public function books(LanguageInterface $language, int $page = 1): array;
 }
