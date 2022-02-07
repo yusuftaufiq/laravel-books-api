@@ -36,7 +36,12 @@ abstract class BaseModel implements BaseModelInterface
 
     public function toArray(): array
     {
-        return collect($this->arrayable)->mapWithKeys(fn ($key) => [$key => $this->{$key}])->toArray();
+        return match ($this->count()) {
+            0 => [],
+            default => collect($this->arrayable)->mapWithKeys(fn ($key) => [
+                $key => $this->{$key}
+            ])->toArray(),
+        };
     }
 
     /**
@@ -44,7 +49,7 @@ abstract class BaseModel implements BaseModelInterface
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }
