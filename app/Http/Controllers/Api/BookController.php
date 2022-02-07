@@ -22,7 +22,7 @@ final class BookController extends Controller
      */
     final public function index(CategoryInterface $category, LanguageInterface $language): Response
     {
-        return response($category->books($language, request()->query('page', 1)));
+        return response($this->book->all($category, $language, request()->query('page', 1)));
     }
 
     /**
