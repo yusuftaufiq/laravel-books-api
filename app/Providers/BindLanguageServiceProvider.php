@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\LanguageInterface;
-use App\Repositories\LanguageRepository;
+use App\Models\Language;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +18,7 @@ class BindLanguageServiceProvider extends ServiceProvider implements DeferrableP
     public function register()
     {
         $this->app->bind(LanguageInterface::class, function (Application $app) {
-            $language = new LanguageRepository();
+            $language = new Language();
             $queryStringLanguage = request()->query('language');
 
             if ($queryStringLanguage !== null) {

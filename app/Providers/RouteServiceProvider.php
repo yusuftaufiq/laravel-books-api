@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\BookRepository;
-use App\Repositories\CategoryRepository;
-use App\Repositories\LanguageRepository;
+use App\Models\Book;
+use App\Models\Category;
+use App\Models\Language;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -37,9 +37,9 @@ class RouteServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeModelBindings = [
-        'book' => BookRepository::class,
-        'category' => CategoryRepository::class,
-        'language' => LanguageRepository::class,
+        'book' => Book::class,
+        'category' => Category::class,
+        'language' => Language::class,
     ];
 
     /**

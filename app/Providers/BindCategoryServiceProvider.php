@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\CategoryInterface;
-use App\Repositories\CategoryRepository;
+use App\Models\Category;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +18,7 @@ class BindCategoryServiceProvider extends ServiceProvider implements DeferrableP
     public function register()
     {
         $this->app->bind(CategoryInterface::class, function (Application $app) {
-            $category = new CategoryRepository();
+            $category = new Category();
             $queryStringCategory = request()->query('category');
 
             if ($queryStringCategory !== null) {

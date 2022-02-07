@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
-use App\Repositories\BookDetailRepository;
-use App\Repositories\BookRepository;
+use App\Models\Book;
+use App\Models\BookDetail;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,8 +16,8 @@ class AppServiceProvider extends ServiceProvider
      * @var array
      */
     public $bindings = [
-        BookInterface::class => BookRepository::class,
-        BookDetailInterface::class => BookDetailRepository::class,
+        BookInterface::class => Book::class,
+        BookDetailInterface::class => BookDetail::class,
     ];
 
     /**
