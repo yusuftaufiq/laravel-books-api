@@ -39,6 +39,27 @@ abstract class BaseModel implements BaseModelInterface
         return collect($this->arrayable)->mapWithKeys(fn ($key) => [$key => $this->{$key}])->toArray();
     }
 
+    /**
+     * Convert the object into something JSON serializable.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson($options = 0): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
     public function getRouteKey(): int|string
     {
         return $this->{$this->primaryKey};
