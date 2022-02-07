@@ -1,69 +1,51 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Models;
 
 use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
-use App\Repositories\CrawlerRepository;
 
-final class BookDetailRepository extends CrawlerRepository implements BookDetailInterface
+final class BookDetail extends BaseModel implements BookDetailInterface
 {
+    protected $primaryKey = 'slug';
+
+    protected $arrayable = [
+        'releaseDate',
+        'description',
+        'language',
+        'country',
+        'publisher',
+        'pageCount',
+        'category',
+    ];
+
+    protected $countable = [
+        'description',
+        'language',
+        'publisher',
+    ];
+
+    protected ?string $slug = null;
+
+    protected ?string $releaseDate = null;
+
+    protected ?string $description = null;
+
+    protected ?string $language = null;
+
+    protected ?string $country = null;
+
+    protected ?string $publisher = null;
+
+    protected ?int $pageCount = null;
+
+    protected ?string $category = null;
+
     private ?BookInterface $book = null;
-
-    private ?string $slug = null;
-
-    private ?string $releaseDate = null;
-
-    private ?string $description = null;
-
-    private ?string $language = null;
-
-    private ?string $country = null;
-
-    private ?string $publisher = null;
-
-    private ?int $pageCount = null;
-
-    private ?string $category = null;
 
     final public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    final public function getReleaseDate(): ?string
-    {
-        return $this->releaseDate;
-    }
-
-    final public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    final public function getLanguage(): ?string
-    {
-        return $this->language;
-    }
-
-    final public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    final public function getPublisher(): ?string
-    {
-        return $this->publisher;
-    }
-
-    final public function getPageCount(): int
-    {
-        return $this->pageCount;
-    }
-
-    final public function getCategory(): ?string
-    {
-        return $this->category;
     }
 
     final public function setBook(BookInterface $book): static
@@ -89,10 +71,10 @@ final class BookDetailRepository extends CrawlerRepository implements BookDetail
             ->text();
     }
 
-    final public function find(string $slug): static
+    final public function find(mixed $slug): static
     {
         if ($this->book === null) {
-            $this->book = new BookRepository();
+            $this->book = new Book();
             $this->book->find($slug);
         }
 
@@ -104,43 +86,10 @@ final class BookDetailRepository extends CrawlerRepository implements BookDetail
         $this->pageCount = $this->getDetailOf('Page Count');
         $this->category = $this->book->getCrawler()->filter('[itemprop="title"]')->eq(2)->text();
         $this->categorySlug = \Str::afterLast(
-            $this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'),
-            CategoryRepository::BASE_URL,
+            subject: $this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'),
+            search: Category::BASE_URL,
         );
 
         return $this;
-    }
-
-    final public function count(): int
-    {
-        return $this->description !== null
-            && $this->language !== null
-            && $this->publisher !== null;
-    }
-
-    final public function toArray(): array
-    {
-        return match ($this->count()) {
-            0 => [],
-            default => [
-                'releaseDate' => $this->releaseDate,
-                'description' => $this->description,
-                'language' => $this->language,
-                'country' => $this->country,
-                'publisher' => $this->publisher,
-                'pageCount' => $this->pageCount,
-                'category' => $this->category,
-            ],
-        };
-    }
-
-    final public function getRouteKey(): int|string
-    {
-        return $this->slug;
-    }
-
-    final public function getRouteKeyName(): string
-    {
-        return 'bookDetail';
     }
 }

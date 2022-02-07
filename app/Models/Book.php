@@ -1,32 +1,49 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Models;
 
 use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
 use App\Contracts\CategoryInterface;
 use App\Contracts\LanguageInterface;
-use App\Repositories\CrawlerRepository;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class BookRepository extends CrawlerRepository implements BookInterface
+final class Book extends BaseModel implements BookInterface
 {
     final public const BASE_URL = 'https://ebooks.gramedia.com/books/';
 
+    protected $primaryKey = 'slug';
+
+    protected $arrayable = [
+        'url',
+        'slug',
+        'title',
+        'image',
+        'price',
+        'author',
+    ];
+
+    protected $countable = [
+        'url',
+        'slug',
+        'title',
+        'author',
+    ];
+
+    protected ?string $url = null;
+
+    protected ?string $slug = null;
+
+    protected ?string $title = null;
+
+    protected ?string $image = null;
+
+    protected ?string $author = null;
+
+    protected ?string $price = null;
+
     private ?Crawler $crawler = null;
-
-    private ?string $url = null;
-
-    private ?string $slug = null;
-
-    private ?string $title = null;
-
-    private ?string $image = null;
-
-    private ?string $price = null;
-
-    private ?string $author = null;
 
     private ?BookDetailInterface $detail = null;
 
@@ -34,48 +51,17 @@ final class BookRepository extends CrawlerRepository implements BookInterface
     {
         return $this->crawler;
     }
-    final public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    final public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    final public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    final public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    final public function getImageUrl(): ?string
-    {
-        return $this->image;
-    }
-
-    final public function getUrl(): ?string
-    {
-        return $this->url;
-    }
 
     final public function all(
         ?CategoryInterface $category = null,
         ?LanguageInterface $language = null,
         int $page = 1
     ): array {
-        $queryString = \Arr::query([
+        $request = \Goutte::request(method: 'GET', uri: self::BASE_URL . '?' . \Arr::query([
             'page' => $page,
             'category' => $category->getSlug(),
             'language' => $language->getValue(),
-        ]);
-
-        $request = \Goutte::request('GET', self::BASE_URL . "?$queryString");
+        ]));
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
             'url' => $node->filter('.title a')->attr('href'),
@@ -89,11 +75,11 @@ final class BookRepository extends CrawlerRepository implements BookInterface
         return $books;
     }
 
-    final public function find(string $slug): static
+    final public function find(mixed $slug): static
     {
-        $this->crawler = \Goutte::request('GET', self::BASE_URL . $slug);
+        $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
 
-        if (\Str::contains($this->crawler->getUri(), '?ref')) {
+        if (\Str::contains(haystack: $this->crawler->getUri(), needles: '?ref')) {
             throw new NotFoundHttpException('Book not found');
         }
 
@@ -101,8 +87,11 @@ final class BookRepository extends CrawlerRepository implements BookInterface
         $this->slug = $slug;
         $this->title = $this->crawler->filter('#big')->text();
         $this->image = $this->crawler->filter('#zoom img')->attr('src');
-        $this->price = \Str::afterLast($this->crawler->filter('#content_data_trigger .plan_list div')->text(), ')');
         $this->author = $this->crawler->filter('.auth a')->text();
+        $this->price = \Str::afterLast(
+            subject: $this->crawler->filter('#content_data_trigger .plan_list div')->text(),
+            search: ')'
+        );
 
         return $this;
     }
@@ -110,7 +99,7 @@ final class BookRepository extends CrawlerRepository implements BookInterface
     final public function details(): array
     {
         if ($this->detail === null) {
-            $this->detail = new BookDetailRepository();
+            $this->detail = new BookDetail();
             $this->detail->setBook($this);
         }
 
@@ -119,38 +108,5 @@ final class BookRepository extends CrawlerRepository implements BookInterface
         }
 
         return \Arr::collapse([$this->toArray(), $this->detail->toArray()]);
-    }
-
-    final public function count(): int
-    {
-        return $this->url !== null
-            && $this->slug !== null
-            && $this->title !== null
-            && $this->author !== null;
-    }
-
-    final public function toArray(): array
-    {
-        return match ($this->count()) {
-            0 => [],
-            default => [
-                'url' => $this->url,
-                'slug' => $this->slug,
-                'title' => $this->title,
-                'image' => $this->image,
-                'price' => $this->price,
-                'author' => $this->author,
-            ],
-        };
-    }
-
-    final public function getRouteKey(): int|string
-    {
-        return $this->slug;
-    }
-
-    final public function getRouteKeyName(): string
-    {
-        return 'book';
     }
 }
