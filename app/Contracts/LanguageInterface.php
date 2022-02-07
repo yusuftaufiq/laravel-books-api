@@ -17,4 +17,13 @@ interface LanguageInterface extends BaseModelInterface
      * @return array
      */
     public function all(): array;
+
+    /**
+     * Get the language by its slug.
+     *
+     * @param mixed $slug
+     *
+     * @return static
+     */
+    public function find(mixed $slug): static;
 }
