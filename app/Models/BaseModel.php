@@ -1,20 +1,53 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Models;
 
-use App\Contracts\CrawlerInterface;
+use App\Contracts\BaseModelInterface;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 
-abstract class CrawlerRepository implements CrawlerInterface
+abstract class BaseModel implements BaseModelInterface
 {
-    abstract public function find(string $slug): static;
+    use HasAttributes;
 
-    abstract public function count(): int;
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected string $primaryKey;
 
-    abstract public function toArray(): array;
+    protected array $arrayable;
 
-    abstract public function getRouteKey(): int|string;
+    protected array $countable;
 
-    abstract public function getRouteKeyName(): string;
+    /**
+     * Get the collection by its value.
+     *
+     * @param mixed $value
+     *
+     * @return static
+     */
+    abstract public function find(mixed $value): static;
+
+    public function count(): int
+    {
+        return (int) collect($this->countable)->every(fn ($key) => $this->{$key} !== null);
+    }
+
+    public function toArray(): array
+    {
+        return collect($this->arrayable)->mapWithKeys(fn ($key) => [$key => $this->{$key}])->toArray();
+    }
+
+    public function getRouteKey(): int|string
+    {
+        return $this->{$this->primaryKey};
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return $this->getAttribute($this->getRouteKeyName());
+    }
 
     public function resolveRouteBinding(mixed $value, $field = null): static
     {
