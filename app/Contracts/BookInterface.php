@@ -23,7 +23,7 @@ interface BookInterface extends BaseModelInterface
     ): array;
 
     /**
-     * Get the book by its slug.
+     * Get a book by its slug.
      *
      * @param mixed $slug
      *
@@ -32,7 +32,7 @@ interface BookInterface extends BaseModelInterface
     public function find(mixed $slug): static;
 
     /**
-     * Get the book's details.
+     * Get a book details.
      *
      * @return array
      */

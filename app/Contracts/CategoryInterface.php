@@ -17,7 +17,7 @@ interface CategoryInterface extends BaseModelInterface
     public function all(): array;
 
     /**
-     * Get the category by its slug.
+     * Get a category by its slug.
      *
      * @param mixed $slug
      *

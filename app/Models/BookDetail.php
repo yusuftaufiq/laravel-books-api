@@ -56,15 +56,15 @@ final class BookDetail extends BaseModel implements BookDetailInterface
     }
 
     /**
-     * Get the book detail type.
+     * Get part of the book details.
      *
-     * @param  string  $type    The type of book detail part.
+     * @param  string  $part    Part of the book details.
      *
      * @return string
      */
-    private function getDetailOf(string $type): string
+    private function getDetailOf(string $part): string
     {
-        return $this->book->getCrawler()->filter(".switch_content.sc_2 td:contains(\"$type\")")
+        return $this->book->getCrawler()->filter(".switch_content.sc_2 td:contains(\"$part\")")
             ->closest('tr')
             ->filter('td')
             ->last()

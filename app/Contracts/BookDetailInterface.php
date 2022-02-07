@@ -21,7 +21,7 @@ interface BookDetailInterface extends BaseModelInterface
     public function setBook(BookInterface $book): static;
 
     /**
-     * Get the book detail by its slug.
+     * Get a book detail by its slug.
      *
      * @param mixed $slug
      *
