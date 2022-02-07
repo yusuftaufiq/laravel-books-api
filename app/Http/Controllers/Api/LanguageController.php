@@ -32,6 +32,6 @@ final class LanguageController extends Controller
      */
     final public function show(LanguageInterface $language): Response
     {
-        return response($language->toArray());
+        return response($language);
     }
 }

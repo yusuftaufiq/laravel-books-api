@@ -31,6 +31,6 @@ final class CategoryController extends Controller
      */
     final public function show(CategoryInterface $category): Response
     {
-        return response($category->toArray());
+        return response($category);
     }
 }

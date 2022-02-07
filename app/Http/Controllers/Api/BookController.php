@@ -32,6 +32,6 @@ final class BookController extends Controller
      */
     final public function show(BookInterface $book): Response
     {
-        return response($book->toArray());
+        return response($book);
     }
 }
