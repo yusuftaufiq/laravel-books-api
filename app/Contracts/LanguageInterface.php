@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface LanguageInterface extends CrawlerInterface
+interface LanguageInterface extends BaseModelInterface
 {
     /**
      * Get the language's value.
@@ -10,20 +10,6 @@ interface LanguageInterface extends CrawlerInterface
      * @return null|string
      */
     public function getValue(): ?string;
-
-    /**
-     * Get the language's name.
-     *
-     * @return null|string
-     */
-    public function getName(): ?string;
-
-    /**
-     * Get the language's slug.
-     *
-     * @return null|string
-     */
-    public function getSlug(): ?string;
 
     /**
      * Get all languages.

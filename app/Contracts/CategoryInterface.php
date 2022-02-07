@@ -2,15 +2,8 @@
 
 namespace App\Contracts;
 
-interface CategoryInterface extends CrawlerInterface
+interface CategoryInterface extends BaseModelInterface
 {
-    /**
-     * Get the category's name.
-     *
-     * @return null|string
-     */
-    public function getName(): ?string;
-
     /**
      * Get the category's slug.
      *
@@ -22,6 +15,15 @@ interface CategoryInterface extends CrawlerInterface
      * Get all categories.
      */
     public function all(): array;
+
+    /**
+     * Get the category by its slug.
+     *
+     * @param mixed $slug
+     *
+     * @return static
+     */
+    public function find(mixed $slug): static;
 
     /**
      * Get the category's books.

@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-interface BookInterface extends CrawlerInterface
+interface BookInterface extends BaseModelInterface
 {
     /**
      * Get the book's crawler.
@@ -14,49 +14,6 @@ interface BookInterface extends CrawlerInterface
     public function getCrawler(): ?Crawler;
 
     /**
-     * Get the book's slug.
-     *
-     * @return null|string
-     */
-    public function getSlug(): ?string;
-
-    /**
-     * Get the book's title.
-     *
-     * @return null|string
-     */
-    public function getTitle(): ?string;
-
-    /**
-     * Get the book's author.
-     *
-     * @return null|string
-     */
-    public function getAuthor(): ?string;
-
-    /**
-     * Get the book's price.
-     *
-     * @return null|float
-     */
-    public function getPrice(): ?float;
-
-
-    /**
-     * Get the book's image URL.
-     *
-     * @return null|string
-     */
-    public function getImageUrl(): ?string;
-
-    /**
-     * Get the book's URL.
-     *
-     * @return null|string
-     */
-    public function getUrl(): ?string;
-
-    /**
      * Get all books.
      */
     public function all(
@@ -64,6 +21,15 @@ interface BookInterface extends CrawlerInterface
         ?LanguageInterface $language = null,
         int $page = 1
     ): array;
+
+    /**
+     * Get the book by its slug.
+     *
+     * @param mixed $slug
+     *
+     * @return static
+     */
+    public function find(mixed $slug): static;
 
     /**
      * Get the book's details.
