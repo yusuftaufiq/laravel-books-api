@@ -84,4 +84,9 @@ abstract class BaseModel implements BaseModelInterface
     {
         throw new \Exception(self::class . ' does not support child bindings.');
     }
+
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
