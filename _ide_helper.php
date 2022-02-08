@@ -16051,6 +16051,1304 @@
      
 }
 
+    namespace App\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class BookFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getCrawler()
+        {
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getCrawler();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function all($category = null, $language = null, $page = 1)
+        {
+                        /** @var \App\Models\Book $instance */
+                        return $instance->all($category, $language, $page);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function find($slug)
+        {
+                        /** @var \App\Models\Book $instance */
+                        return $instance->find($slug);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function details()
+        {
+                        /** @var \App\Models\Book $instance */
+                        return $instance->details();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function count()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->count();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function toArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->toArray();
+        }
+                    /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function jsonSerialize()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->jsonSerialize();
+        }
+                    /**
+         * Convert the object to its JSON representation.
+         *
+         * @param int $options
+         * @return string 
+         * @static 
+         */ 
+        public static function toJson($options = 0)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->toJson($options);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteKey()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getRouteKey();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteKeyName()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getRouteKeyName();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveRouteBinding($value, $field = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->resolveRouteBinding($value, $field);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveChildRouteBinding($childType, $value, $field)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->resolveChildRouteBinding($childType, $value, $field);
+        }
+                    /**
+         * Convert the model's attributes to an array.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function attributesToArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->attributesToArray();
+        }
+                    /**
+         * Get the model's relationships in array form.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function relationsToArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->relationsToArray();
+        }
+                    /**
+         * Get an attribute from the model.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getAttribute($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getAttribute($key);
+        }
+                    /**
+         * Get a plain attribute (not a relationship).
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getAttributeValue($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getAttributeValue($key);
+        }
+                    /**
+         * Get a relationship.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getRelationValue($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getRelationValue($key);
+        }
+                    /**
+         * Determine if the given key is a relationship method on the model.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function isRelation($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->isRelation($key);
+        }
+                    /**
+         * Determine if a get mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasGetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasGetMutator($key);
+        }
+                    /**
+         * Determine if a "Attribute" return type marked mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasAttributeMutator($key);
+        }
+                    /**
+         * Determine if a "Attribute" return type marked get mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeGetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasAttributeGetMutator($key);
+        }
+                    /**
+         * Merge new casts with existing casts on the model.
+         *
+         * @param array $casts
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function mergeCasts($casts)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->mergeCasts($casts);
+        }
+                    /**
+         * Set a given attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function setAttribute($key, $value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->setAttribute($key, $value);
+        }
+                    /**
+         * Determine if a set mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasSetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasSetMutator($key);
+        }
+                    /**
+         * Determine if an "Attribute" return type marked set mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeSetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasAttributeSetMutator($key);
+        }
+                    /**
+         * Set a given JSON attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function fillJsonAttribute($key, $value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->fillJsonAttribute($key, $value);
+        }
+                    /**
+         * Decode the given JSON back into an array or object.
+         *
+         * @param string $value
+         * @param bool $asObject
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromJson($value, $asObject = false)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->fromJson($value, $asObject);
+        }
+                    /**
+         * Decrypt the given encrypted string.
+         *
+         * @param string $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromEncryptedString($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->fromEncryptedString($value);
+        }
+                    /**
+         * Set the encrypter instance that will be used to encrypt attributes.
+         *
+         * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter
+         * @return void 
+         * @static 
+         */ 
+        public static function encryptUsing($encrypter)
+        {            //Method inherited from \App\Models\BaseModel         
+                        \App\Models\Book::encryptUsing($encrypter);
+        }
+                    /**
+         * Decode the given float.
+         *
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromFloat($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->fromFloat($value);
+        }
+                    /**
+         * Convert a DateTime to a storable string.
+         *
+         * @param mixed $value
+         * @return string|null 
+         * @static 
+         */ 
+        public static function fromDateTime($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->fromDateTime($value);
+        }
+                    /**
+         * Get the attributes that should be converted to dates.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDates()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getDates();
+        }
+                    /**
+         * Get the format for database stored dates.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDateFormat()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getDateFormat();
+        }
+                    /**
+         * Set the date format used by the model.
+         *
+         * @param string $format
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function setDateFormat($format)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->setDateFormat($format);
+        }
+                    /**
+         * Determine whether an attribute should be cast to a native type.
+         *
+         * @param string $key
+         * @param array|string|null $types
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasCast($key, $types = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasCast($key, $types);
+        }
+                    /**
+         * Get the casts array.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getCasts()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getCasts();
+        }
+                    /**
+         * Get all of the current attributes on the model.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getAttributes()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getAttributes();
+        }
+                    /**
+         * Set the array of model attributes. No checking is done.
+         *
+         * @param array $attributes
+         * @param bool $sync
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function setRawAttributes($attributes, $sync = false)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->setRawAttributes($attributes, $sync);
+        }
+                    /**
+         * Get the model's original attribute values.
+         *
+         * @param string|null $key
+         * @param mixed $default
+         * @return mixed|array 
+         * @static 
+         */ 
+        public static function getOriginal($key = null, $default = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getOriginal($key, $default);
+        }
+                    /**
+         * Get the model's raw original attribute values.
+         *
+         * @param string|null $key
+         * @param mixed $default
+         * @return mixed|array 
+         * @static 
+         */ 
+        public static function getRawOriginal($key = null, $default = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getRawOriginal($key, $default);
+        }
+                    /**
+         * Get a subset of the model's attributes.
+         *
+         * @param array|mixed $attributes
+         * @return array 
+         * @static 
+         */ 
+        public static function only($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->only($attributes);
+        }
+                    /**
+         * Sync the original attributes with the current.
+         *
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function syncOriginal()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->syncOriginal();
+        }
+                    /**
+         * Sync a single original attribute with its current value.
+         *
+         * @param string $attribute
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function syncOriginalAttribute($attribute)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->syncOriginalAttribute($attribute);
+        }
+                    /**
+         * Sync multiple original attribute with their current values.
+         *
+         * @param array|string $attributes
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function syncOriginalAttributes($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->syncOriginalAttributes($attributes);
+        }
+                    /**
+         * Sync the changed attributes.
+         *
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function syncChanges()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->syncChanges();
+        }
+                    /**
+         * Determine if the model or any of the given attribute(s) have been modified.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function isDirty($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->isDirty($attributes);
+        }
+                    /**
+         * Determine if the model or all the given attribute(s) have remained the same.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function isClean($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->isClean($attributes);
+        }
+                    /**
+         * Determine if the model or any of the given attribute(s) have been modified.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function wasChanged($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->wasChanged($attributes);
+        }
+                    /**
+         * Get the attributes that have been changed since the last sync.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDirty()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getDirty();
+        }
+                    /**
+         * Get the attributes that were changed.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getChanges()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getChanges();
+        }
+                    /**
+         * Determine if the new and old values for a given key are equivalent.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function originalIsEquivalent($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->originalIsEquivalent($key);
+        }
+                    /**
+         * Append attributes to query when building a query.
+         *
+         * @param array|string $attributes
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function append($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->append($attributes);
+        }
+                    /**
+         * Set the accessors to append to model arrays.
+         *
+         * @param array $appends
+         * @return \App\Models\Book 
+         * @static 
+         */ 
+        public static function setAppends($appends)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->setAppends($appends);
+        }
+                    /**
+         * Return whether the accessor attribute has been appended.
+         *
+         * @param string $attribute
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAppended($attribute)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->hasAppended($attribute);
+        }
+                    /**
+         * Get the mutated attributes for a given instance.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getMutatedAttributes()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\Book $instance */
+                        return $instance->getMutatedAttributes();
+        }
+                    /**
+         * Extract and cache all the mutated attributes of a class.
+         *
+         * @param string $class
+         * @return void 
+         * @static 
+         */ 
+        public static function cacheMutatedAttributes($class)
+        {            //Method inherited from \App\Models\BaseModel         
+                        \App\Models\Book::cacheMutatedAttributes($class);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class BookDetailFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getSlug()
+        {
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getSlug();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setBook($book)
+        {
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->setBook($book);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function find($slug)
+        {
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->find($slug);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function count()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->count();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function toArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->toArray();
+        }
+                    /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function jsonSerialize()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->jsonSerialize();
+        }
+                    /**
+         * Convert the object to its JSON representation.
+         *
+         * @param int $options
+         * @return string 
+         * @static 
+         */ 
+        public static function toJson($options = 0)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->toJson($options);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteKey()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getRouteKey();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRouteKeyName()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getRouteKeyName();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveRouteBinding($value, $field = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->resolveRouteBinding($value, $field);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveChildRouteBinding($childType, $value, $field)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->resolveChildRouteBinding($childType, $value, $field);
+        }
+                    /**
+         * Convert the model's attributes to an array.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function attributesToArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->attributesToArray();
+        }
+                    /**
+         * Get the model's relationships in array form.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function relationsToArray()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->relationsToArray();
+        }
+                    /**
+         * Get an attribute from the model.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getAttribute($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getAttribute($key);
+        }
+                    /**
+         * Get a plain attribute (not a relationship).
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getAttributeValue($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getAttributeValue($key);
+        }
+                    /**
+         * Get a relationship.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getRelationValue($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getRelationValue($key);
+        }
+                    /**
+         * Determine if the given key is a relationship method on the model.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function isRelation($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->isRelation($key);
+        }
+                    /**
+         * Determine if a get mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasGetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasGetMutator($key);
+        }
+                    /**
+         * Determine if a "Attribute" return type marked mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasAttributeMutator($key);
+        }
+                    /**
+         * Determine if a "Attribute" return type marked get mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeGetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasAttributeGetMutator($key);
+        }
+                    /**
+         * Merge new casts with existing casts on the model.
+         *
+         * @param array $casts
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function mergeCasts($casts)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->mergeCasts($casts);
+        }
+                    /**
+         * Set a given attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function setAttribute($key, $value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->setAttribute($key, $value);
+        }
+                    /**
+         * Determine if a set mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasSetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasSetMutator($key);
+        }
+                    /**
+         * Determine if an "Attribute" return type marked set mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAttributeSetMutator($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasAttributeSetMutator($key);
+        }
+                    /**
+         * Set a given JSON attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function fillJsonAttribute($key, $value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->fillJsonAttribute($key, $value);
+        }
+                    /**
+         * Decode the given JSON back into an array or object.
+         *
+         * @param string $value
+         * @param bool $asObject
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromJson($value, $asObject = false)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->fromJson($value, $asObject);
+        }
+                    /**
+         * Decrypt the given encrypted string.
+         *
+         * @param string $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromEncryptedString($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->fromEncryptedString($value);
+        }
+                    /**
+         * Set the encrypter instance that will be used to encrypt attributes.
+         *
+         * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter
+         * @return void 
+         * @static 
+         */ 
+        public static function encryptUsing($encrypter)
+        {            //Method inherited from \App\Models\BaseModel         
+                        \App\Models\BookDetail::encryptUsing($encrypter);
+        }
+                    /**
+         * Decode the given float.
+         *
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */ 
+        public static function fromFloat($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->fromFloat($value);
+        }
+                    /**
+         * Convert a DateTime to a storable string.
+         *
+         * @param mixed $value
+         * @return string|null 
+         * @static 
+         */ 
+        public static function fromDateTime($value)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->fromDateTime($value);
+        }
+                    /**
+         * Get the attributes that should be converted to dates.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDates()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getDates();
+        }
+                    /**
+         * Get the format for database stored dates.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDateFormat()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getDateFormat();
+        }
+                    /**
+         * Set the date format used by the model.
+         *
+         * @param string $format
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function setDateFormat($format)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->setDateFormat($format);
+        }
+                    /**
+         * Determine whether an attribute should be cast to a native type.
+         *
+         * @param string $key
+         * @param array|string|null $types
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasCast($key, $types = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasCast($key, $types);
+        }
+                    /**
+         * Get the casts array.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getCasts()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getCasts();
+        }
+                    /**
+         * Get all of the current attributes on the model.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getAttributes()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getAttributes();
+        }
+                    /**
+         * Set the array of model attributes. No checking is done.
+         *
+         * @param array $attributes
+         * @param bool $sync
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function setRawAttributes($attributes, $sync = false)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->setRawAttributes($attributes, $sync);
+        }
+                    /**
+         * Get the model's original attribute values.
+         *
+         * @param string|null $key
+         * @param mixed $default
+         * @return mixed|array 
+         * @static 
+         */ 
+        public static function getOriginal($key = null, $default = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getOriginal($key, $default);
+        }
+                    /**
+         * Get the model's raw original attribute values.
+         *
+         * @param string|null $key
+         * @param mixed $default
+         * @return mixed|array 
+         * @static 
+         */ 
+        public static function getRawOriginal($key = null, $default = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getRawOriginal($key, $default);
+        }
+                    /**
+         * Get a subset of the model's attributes.
+         *
+         * @param array|mixed $attributes
+         * @return array 
+         * @static 
+         */ 
+        public static function only($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->only($attributes);
+        }
+                    /**
+         * Sync the original attributes with the current.
+         *
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function syncOriginal()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->syncOriginal();
+        }
+                    /**
+         * Sync a single original attribute with its current value.
+         *
+         * @param string $attribute
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function syncOriginalAttribute($attribute)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->syncOriginalAttribute($attribute);
+        }
+                    /**
+         * Sync multiple original attribute with their current values.
+         *
+         * @param array|string $attributes
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function syncOriginalAttributes($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->syncOriginalAttributes($attributes);
+        }
+                    /**
+         * Sync the changed attributes.
+         *
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function syncChanges()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->syncChanges();
+        }
+                    /**
+         * Determine if the model or any of the given attribute(s) have been modified.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function isDirty($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->isDirty($attributes);
+        }
+                    /**
+         * Determine if the model or all the given attribute(s) have remained the same.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function isClean($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->isClean($attributes);
+        }
+                    /**
+         * Determine if the model or any of the given attribute(s) have been modified.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */ 
+        public static function wasChanged($attributes = null)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->wasChanged($attributes);
+        }
+                    /**
+         * Get the attributes that have been changed since the last sync.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDirty()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getDirty();
+        }
+                    /**
+         * Get the attributes that were changed.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getChanges()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getChanges();
+        }
+                    /**
+         * Determine if the new and old values for a given key are equivalent.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function originalIsEquivalent($key)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->originalIsEquivalent($key);
+        }
+                    /**
+         * Append attributes to query when building a query.
+         *
+         * @param array|string $attributes
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function append($attributes)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->append($attributes);
+        }
+                    /**
+         * Set the accessors to append to model arrays.
+         *
+         * @param array $appends
+         * @return \App\Models\BookDetail 
+         * @static 
+         */ 
+        public static function setAppends($appends)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->setAppends($appends);
+        }
+                    /**
+         * Return whether the accessor attribute has been appended.
+         *
+         * @param string $attribute
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasAppended($attribute)
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->hasAppended($attribute);
+        }
+                    /**
+         * Get the mutated attributes for a given instance.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getMutatedAttributes()
+        {            //Method inherited from \App\Models\BaseModel         
+                        /** @var \App\Models\BookDetail $instance */
+                        return $instance->getMutatedAttributes();
+        }
+                    /**
+         * Extract and cache all the mutated attributes of a class.
+         *
+         * @param string $class
+         * @return void 
+         * @static 
+         */ 
+        public static function cacheMutatedAttributes($class)
+        {            //Method inherited from \App\Models\BaseModel         
+                        \App\Models\BookDetail::cacheMutatedAttributes($class);
+        }
+         
+    }
+     
+}
+
         namespace Weidner\Goutte { 
             /**
      * 
@@ -16726,6 +18024,8 @@ namespace  {
             class Artisan extends \Illuminate\Support\Facades\Artisan {}
             class Auth extends \Illuminate\Support\Facades\Auth {}
             class Blade extends \Illuminate\Support\Facades\Blade {}
+            class Book extends \App\Facades\BookFacade {}
+            class BookDetail extends \App\Facades\BookDetailFacade {}
             class Broadcast extends \Illuminate\Support\Facades\Broadcast {}
             class Bus extends \Illuminate\Support\Facades\Bus {}
             class Cache extends \Illuminate\Support\Facades\Cache {}
