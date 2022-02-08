@@ -65,11 +65,14 @@ final class Book extends BaseModel implements BookInterface
 
         $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
             'url' => $node->filter('.title a')->attr('href'),
-            'slug' => \Str::substr($node->filter('.title a')->attr('href'), \Str::length(self::BASE_URL)),
             'title' => $node->filter('.title a')->text(),
             'image' => $node->filter('.imgwrap img')->attr('src'),
             'price' => $node->filter('.price')->text(),
             'author' => $node->filter('.date')->text(),
+            'slug' => \Str::substr(
+                string: $node->filter('.title a')->attr('href'),
+                start: \Str::length(self::BASE_URL)
+            ),
         ]);
 
         return $books;
