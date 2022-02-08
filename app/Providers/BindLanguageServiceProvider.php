@@ -17,10 +17,10 @@ class BindLanguageServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function register()
     {
-        if (request()->route()->hasParameter('language') === false) {
+        if (request()?->route()?->hasParameter('language') === false) {
             $this->app->bind(LanguageInterface::class, function (Application $app) {
                 $language = new Language();
-                $queryStringLanguage = request()->query('language');
+                $queryStringLanguage = request()?->query('language');
 
                 if ($queryStringLanguage !== null) {
                     $language->resolveRouteBinding($queryStringLanguage);

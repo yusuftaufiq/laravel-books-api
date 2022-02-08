@@ -17,10 +17,10 @@ class BindCategoryServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function register()
     {
-        if (request()->route()->hasParameter('category') === false) {
+        if (request()?->route()?->hasParameter('category') === false) {
             $this->app->bind(CategoryInterface::class, function (Application $app) {
                 $category = new Category();
-                $queryStringCategory = request()->query('category');
+                $queryStringCategory = request()?->query('category');
 
                 if ($queryStringCategory !== null) {
                     $category->resolveRouteBinding($queryStringCategory);
