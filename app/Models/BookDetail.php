@@ -74,8 +74,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
     final public function find(mixed $slug): static
     {
         if ($this->book === null) {
-            $this->book = new Book();
-            $this->book->find($slug);
+            $this->book = \Book::find($slug);
         }
 
         $this->releaseDate = $this->book->getCrawler()->filter('.switch_content.sc_1')->first()->text();

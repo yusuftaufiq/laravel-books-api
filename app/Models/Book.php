@@ -102,8 +102,7 @@ final class Book extends BaseModel implements BookInterface
     final public function details(): array
     {
         if ($this->detail === null) {
-            $this->detail = new BookDetail();
-            $this->detail->setBook($this);
+            $this->detail = \BookDetail::setBook($this);
         }
 
         if ($this->detail->getSlug() !== $this->slug) {
