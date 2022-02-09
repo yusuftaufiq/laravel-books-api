@@ -23,11 +23,11 @@ abstract class BaseModel implements BaseModelInterface
     /**
      * Get the collection by its value.
      *
-     * @param mixed $value
+     * @param string $value
      *
      * @return static
      */
-    abstract public function find(mixed $value): static;
+    abstract public function find(string $value): static;
 
     public function count(): int
     {
@@ -49,7 +49,7 @@ abstract class BaseModel implements BaseModelInterface
      *
      * @return array
      */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }

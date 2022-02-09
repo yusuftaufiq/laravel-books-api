@@ -19,9 +19,9 @@ interface CategoryInterface extends BaseModelInterface
     /**
      * Get a category by its slug.
      *
-     * @param mixed $slug
+     * @param string $slug
      *
      * @return static
      */
-    public function find(mixed $slug): static;
+    public function find(string $slug): static;
 }
