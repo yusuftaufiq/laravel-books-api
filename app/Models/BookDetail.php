@@ -71,7 +71,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
             ->text();
     }
 
-    final public function find(mixed $slug): static
+    final public function find(string $slug): static
     {
         if ($this->book === null) {
             $this->book = \Book::find($slug);

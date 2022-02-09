@@ -42,7 +42,7 @@ final class Language extends BaseModel implements LanguageInterface
         return $categories->toArray();
     }
 
-    final public function find(mixed $slug): static
+    final public function find(string $slug): static
     {
         $languageEnum = LanguageEnum::tryFrom($slug);
 

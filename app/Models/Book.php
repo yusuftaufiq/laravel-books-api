@@ -78,7 +78,7 @@ final class Book extends BaseModel implements BookInterface
         return $books;
     }
 
-    final public function find(mixed $slug): static
+    final public function find(string $slug): static
     {
         $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
 

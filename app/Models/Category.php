@@ -41,7 +41,7 @@ final class Category extends BaseModel implements CategoryInterface
         return $categories->toArray();
     }
 
-    final public function find(mixed $slug): static
+    final public function find(string $slug): static
     {
         $categoryEnum = CategoryEnum::tryFrom($slug);
 
