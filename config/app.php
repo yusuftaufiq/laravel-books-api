@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Weidner\Goutte\GoutteServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -177,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\BindCategoryServiceProvider::class,
         App\Providers\BindLanguageServiceProvider::class,
+        App\Providers\GoutteServiceProvider::class,
     ],
 
     /*
@@ -211,7 +211,7 @@ return [
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
-        'Goutte' => Weidner\Goutte\GoutteFacade::class,
+        'Goutte' => App\Facades\GoutteFacade::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Http' => Illuminate\Support\Facades\Http::class,
         'Js' => Illuminate\Support\Js::class,
