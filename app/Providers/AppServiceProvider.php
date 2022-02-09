@@ -32,8 +32,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('book', fn () => new Book());
-        $this->app->bind('bookDetail', fn () => new BookDetail());
+        //
     }
 
     /**

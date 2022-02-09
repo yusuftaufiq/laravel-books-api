@@ -2,12 +2,13 @@
 
 namespace App\Facades;
 
+use App\Contracts\BookInterface;
 use Illuminate\Support\Facades\Facade;
 
 class BookFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'book';
+        return BookInterface::class;
     }
 }
