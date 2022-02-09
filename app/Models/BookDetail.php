@@ -77,7 +77,6 @@ final class BookDetail extends BaseModel implements BookDetailInterface
             $this->book = \Book::find($slug);
         }
 
-        $this->releaseDate = $this->book->getCrawler()->filter('.switch_content.sc_1')->first()->text();
         $this->description = $this->book->getCrawler()->filter('[itemprop="description"]')->text();
         $this->language = $this->getDetailOf('Language');
         $this->country = $this->getDetailOf('Country');
@@ -86,6 +85,9 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         $this->category = $this->book->getCrawler()->filter('[itemprop="title"]')->eq(2)->text();
         $this->categorySlug = str($this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'))
             ->afterLast(search: Category::BASE_URL);
+        $this->releaseDate = str($this->book->getCrawler()->filter('.switch_content.sc_1')->text())
+            ->after(search: 'Release Date: ')
+            ->before(search: '.');
 
         return $this;
     }
