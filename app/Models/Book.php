@@ -69,10 +69,7 @@ final class Book extends BaseModel implements BookInterface
             'image' => $node->filter('.imgwrap img')->attr('src'),
             'price' => $node->filter('.price')->text(),
             'author' => $node->filter('.date')->text(),
-            'slug' => \Str::substr(
-                string: $node->filter('.title a')->attr('href'),
-                start: \Str::length(self::BASE_URL)
-            ),
+            'slug' => str($node->filter('.title a')->attr('href'))->substr(start: str()->length(self::BASE_URL)),
         ]);
 
         return $books;
@@ -82,7 +79,7 @@ final class Book extends BaseModel implements BookInterface
     {
         $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
 
-        if (\Str::contains(haystack: $this->crawler->getUri(), needles: '?ref')) {
+        if (str($this->crawler->getUri())->contains(needles: '?ref')) {
             throw new NotFoundHttpException('Book not found');
         }
 
@@ -91,10 +88,8 @@ final class Book extends BaseModel implements BookInterface
         $this->title = $this->crawler->filter('#big')->text();
         $this->image = $this->crawler->filter('#zoom img')->attr('src');
         $this->author = $this->crawler->filter('.auth a')->text();
-        $this->price = \Str::afterLast(
-            subject: $this->crawler->filter('#content_data_trigger .plan_list div')->text(),
-            search: ')'
-        );
+        $this->price = str($this->crawler->filter('#content_data_trigger .plan_list div')->text())
+            ->afterLast(search: ')');
 
         return $this;
     }

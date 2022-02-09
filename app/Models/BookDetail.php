@@ -84,10 +84,8 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         $this->publisher = $this->getDetailOf('Publisher');
         $this->pageCount = $this->getDetailOf('Page Count');
         $this->category = $this->book->getCrawler()->filter('[itemprop="title"]')->eq(2)->text();
-        $this->categorySlug = \Str::afterLast(
-            subject: $this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'),
-            search: Category::BASE_URL,
-        );
+        $this->categorySlug = str($this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'))
+            ->afterLast(search: Category::BASE_URL);
 
         return $this;
     }
