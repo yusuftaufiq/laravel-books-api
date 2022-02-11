@@ -16147,18 +16147,9 @@
      */ 
         class BookFacade {
                     /**
-         * 
+         * Get all books.
          *
-         * @static 
-         */ 
-        public static function getCrawler()
-        {
-                        /** @var \App\Models\Book $instance */
-                        return $instance->getCrawler();
-        }
-                    /**
-         * 
-         *
+         * @return \App\Models\array<BookInterface> 
          * @static 
          */ 
         public static function all($category = null, $language = null, $page = 1)
@@ -16803,20 +16794,10 @@
          *
          * @static 
          */ 
-        public static function getSlug()
+        public static function withCrawler($crawler)
         {
                         /** @var \App\Models\BookDetail $instance */
-                        return $instance->getSlug();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setBook($book)
-        {
-                        /** @var \App\Models\BookDetail $instance */
-                        return $instance->setBook($book);
+                        return $instance->withCrawler($crawler);
         }
                     /**
          * 
