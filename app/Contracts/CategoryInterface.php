@@ -2,14 +2,22 @@
 
 namespace App\Contracts;
 
+
+/**
+ * @property ?string $slug
+ * @property ?string $name
+ */
 interface CategoryInterface extends BaseModelInterface
 {
     /**
-     * Get the category's slug.
+     * Create a new category instance.
      *
-     * @return null|string
+     * @param ?string $slug
+     * @param ?string $name
+     *
+     * @return void
      */
-    public function getSlug(): ?string;
+    public function __construct(?string $slug = null, ?string $name = null);
 
     /**
      * Get all categories.

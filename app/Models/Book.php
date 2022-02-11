@@ -31,46 +31,43 @@ final class Book extends BaseModel implements BookInterface
         'author',
     ];
 
-    protected ?string $url = null;
-
-    protected ?string $slug = null;
-
-    protected ?string $title = null;
-
-    protected ?string $image = null;
-
-    protected ?string $author = null;
-
-    protected ?string $price = null;
-
-    private ?Crawler $crawler = null;
-
-    private ?BookDetailInterface $detail = null;
-
-    final public function getCrawler(): ?Crawler
-    {
-        return $this->crawler;
+    final public function __construct(
+        public ?string $image = null,
+        public ?string $title = null,
+        public ?string $author = null,
+        public ?string $price = null,
+        public ?string $url = null,
+        public ?string $slug = null,
+        public ?Crawler $crawler = null,
+        public ?BookDetailInterface $details = null,
+    ) {
     }
 
+    /**
+     * Get all books.
+     *
+     * @return array<BookInterface>
+     */
     final public function all(
         ?CategoryInterface $category = null,
         ?LanguageInterface $language = null,
         int $page = 1
     ): array {
-        $request = \Goutte::request(method: 'GET', uri: self::BASE_URL . '?' . \Arr::query([
+        $crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . '?' . \Arr::query([
             'page' => $page,
-            'category' => $category->getSlug(),
-            'language' => $language->getValue(),
+            'category' => $category->slug,
+            'language' => $language->value,
         ]));
 
-        $books = $request->filter('.oubox_list')->each(fn (Crawler $node) => [
-            'url' => $node->filter('.title a')->attr('href'),
-            'title' => $node->filter('.title a')->text(),
-            'image' => $node->filter('.imgwrap img')->attr('src'),
-            'price' => $node->filter('.price')->text(),
-            'author' => $node->filter('.date')->text(),
-            'slug' => str($node->filter('.title a')->attr('href'))->substr(start: str()->length(self::BASE_URL)),
-        ]);
+        $books = $crawler->filter('.oubox_list')->each(fn (Crawler $node) => new static(
+            url: $node->filter('.title a')->attr('href'),
+            title: $node->filter('.title a')->text(),
+            image: $node->filter('.imgwrap img')->attr('src'),
+            price: $node->filter('.price')->text(),
+            author: $node->filter('.date')->text(),
+            slug: str($node->filter('.title a')->attr('href'))->substr(start: str()->length(self::BASE_URL)),
+            crawler: $crawler,
+        ));
 
         return $books;
     }
@@ -83,27 +80,26 @@ final class Book extends BaseModel implements BookInterface
             throw new NotFoundHttpException('Book not found');
         }
 
+        $this->image = $this->crawler->filter('#zoom img')->attr('src');
+        $this->title = $this->crawler->filter('#big')->text();
+        $this->author = $this->crawler->filter('.auth a')->text();
+        $this->price = str($this->crawler->filter('#content_data_trigger .plan_list div')->text())->afterLast(search: ')');
         $this->url = self::BASE_URL . $slug;
         $this->slug = $slug;
-        $this->title = $this->crawler->filter('#big')->text();
-        $this->image = $this->crawler->filter('#zoom img')->attr('src');
-        $this->author = $this->crawler->filter('.auth a')->text();
-        $this->price = str($this->crawler->filter('#content_data_trigger .plan_list div')->text())
-            ->afterLast(search: ')');
 
         return $this;
     }
 
-    final public function details(): array
+    final public function details(): static
     {
-        if ($this->detail === null) {
-            $this->detail = \BookDetail::setBook($this);
+        if ($this->details === null) {
+            $this->details = \BookDetail::withCrawler($this->crawler);
         }
 
-        if ($this->detail->getSlug() !== $this->slug) {
-            $this->detail->find($this->slug);
+        if ($this->details->slug !== $this->slug) {
+            $this->details->find($this->slug);
         }
 
-        return \Arr::collapse([$this->toArray(), $this->detail->toArray()]);
+        return $this;
     }
 }

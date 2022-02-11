@@ -22,13 +22,10 @@ final class Category extends BaseModel implements CategoryInterface
         'name',
     ];
 
-    protected ?string $slug = null;
-
-    protected ?string $name = null;
-
-    final public function getSlug(): ?string
-    {
-        return $this->slug;
+    public function __construct(
+        public ?string $slug = null,
+        public ?string $name = null,
+    ) {
     }
 
     final public function all(): array

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\BookDetailInterface;
-use App\Contracts\BookInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 final class BookDetail extends BaseModel implements BookDetailInterface
 {
@@ -25,34 +25,17 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         'publisher',
     ];
 
-    protected ?string $slug = null;
-
-    protected ?string $releaseDate = null;
-
-    protected ?string $description = null;
-
-    protected ?string $language = null;
-
-    protected ?string $country = null;
-
-    protected ?string $publisher = null;
-
-    protected ?int $pageCount = null;
-
-    protected ?string $category = null;
-
-    private ?BookInterface $book = null;
-
-    final public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    final public function setBook(BookInterface $book): static
-    {
-        $this->book = $book;
-
-        return $this;
+    final public function __construct(
+        public ?string $releaseDate = null,
+        public ?string $description = null,
+        public ?string $language = null,
+        public ?string $country = null,
+        public ?string $publisher = null,
+        public ?int $pageCount = null,
+        public ?string $category = null,
+        public ?string $slug = null,
+        public ?Crawler $crawler = null,
+    ) {
     }
 
     /**
@@ -64,30 +47,37 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      */
     private function getDetailOf(string $part): string
     {
-        return $this->book->getCrawler()->filter(".switch_content.sc_2 td:contains(\"$part\")")
+        return $this->book->crawler->filter(".switch_content.sc_2 td:contains(\"$part\")")
             ->closest('tr')
             ->filter('td')
             ->last()
             ->text();
     }
 
+    final public function withCrawler(Crawler $crawler): static
+    {
+        $this->crawler = $crawler;
+
+        return $this;
+    }
+
     final public function find(string $slug): static
     {
-        if ($this->book === null) {
-            $this->book = \Book::find($slug);
+        if ($this->crawler === null) {
+            $this->crawler = \Book::find($slug)->crawler;
         }
 
-        $this->description = $this->book->getCrawler()->filter('[itemprop="description"]')->text();
+        $this->releaseDate = str($this->crawler->filter('.switch_content.sc_1')->text())
+            ->after(search: 'Release Date: ')
+            ->before(search: '.');
+        $this->description = $this->crawler->filter('[itemprop="description"]')->text();
         $this->language = $this->getDetailOf('Language');
         $this->country = $this->getDetailOf('Country');
         $this->publisher = $this->getDetailOf('Publisher');
         $this->pageCount = $this->getDetailOf('Page Count');
-        $this->category = $this->book->getCrawler()->filter('[itemprop="title"]')->eq(2)->text();
-        $this->categorySlug = str($this->book->getCrawler()->filter('[itemprop="url"].non')->eq(2)->attr('href'))
+        $this->category = $this->crawler->filter('[itemprop="title"]')->eq(2)->text();
+        $this->categorySlug = str($this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href'))
             ->afterLast(search: Category::BASE_URL);
-        $this->releaseDate = str($this->book->getCrawler()->filter('.switch_content.sc_1')->text())
-            ->after(search: 'Release Date: ')
-            ->before(search: '.');
 
         return $this;
     }

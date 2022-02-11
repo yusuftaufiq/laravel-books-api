@@ -20,15 +20,11 @@ final class Language extends BaseModel implements LanguageInterface
         'name',
     ];
 
-    protected ?string $slug = null;
-
-    protected ?string $name = null;
-
-    protected ?int $value = null;
-
-    final public function getValue(): ?string
-    {
-        return $this->value;
+    final public function __construct(
+        public ?string $slug = null,
+        public ?string $name = null,
+        public ?int $value = null,
+    ) {
     }
 
     final public function all(): array

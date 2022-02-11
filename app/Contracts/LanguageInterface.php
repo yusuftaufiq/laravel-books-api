@@ -2,14 +2,23 @@
 
 namespace App\Contracts;
 
+/**
+ * @property ?string $slug
+ * @property ?string $name
+ * @property ?int $value
+ */
 interface LanguageInterface extends BaseModelInterface
 {
     /**
-     * Get the language's value.
+     * Create a new language instance.
      *
-     * @return null|string
+     * @param ?string $slug
+     * @param ?string $name
+     * @param ?int $value
+     *
+     * @return void
      */
-    public function getValue(): ?string;
+    public function __construct(?string $slug = null, ?string $name = null, ?int $value = null);
 
     /**
      * Get all languages.

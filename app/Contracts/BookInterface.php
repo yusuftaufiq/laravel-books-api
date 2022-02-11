@@ -4,17 +4,47 @@ namespace App\Contracts;
 
 use Symfony\Component\DomCrawler\Crawler;
 
+/**
+ * @property ?string $image
+ * @property ?string $title
+ * @property ?string $author
+ * @property ?string $price
+ * @property ?string $url
+ * @property ?string $slug
+ * @property ?Crawler $crawler
+ * @property ?BookDetailInterface $details
+ */
 interface BookInterface extends BaseModelInterface
 {
     /**
-     * Get the book's crawler.
+     * Create a new book instance.
      *
-     * @return null|Crawler
+     * @param ?string $image
+     * @param ?string $title
+     * @param ?string $author
+     * @param ?string $price
+     * @param ?string $url
+     * @param ?string $slug
+     * @param ?Crawler $crawler
+     * @param ?BookDetailInterface $details
+     *
+     * @return void
      */
-    public function getCrawler(): ?Crawler;
+    public function __construct(
+        ?string $image = null,
+        ?string $title = null,
+        ?string $author = null,
+        ?string $price = null,
+        ?string $url = null,
+        ?string $slug = null,
+        ?Crawler $crawler = null,
+        ?BookDetailInterface $details = null,
+    );
 
     /**
      * Get all books.
+     *
+     * @return array<BookInterface>
      */
     public function all(
         ?CategoryInterface $category = null,
@@ -34,7 +64,7 @@ interface BookInterface extends BaseModelInterface
     /**
      * Get a book details.
      *
-     * @return array
+     * @return static
      */
-    public function details(): array;
+    public function details(): static;
 }
