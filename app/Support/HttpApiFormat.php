@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Phpro\ApiProblem\Http\HttpApiProblem;
 
-class HttpResponse extends HttpApiProblem
+class HttpApiFormat extends HttpApiProblem
 {
     protected Collection $data;
 

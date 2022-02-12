@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Support\HttpResponse;
+use App\Support\HttpApiFormat;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Http\Response;
@@ -30,13 +30,13 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
         app(ResponseFactory::class)->macro('api', function (array $data = [], int $statusCode = Response::HTTP_OK): Response {
             /** @var ResponseFactory $this */
 
-            $httpResponse = new HttpResponse(
+            $httpApiFormat = new HttpApiFormat(
                 $statusCode,
                 data: ['detail' => $data],
             );
 
             return new Response(
-                content: $httpResponse->toArray(),
+                content: $httpApiFormat->toArray(),
                 status: $statusCode,
             );
         });
@@ -44,12 +44,12 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
         Response::macro('api', function (): Response {
             /** @var Response $this */
 
-            $httpResponse = new HttpResponse(
+            $httpApiFormat = new HttpApiFormat(
                 $this->getStatusCode(),
                 data: ['detail' => $this->getOriginalContent()],
             );
 
-            $this->setContent($httpResponse->toArray());
+            $this->setContent($httpApiFormat->toArray());
 
             return $this;
         });
