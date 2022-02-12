@@ -54,13 +54,6 @@ final class BookDetail extends BaseModel implements BookDetailInterface
             ->text();
     }
 
-    final public function withCrawler(Crawler $crawler): static
-    {
-        $this->crawler = $crawler;
-
-        return $this;
-    }
-
     final public function find(string $slug): static
     {
         if ($this->crawler === null) {

@@ -45,15 +45,6 @@ interface BookDetailInterface extends BaseModelInterface
     );
 
     /**
-     * Set the book's crawler.
-     *
-     * @param Crawler $crawler
-     *
-     * @return static
-     */
-    public function withCrawler(Crawler $crawler): static;
-
-    /**
      * Get a book detail by its slug.
      *
      * @param string $slug
