@@ -62,9 +62,9 @@ interface BookInterface extends BaseModelInterface
     public function find(string $slug): static;
 
     /**
-     * Get a book details.
+     * Load a book details.
      *
      * @return static
      */
-    public function details(): static;
+    public function loadDetails(): static;
 }

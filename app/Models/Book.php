@@ -90,7 +90,7 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
-    final public function details(): static
+    final public function loadDetails(): static
     {
         if ($this->details === null) {
             $this->details = \BookDetail::withCrawler($this->crawler);
