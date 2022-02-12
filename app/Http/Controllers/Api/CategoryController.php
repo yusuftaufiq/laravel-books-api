@@ -21,7 +21,7 @@ final class CategoryController extends Controller
      */
     final public function index(): Response
     {
-        return response($this->category->all());
+        return response($this->category->all())->api();
     }
 
     /**
@@ -31,6 +31,6 @@ final class CategoryController extends Controller
      */
     final public function show(CategoryInterface $category): Response
     {
-        return response($category);
+        return response($category)->api();
     }
 }

@@ -43,7 +43,7 @@ final class Language extends BaseModel implements LanguageInterface
         $languageEnum = LanguageEnum::tryFrom($slug);
 
         if ($languageEnum === null) {
-            throw new NotFoundHttpException('Language not found');
+            throw new NotFoundHttpException("The language with slug $slug could not be found.");
         }
 
         $this->slug = $languageEnum->value;

@@ -177,6 +177,7 @@ return [
         App\Providers\BindCategoryServiceProvider::class,
         App\Providers\BindLanguageServiceProvider::class,
         App\Providers\GoutteServiceProvider::class,
+        App\Providers\ApiResponseMacroServiceProvider::class,
     ],
 
     /*

@@ -43,7 +43,7 @@ final class Category extends BaseModel implements CategoryInterface
         $categoryEnum = CategoryEnum::tryFrom($slug);
 
         if ($categoryEnum === null) {
-            throw new NotFoundHttpException('Category not found');
+            throw new NotFoundHttpException("The category with slug $slug could not be found.");
         }
 
         $this->slug = $categoryEnum->value;

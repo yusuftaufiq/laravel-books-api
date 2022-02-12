@@ -21,7 +21,7 @@ final class LanguageController extends Controller
      */
     final public function index(): Response
     {
-        return response($this->language->all());
+        return response($this->language->all())->api();
     }
 
     /**
@@ -32,6 +32,6 @@ final class LanguageController extends Controller
      */
     final public function show(LanguageInterface $language): Response
     {
-        return response($language);
+        return response($language)->api();
     }
 }

@@ -11912,6 +11912,19 @@
         {
                         \Illuminate\Routing\ResponseFactory::flushMacros();
         }
+                    /**
+         * 
+         *
+         * @see \App\Providers\ApiResponseMacroServiceProvider::boot()
+         * @param array $data
+         * @param int $statusCode
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function api($data = [], $statusCode = 200)
+        {
+                        return \Illuminate\Routing\ResponseFactory::api($data, $statusCode);
+        }
          
     }
             /**
@@ -16172,10 +16185,10 @@
          *
          * @static 
          */ 
-        public static function details()
+        public static function loadDetails()
         {
                         /** @var \App\Models\Book $instance */
-                        return $instance->details();
+                        return $instance->loadDetails();
         }
                     /**
          * 
@@ -16789,16 +16802,6 @@
      *
      */ 
         class BookDetailFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function withCrawler($crawler)
-        {
-                        /** @var \App\Models\BookDetail $instance */
-                        return $instance->withCrawler($crawler);
-        }
                     /**
          * 
          *
@@ -18174,6 +18177,48 @@
         public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class Response {
+                    /**
+         * 
+         *
+         * @see \App\Providers\ApiResponseMacroServiceProvider::boot()
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function api()
+        {
+                        return \Illuminate\Http\Response::api();
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Routing { 
+            /**
+     * 
+     *
+     */ 
+        class ResponseFactory {
+                    /**
+         * 
+         *
+         * @see \App\Providers\ApiResponseMacroServiceProvider::boot()
+         * @param array $data
+         * @param int $statusCode
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */ 
+        public static function api($data = [], $statusCode = 200)
+        {
+                        return \Illuminate\Routing\ResponseFactory::api($data, $statusCode);
         }
          
     }

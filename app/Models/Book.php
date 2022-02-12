@@ -77,7 +77,7 @@ final class Book extends BaseModel implements BookInterface
         $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
 
         if (str($this->crawler->getUri())->contains(needles: '?ref')) {
-            throw new NotFoundHttpException('Book not found');
+            throw new NotFoundHttpException("The book with slug $slug could not be found.");
         }
 
         $this->image = $this->crawler->filter('#zoom img')->attr('src');
