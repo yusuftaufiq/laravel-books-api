@@ -16185,10 +16185,10 @@
          *
          * @static 
          */ 
-        public static function loadDetails()
+        public static function loadDetail()
         {
                         /** @var \App\Models\Book $instance */
-                        return $instance->loadDetails();
+                        return $instance->loadDetail();
         }
                     /**
          * 

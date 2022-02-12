@@ -22,6 +22,6 @@ final class BookDetailController extends Controller
      */
     final public function index(BookInterface $book): Response
     {
-        return response($book->loadDetails())->api();
+        return response($book->loadDetail())->api();
     }
 }

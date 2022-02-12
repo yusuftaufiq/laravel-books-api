@@ -39,7 +39,7 @@ final class Book extends BaseModel implements BookInterface
         public ?string $url = null,
         public ?string $slug = null,
         public ?Crawler $crawler = null,
-        public ?BookDetailInterface $details = null,
+        public ?BookDetailInterface $detail = null,
     ) {
     }
 
@@ -90,18 +90,18 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
-    final public function loadDetails(): static
+    final public function loadDetail(): static
     {
-        if ($this->details->crawler->getUri() === null) {
-            $this->details->crawler = $this->crawler;
+        if ($this->detail->crawler->getUri() === null) {
+            $this->detail->crawler = $this->crawler;
         }
 
-        if ($this->details->slug !== $this->slug) {
-            $this->details->find($this->slug);
+        if ($this->detail->slug !== $this->slug) {
+            $this->detail->find($this->slug);
         }
 
-        if (collect($this->arrayable)->contains('details') === false) {
-            $this->arrayable[] = 'details';
+        if (collect($this->arrayable)->contains('detail') === false) {
+            $this->arrayable[] = 'detail';
         }
 
         return $this;
