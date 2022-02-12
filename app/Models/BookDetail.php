@@ -47,7 +47,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      */
     private function getDetailOf(string $part): string
     {
-        return $this->book->crawler->filter(".switch_content.sc_2 td:contains(\"$part\")")
+        return $this->crawler->filter(".switch_content.sc_2 td:contains(\"$part\")")
             ->closest('tr')
             ->filter('td')
             ->last()
@@ -56,7 +56,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
 
     final public function find(string $slug): static
     {
-        if ($this->crawler === null) {
+        if ($this->crawler->getUri() === null) {
             $this->crawler = \Book::find($slug)->crawler;
         }
 
