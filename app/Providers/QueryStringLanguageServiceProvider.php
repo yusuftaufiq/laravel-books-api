@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-class BindLanguageServiceProvider extends ServiceProvider implements DeferrableProvider
+class QueryStringLanguageServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Register services.
