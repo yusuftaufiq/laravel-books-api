@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    public $bindings = [
+    public array $bindings = [
         BookInterface::class => Book::class,
         BookDetailInterface::class => BookDetail::class,
         CategoryInterface::class => Category::class,
