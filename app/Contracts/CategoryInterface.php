@@ -21,6 +21,8 @@ interface CategoryInterface extends BaseModelInterface
 
     /**
      * Get all categories.
+     *
+     * @return array<CategoryInterface>
      */
     public function all(): array;
 

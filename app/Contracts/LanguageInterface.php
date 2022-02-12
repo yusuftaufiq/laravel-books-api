@@ -23,7 +23,7 @@ interface LanguageInterface extends BaseModelInterface
     /**
      * Get all languages.
      *
-     * @return array
+     * @return array<LanguageInterface>
      */
     public function all(): array;
 
