@@ -6,7 +6,12 @@ use App\Contracts\BookInterface;
 use App\Contracts\CategoryInterface;
 use App\Contracts\LanguageInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookCollection;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 final class BookController extends Controller
 {
@@ -20,9 +25,17 @@ final class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    final public function index(CategoryInterface $category, LanguageInterface $language): Response
+    final public function index(CategoryInterface $category, LanguageInterface $language): BookCollection
     {
-        return response($this->book->all($category, $language, request()?->query('page', 1)))->api();
+        $page = request()?->query('page', 1);
+        $books = $this->book->all($category, $language, $page);
+
+        $paginator = new Paginator($books, 24, $page);
+        $paginator->withPath(Book::BASE_URL);
+
+        return new BookCollection($paginator);
+
+        // return new BookCollection($this->book->all($category, $language, request()?->query('page', 1)));
     }
 
     /**

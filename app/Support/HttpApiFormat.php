@@ -10,12 +10,12 @@ class HttpApiFormat extends HttpApiProblem
 {
     protected Collection $data;
 
-    public function __construct(int $statusCode = Response::HTTP_OK, array $data = []) {
+    public function __construct(int $statusCode = Response::HTTP_OK, array $data = [])
+    {
         $this->data = collect([
             'status' => $statusCode,
             'type' => static::TYPE_HTTP_RFC,
             'title' => static::getTitleForStatusCode($statusCode),
-            'detail' => '',
         ])->merge($data);
     }
 
