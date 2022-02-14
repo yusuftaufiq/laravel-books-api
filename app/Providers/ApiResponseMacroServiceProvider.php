@@ -27,7 +27,21 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
      */
     public function boot(): void
     {
-        app(ResponseFactory::class)->macro('api', function (array $data = [], int $statusCode = Response::HTTP_OK): Response {
+        $this->configureResponseFactoryMacro();
+        $this->configureResponseMacro();
+    }
+
+    /**
+     * Configure the response factory macro.
+     *
+     * @return void
+     */
+    protected function configureResponseFactoryMacro(): void
+    {
+        app(ResponseFactory::class)->macro('api', function (
+            array $data = [],
+            int $statusCode = Response::HTTP_OK,
+        ): Response {
             /** @var ResponseFactory $this */
 
             $httpApiFormat = new HttpApiFormat(
@@ -40,7 +54,15 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
                 status: $statusCode,
             );
         });
+    }
 
+    /**
+     * Configure the response macro.
+     *
+     * @return void
+     */
+    protected function configureResponseMacro(): void
+    {
         Response::macro('api', function (): Response {
             /** @var Response $this */
 
