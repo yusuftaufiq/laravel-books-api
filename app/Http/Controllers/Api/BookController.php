@@ -7,11 +7,7 @@ use App\Contracts\CategoryInterface;
 use App\Contracts\LanguageInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookCollection;
-use App\Models\Book;
-use App\Models\User;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 final class BookController extends Controller
 {
@@ -28,14 +24,9 @@ final class BookController extends Controller
     final public function index(CategoryInterface $category, LanguageInterface $language): BookCollection
     {
         $page = request()?->query('page', 1);
-        $books = $this->book->all($category, $language, $page);
+        $books = $this->book->withCategory($category)->withLanguage($language)->paginate($page);
 
-        $paginator = new Paginator($books, 24, $page);
-        $paginator->withPath(Book::BASE_URL);
-
-        return new BookCollection($paginator);
-
-        // return new BookCollection($this->book->all($category, $language, request()?->query('page', 1)));
+        return new BookCollection($books);
     }
 
     /**

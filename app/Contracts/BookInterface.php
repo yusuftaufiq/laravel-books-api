@@ -24,22 +24,28 @@ interface BookInterface extends BaseModelInterface
      * @param ?string $title
      * @param ?string $author
      * @param ?string $price
+     * @param ?string $originalUrl
      * @param ?string $url
      * @param ?string $slug
      * @param ?Crawler $crawler
-     * @param ?BookDetailInterface $details
+     * @param ?BookDetailInterface $detail
+     * @param ?CategoryInterface $category
+     * @param ?LanguageInterface $language
      *
      * @return void
      */
     public function __construct(
-        ?string $image = null,
-        ?string $title = null,
-        ?string $author = null,
-        ?string $price = null,
-        ?string $url = null,
-        ?string $slug = null,
-        ?Crawler $crawler = null,
-        ?BookDetailInterface $details = null,
+        string $image = null,
+        string $title = null,
+        string $author = null,
+        string $price = null,
+        string $originalUrl = null,
+        string $url = null,
+        string $slug = null,
+        Crawler $crawler = null,
+        BookDetailInterface $detail = null,
+        CategoryInterface $category = null,
+        LanguageInterface $language = null,
     );
 
     /**
