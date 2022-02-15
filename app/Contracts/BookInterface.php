@@ -10,10 +10,13 @@ use Symfony\Component\DomCrawler\Crawler;
  * @property ?string $title
  * @property ?string $author
  * @property ?string $price
+ * @property ?string $originalUrl
  * @property ?string $url
  * @property ?string $slug
  * @property ?Crawler $crawler
- * @property ?BookDetailInterface $details
+ * @property ?BookDetailInterface $detail
+ * @property ?CategoryInterface $category
+ * @property ?LanguageInterface $language
  */
 interface BookInterface extends BaseModelInterface
 {

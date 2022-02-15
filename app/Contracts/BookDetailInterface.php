@@ -12,6 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
  * @property ?string $publisher
  * @property ?int $pageCount
  * @property ?string $category
+ * @property ?string $categorySlug
  * @property ?string $slug
  * @property ?Crawler $crawler
  */
@@ -27,6 +28,7 @@ interface BookDetailInterface extends BaseModelInterface
      * @param ?string $publisher
      * @param ?int $pageCount
      * @param ?string $category
+     * @param ?string $categorySlug
      * @param ?string $slug
      * @param ?Crawler $crawler
      *
@@ -40,6 +42,7 @@ interface BookDetailInterface extends BaseModelInterface
         ?string $publisher = null,
         ?int $pageCount = null,
         ?string $category = null,
+        ?string $categorySlug = null,
         ?string $slug = null,
         ?Crawler $crawler = null,
     );
