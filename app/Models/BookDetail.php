@@ -54,10 +54,10 @@ final class BookDetail extends BaseModel implements BookDetailInterface
             ->text();
     }
 
-    final public function find(string $slug): static
+    final public function find(string $slug): self
     {
         if ($this->crawler->getUri() === null) {
-            $this->crawler = \Book::find($slug)->crawler;
+            $this->crawler = \Goutte::request(method: 'GET', uri: Book::BASE_URL . $slug);
         }
 
         $this->releaseDate = str($this->crawler->filter('.switch_content.sc_1')->text())
