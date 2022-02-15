@@ -7,7 +7,7 @@ use App\Contracts\CategoryInterface;
 use App\Contracts\LanguageInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookCollection;
-use Illuminate\Http\Response;
+use App\Http\Resources\BookResource;
 
 final class BookController extends Controller
 {
@@ -19,7 +19,10 @@ final class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param CategoryInterface $category
+     * @param LanguageInterface $language
+     *
+     * @return BookCollection
      */
     final public function index(CategoryInterface $category, LanguageInterface $language): BookCollection
     {
@@ -32,10 +35,12 @@ final class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param BookInterface $book
+     *
+     * @return BookResource
      */
-    final public function show(BookInterface $book): Response
+    final public function show(BookInterface $book): BookResource
     {
-        return response($book)->api();
+        return new BookResource($book);
     }
 }

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Resources\BookResource;
 
 final class BookDetailController extends Controller
 {
@@ -18,10 +17,12 @@ final class BookDetailController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param BookInterface $book
+     *
+     * @return BookResource
      */
-    final public function index(BookInterface $book): Response
+    final public function index(BookInterface $book): BookResource
     {
-        return response($book->loadDetail())->api();
+        return new BookResource($book->loadDetail());
     }
 }
