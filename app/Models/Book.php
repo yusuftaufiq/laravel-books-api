@@ -19,24 +19,6 @@ final class Book extends BaseModel implements BookInterface
 
     protected string $primaryKey = 'slug';
 
-    protected array $arrayable = [
-        'image',
-        'title',
-        'author',
-        'price',
-        'originalUrl',
-        'url',
-        'slug',
-    ];
-
-    protected array $countable = [
-        'title',
-        'author',
-        'originalUrl',
-        'url',
-        'slug',
-    ];
-
     final public function __construct(
         public ?string $image = null,
         public ?string $title = null,
@@ -126,10 +108,6 @@ final class Book extends BaseModel implements BookInterface
 
         if ($this->detail->slug !== $this->slug) {
             $this->detail->find($this->slug);
-        }
-
-        if (collect($this->arrayable)->contains('detail') === false) {
-            $this->arrayable[] = 'detail';
         }
 
         return $this;

@@ -9,22 +9,6 @@ final class BookDetail extends BaseModel implements BookDetailInterface
 {
     protected string $primaryKey = 'slug';
 
-    protected array $arrayable = [
-        'releaseDate',
-        'description',
-        'language',
-        'country',
-        'publisher',
-        'pageCount',
-        'category',
-    ];
-
-    protected array $countable = [
-        'description',
-        'language',
-        'publisher',
-    ];
-
     final public function __construct(
         public ?string $releaseDate = null,
         public ?string $description = null,
@@ -33,6 +17,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         public ?string $publisher = null,
         public ?int $pageCount = null,
         public ?string $category = null,
+        public ?string $categorySlug = null,
         public ?string $slug = null,
         public ?Crawler $crawler = null,
     ) {
@@ -71,6 +56,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         $this->category = $this->crawler->filter('[itemprop="title"]')->eq(2)->text();
         $this->categorySlug = str($this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href'))
             ->afterLast(search: Category::BASE_URL);
+        $this->slug = $slug;
 
         return $this;
     }
