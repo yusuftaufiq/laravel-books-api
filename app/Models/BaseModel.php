@@ -25,9 +25,9 @@ abstract class BaseModel implements BaseModelInterface
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      */
-    abstract public function find(string $value): static;
+    abstract public function find(string $value): self;
 
     public function count(): int
     {

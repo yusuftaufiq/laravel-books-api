@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -42,29 +43,39 @@ interface BookInterface extends BaseModelInterface
     );
 
     /**
-     * Get all books.
+     * Get all books in the current page.
      *
-     * @return array<BookInterface>
+     * @return Paginator
      */
-    public function all(
-        ?CategoryInterface $category = null,
-        ?LanguageInterface $language = null,
-        int $page = 1
-    ): array;
+    public function paginate(int $page = 1): Paginator;
 
     /**
      * Get a book by its slug.
      *
      * @param string $slug
      *
-     * @return static
+     * @return self
      */
-    public function find(string $slug): static;
+    public function find(string $slug): self;
+
+    /**
+     * Set the book category.
+     *
+     * @return self
+     */
+    public function withCategory(CategoryInterface $category): self;
+
+    /**
+     * Set the book language.
+     *
+     * @return self
+     */
+    public function withLanguage(LanguageInterface $language): self;
 
     /**
      * Load a book detail.
      *
-     * @return static
+     * @return self
      */
-    public function loadDetail(): static;
+    public function loadDetail(): self;
 }

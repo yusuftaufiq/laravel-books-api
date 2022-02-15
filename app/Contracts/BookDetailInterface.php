@@ -49,7 +49,7 @@ interface BookDetailInterface extends BaseModelInterface
      *
      * @param string $slug
      *
-     * @return static
+     * @return self
      */
-    public function find(string $slug): static;
+    public function find(string $slug): self;
 }

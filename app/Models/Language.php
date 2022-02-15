@@ -29,7 +29,7 @@ final class Language extends BaseModel implements LanguageInterface
 
     final public function all(): array
     {
-        $categories = collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum) => new static(
+        $categories = collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum) => new self(
             slug: $languageEnum->value,
             name: $languageEnum->name,
             value: $languageEnum->value(),
@@ -38,7 +38,7 @@ final class Language extends BaseModel implements LanguageInterface
         return $categories->toArray();
     }
 
-    final public function find(string $slug): static
+    final public function find(string $slug): self
     {
         $languageEnum = LanguageEnum::tryFrom($slug);
 
