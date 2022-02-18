@@ -12,16 +12,6 @@ final class Category extends BaseModel implements CategoryInterface
 
     protected string $primaryKey = 'slug';
 
-    protected array $arrayable = [
-        'slug',
-        'name',
-    ];
-
-    protected array $countable = [
-        'slug',
-        'name',
-    ];
-
     public function __construct(
         public ?string $slug = null,
         public ?string $name = null,

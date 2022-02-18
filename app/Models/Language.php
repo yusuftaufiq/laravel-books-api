@@ -10,16 +10,6 @@ final class Language extends BaseModel implements LanguageInterface
 {
     protected string $primaryKey = 'slug';
 
-    protected array $arrayable = [
-        'slug',
-        'name',
-    ];
-
-    protected array $countable = [
-        'slug',
-        'name',
-    ];
-
     final public function __construct(
         public ?string $slug = null,
         public ?string $name = null,

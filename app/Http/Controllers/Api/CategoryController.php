@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\CategoryInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 
 final class CategoryController extends Controller
 {
@@ -19,9 +19,9 @@ final class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    final public function index(): Response
+    final public function index(): CategoryCollection
     {
-        return response($this->category->all())->api();
+        return new CategoryCollection($this->category->all());
     }
 
     /**
@@ -29,8 +29,8 @@ final class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    final public function show(CategoryInterface $category): Response
+    final public function show(CategoryInterface $category): CategoryResource
     {
-        return response($category)->api();
+        return new CategoryResource($category);
     }
 }

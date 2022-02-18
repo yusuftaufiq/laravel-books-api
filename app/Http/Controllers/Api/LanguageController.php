@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\LanguageInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Resources\LanguageCollection;
+use App\Http\Resources\LanguageResource;
 
 final class LanguageController extends Controller
 {
@@ -19,9 +19,9 @@ final class LanguageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    final public function index(): Response
+    final public function index(): LanguageCollection
     {
-        return response($this->language->all())->api();
+        return new LanguageCollection($this->language->all());
     }
 
     /**
@@ -30,8 +30,8 @@ final class LanguageController extends Controller
      * @param  \App\Contracts\LanguageInterface  $language
      * @return \Illuminate\Http\Response
      */
-    final public function show(LanguageInterface $language): Response
+    final public function show(LanguageInterface $language): LanguageResource
     {
-        return response($language)->api();
+        return new LanguageResource($language);
     }
 }
