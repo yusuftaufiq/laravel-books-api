@@ -42,8 +42,7 @@ final class Book extends BaseModel implements BookInterface
             'language' => $this->language->value,
         ]));
 
-        $books = $crawler->filter('.oubox_list')->each(function (Crawler $node) use ($crawler): self
-        {
+        $books = $crawler->filter('.oubox_list')->each(function (Crawler $node) use ($crawler): self {
             $title = $node->filter('.title a');
             $originalUrl = $title->attr('href');
             $slug = str($originalUrl)->substr(start: str()->length(self::BASE_URL));
