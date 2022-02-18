@@ -2,28 +2,19 @@
 
 namespace App\Http\Resources;
 
-use App\Support\HttpApiFormat;
+use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookResource extends JsonResource
 {
+    use ResourceMetaDataTrait;
+
     /**
      * The "data" wrapper that should be applied.
      *
      * @var string
      */
     public static $wrap = 'book';
-
-    /**
-     * Get additional data that should be returned with the resource array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function with($request)
-    {
-        return (new HttpApiFormat())->toArray();
-    }
 
     /**
      * Transform the resource into an array.
@@ -33,7 +24,7 @@ class BookResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var \App\Models\Book|BookResource $this */
+        /** @var \App\Models\Book|static $this */
         return [
             'image' => $this->image,
             'title' => $this->title,
@@ -42,7 +33,7 @@ class BookResource extends JsonResource
             'originalUrl' => $this->originalUrl,
             'url' => $this->url,
             'slug' => $this->slug,
-            'detail' => $this->when($this->detail->slug !== null, fn (): BookDetailResource => (
+            'detail' => $this->when($this->detail?->slug !== null, fn (): BookDetailResource => (
                 new BookDetailResource($this->detail)
             )),
         ];

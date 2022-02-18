@@ -2,10 +2,21 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookDetailResource extends JsonResource
 {
+    use ResourceMetaDataTrait;
+
+    /**
+     * The "data" wrapper that should be applied.
+     *
+     * @var string
+     */
+    public static $wrap = 'book_detail';
+
+
     /**
      * Transform the resource into an array.
      *
@@ -14,7 +25,7 @@ class BookDetailResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var \App\Models\BookDetail|BookDetailResource $this */
+        /** @var \App\Models\BookDetail|static $this */
         return [
             'releaseDate' => $this->releaseDate,
             'description' => $this->description,
