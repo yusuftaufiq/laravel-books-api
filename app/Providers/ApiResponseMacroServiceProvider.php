@@ -46,7 +46,7 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
 
             $httpApiFormat = new HttpApiFormat(
                 $statusCode,
-                data: ['detail' => $data],
+                $data,
             );
 
             return new Response(
@@ -68,7 +68,7 @@ class ApiResponseMacroServiceProvider extends ServiceProvider implements Deferra
 
             $httpApiFormat = new HttpApiFormat(
                 $this->getStatusCode(),
-                data: ['detail' => $this->getOriginalContent()],
+                data: $this->getOriginalContent(),
             );
 
             $this->setContent($httpApiFormat->toArray());
