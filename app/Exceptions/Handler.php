@@ -2,10 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Support\HttpApiFormat;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Phpro\ApiProblem\Http\NotFoundProblem;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,6 +46,16 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response((new NotFoundProblem($e->getMessage()))->toArray());
+            }
+        });
+
+        $this->renderable(function (TooManyRequestsHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
+
+                return response((new HttpApiFormat($e->getStatusCode(), [
+                    'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
+                ]))->toArray());
             }
         });
     }
