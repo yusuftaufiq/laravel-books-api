@@ -6,10 +6,12 @@ use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
 use App\Contracts\CategoryInterface;
 use App\Contracts\LanguageInterface;
+use App\Contracts\UserInterface;
 use App\Models\Book;
 use App\Models\BookDetail;
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         BookDetailInterface::class => BookDetail::class,
         CategoryInterface::class => Category::class,
         LanguageInterface::class => Language::class,
+        UserInterface::class => User::class,
     ];
 
     /**

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
+use App\Http\Controllers\Api\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use App\Http\Controllers\Api\LanguageController;
 \Route::middleware('auth:sanctum')->get('/user', function (\Request $request) {
     return $request->user();
 });
+
+\Route::post('/register', RegisterController::class);
 
 \Route::middleware('cache.response')->group(function () {
     \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
