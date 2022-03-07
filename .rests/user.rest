@@ -1,0 +1,11 @@
+### Get authorization bearer token
+POST {{$dotenv APP_URL}}api/register HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "{{$dotenv USER_NAME}}",
+    "email": "{{$dotenv USER_EMAIL}}",
+    "password": "{{$dotenv USER_PASSWORD}}",
+    "confirm_password": "{{$dotenv USER_PASSWORD}}"
+}
