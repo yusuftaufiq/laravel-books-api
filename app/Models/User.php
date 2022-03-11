@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
 
 final class User extends Authenticatable implements UserInterface
 {
@@ -49,6 +50,8 @@ final class User extends Authenticatable implements UserInterface
     /**
      * Set the user's hashed password.
      *
+     * @param string $value
+     *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function password(): Attribute
@@ -56,5 +59,24 @@ final class User extends Authenticatable implements UserInterface
         return new Attribute(
             set: fn ($value) => \Hash::createArgon2idDriver()->make($value),
         );
+    }
+
+    /**
+     * Create a new personal access token for the user.
+     *
+     * @param  string  $name
+     * @param  array  $abilities
+     * @return \Laravel\Sanctum\NewAccessToken
+     */
+    public function createToken(string $name, string $expiredAt, array $abilities = ['*'])
+    {
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = \Str::random(40)),
+            'abilities' => $abilities,
+            'expired_at' => $expiredAt,
+        ]);
+
+        return new NewAccessToken($token, "{$token->getKey()}|{$plainTextToken}");
     }
 }

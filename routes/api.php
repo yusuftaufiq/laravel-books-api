@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
 use App\Http\Controllers\Api\CategoryController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\RegisterUserController;
 });
 
 \Route::post('/register', RegisterUserController::class)->name('register');
+\Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 \Route::middleware('cache.response')->group(function () {
     \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
