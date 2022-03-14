@@ -26,7 +26,7 @@ class BookTest extends TestCase
         'slug',
     ];
 
-    public function testBookIndex()
+    public function testBookIndex(): void
     {
         $response = $this->call('GET', route('books.index'), [
             'category' => CategoryEnum::HistoricalFiction->value,
@@ -46,7 +46,7 @@ class BookTest extends TestCase
         $this->assertSlugs(...$response->json('books.*.slug'));
     }
 
-    public function testBookShow()
+    public function testBookShow(): void
     {
         $response = $this->get(route('books.show', ['book' => 1984]));
 
@@ -60,7 +60,7 @@ class BookTest extends TestCase
         $this->assertSlugs($response->json('book.slug'));
     }
 
-    public function testBookNotFound()
+    public function testBookNotFound(): void
     {
         $response = $this->get(route('books.show', ['book' => $this->faker->md5()]));
 
