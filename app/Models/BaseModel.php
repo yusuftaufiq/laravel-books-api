@@ -25,11 +25,6 @@ abstract class BaseModel implements BaseModelInterface
      */
     abstract public function find(string $value): self;
 
-    public function count(): int
-    {
-        return (int) collect($this->countable)->every(fn ($key) => $this->{$key} !== null);
-    }
-
     public function getRouteKey(): int|string
     {
         return $this->{$this->primaryKey};
