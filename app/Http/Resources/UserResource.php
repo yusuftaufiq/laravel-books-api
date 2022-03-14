@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+final class UserResource extends JsonResource
 {
     use ResourceMetaDataTrait;
 
@@ -22,9 +22,9 @@ class UserResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    final public function toArray($request)
     {
-        /** @var \App\Models\User|static $this */
+        /** @var \App\Contracts\UserInterface|static $this */
         return [
             'name' => $this->name,
             'email' => $this->email,

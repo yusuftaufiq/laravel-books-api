@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookResource extends JsonResource
+final class BookResource extends JsonResource
 {
     use ResourceMetaDataTrait;
 
@@ -22,9 +22,9 @@ class BookResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    final public function toArray($request)
     {
-        /** @var \App\Models\Book|static $this */
+        /** @var \App\Contracts\BookInterface|static $this */
         return [
             'image' => $this->image,
             'title' => $this->title,

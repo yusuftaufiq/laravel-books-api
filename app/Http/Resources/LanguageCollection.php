@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class LanguageCollection extends ResourceCollection
+final class LanguageCollection extends ResourceCollection
 {
     use ResourceMetaDataTrait;
 
@@ -15,15 +15,4 @@ class LanguageCollection extends ResourceCollection
      * @var string
      */
     public static $wrap = 'languages';
-
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
-    public function toArray($request)
-    {
-        return parent::toArray($request);
-    }
 }

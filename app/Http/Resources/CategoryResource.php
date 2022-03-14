@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+final class CategoryResource extends JsonResource
 {
     use ResourceMetaDataTrait;
 
@@ -22,9 +22,9 @@ class CategoryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    final public function toArray($request)
     {
-        /** @var \App\Models\Category|static $this */
+        /** @var \App\Contracts\CategoryInterface|static $this */
         return [
             'slug' => $this->slug,
             'name' => $this->name,

@@ -9,7 +9,7 @@ use App\Http\Resources\BookCollection;
 /**
  * @property \App\Models\Book $book
  */
-class SearchController extends Controller
+final class SearchController extends Controller
 {
     final public function __construct(
         private BookInterface $book,
@@ -23,7 +23,7 @@ class SearchController extends Controller
      *
      * @return \App\Http\Resources\BookCollection
      */
-    public function __invoke(string $keyword): BookCollection
+    final public function __invoke(string $keyword): BookCollection
     {
         $page = request()?->query('page', 1);
         $books = $this->book->like($keyword, $page);

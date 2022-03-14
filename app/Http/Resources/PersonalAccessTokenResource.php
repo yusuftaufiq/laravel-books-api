@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Traits\ResourceMetaDataTrait;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PersonalAccessTokenResource extends JsonResource
+final class PersonalAccessTokenResource extends JsonResource
 {
     use ResourceMetaDataTrait;
 
@@ -22,9 +22,9 @@ class PersonalAccessTokenResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    final public function toArray($request)
     {
-        /** @var \App\Models\PersonalAccessToken|static $this */
+        /** @var \App\Contracts\PersonalAccessToken|static $this */
         return [
             'name' => $this->name,
             'abilities' => $this->abilities,
