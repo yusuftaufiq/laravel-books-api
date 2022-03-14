@@ -56,7 +56,14 @@ interface BookInterface extends BaseModelInterface
      *
      * @return Paginator
      */
-    public function paginate(int $page = 1): Paginator;
+    public function all(int $page = 1): Paginator;
+
+    /**
+     * Get all books by keyword in current page.
+     *
+     * @return Paginator
+     */
+    public function like(string $keyword, int $page = 1): Paginator;
 
     /**
      * Get a book by its slug.

@@ -29,7 +29,7 @@ class BookResource extends JsonResource
             'image' => $this->image,
             'title' => $this->title,
             'author' => $this->author,
-            'price' => $this->price,
+            'price' => $this->when($this->price !== null, $this->price),
             'originalUrl' => $this->originalUrl,
             'url' => $this->url,
             'slug' => $this->slug,

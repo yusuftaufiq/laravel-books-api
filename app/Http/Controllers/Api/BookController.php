@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 
+/**
+ * @property \App\Models\Book $book
+ */
 final class BookController extends Controller
 {
     final public function __construct(
@@ -27,7 +30,7 @@ final class BookController extends Controller
     final public function index(CategoryInterface $category, LanguageInterface $language): BookCollection
     {
         $page = request()?->query('page', 1);
-        $books = $this->book->withCategory($category)->withLanguage($language)->paginate($page);
+        $books = $this->book->withCategory($category)->withLanguage($language)->all($page);
 
         return new BookCollection($books);
     }
