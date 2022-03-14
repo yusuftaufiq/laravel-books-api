@@ -3,9 +3,12 @@
 namespace App\Exceptions;
 
 use App\Support\HttpApiFormat;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Phpro\ApiProblem\Http\NotFoundProblem;
+use Phpro\ApiProblem\Http\UnauthorizedProblem;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Throwable;
@@ -45,17 +48,30 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response((new NotFoundProblem($e->getMessage()))->toArray());
+                $message = $e->getMessage() ?: 'Page not found';
+                $notFoundProblem = new NotFoundProblem($message);
+
+                return response($notFoundProblem->toArray(), $e->getStatusCode());
             }
         });
 
         $this->renderable(function (TooManyRequestsHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
-
-                return response((new HttpApiFormat($e->getStatusCode(), [
+                $tooManyRequestsProblem = new HttpApiFormat($e->getStatusCode(), [
                     'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
-                ]))->toArray());
+                ]);
+
+                return response($tooManyRequestsProblem->toArray());
+            }
+        });
+
+        $this->renderable(function (AuthenticationException $e, Request $request) {
+            if ($request->is('api/*')) {
+                $message = $e->getMessage() ?: 'You are not authorized to perform this action.';
+                $unauthorizedProblem = new UnauthorizedProblem($message);
+
+                return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
             }
         });
     }
