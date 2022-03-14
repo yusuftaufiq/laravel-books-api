@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Contracts\CategoryInterface;
+use App\Http\Controllers\Api\BookController;
 use App\Models\Category;
 use Illuminate\Contracts\Support\DeferrableProvider;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class QueryStringCategoryServiceProvider extends ServiceProvider implements DeferrableProvider
@@ -17,17 +17,19 @@ class QueryStringCategoryServiceProvider extends ServiceProvider implements Defe
      */
     public function register()
     {
-        if (request()?->route()?->hasParameter('category') === false) {
-            $this->app->bind(CategoryInterface::class, function (Application $app) {
-                $category = new Category();
-                $queryStringCategory = request()?->query('category');
+        $request = request();
+        $currentRoute = $request?->route();
+        $queryStringCategory = $request?->query('category');
 
-                if ($queryStringCategory !== null) {
-                    $category->resolveRouteBinding($queryStringCategory);
-                }
-
-                return $category;
-            });
+        if (
+            $currentRoute?->hasParameter('category') === false
+            && $currentRoute?->getController()::class === BookController::class
+            && $currentRoute?->getActionMethod() === 'index'
+            && $queryStringCategory !== null
+        ) {
+            $this->app->bind(CategoryInterface::class, fn () => (
+                (new Category())->resolveRouteBinding($queryStringCategory)
+            ));
         }
     }
 

@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Contracts\LanguageInterface;
 use App\Models\Language;
 use Illuminate\Contracts\Support\DeferrableProvider;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class QueryStringLanguageServiceProvider extends ServiceProvider implements DeferrableProvider
@@ -17,17 +16,19 @@ class QueryStringLanguageServiceProvider extends ServiceProvider implements Defe
      */
     public function register()
     {
-        if (request()?->route()?->hasParameter('language') === false) {
-            $this->app->bind(LanguageInterface::class, function (Application $app) {
-                $language = new Language();
-                $queryStringLanguage = request()?->query('language');
+        $request = request();
+        $currentRoute = $request?->route();
+        $queryStringLanguage = $request?->query('language');
 
-                if ($queryStringLanguage !== null) {
-                    $language->resolveRouteBinding($queryStringLanguage);
-                }
-
-                return $language;
-            });
+        if (
+            $currentRoute?->hasParameter('language') === false
+            && $currentRoute?->getController()::class === BookController::class
+            && $currentRoute?->getActionMethod() === 'index'
+            && $queryStringLanguage !== null
+        ) {
+            $this->app->bind(LanguageInterface::class, fn () => (
+                (new Language())->resolveRouteBinding($queryStringLanguage)
+            ));
         }
     }
 
