@@ -6,6 +6,7 @@ use App\Enums\CategoryEnum;
 use App\Enums\LanguageEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
@@ -36,14 +37,8 @@ class BookTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testBookIndex(): void
+    private function assertBooksStructure(TestResponse $response)
     {
-        $response = $this->actingAs($this->user)->call('GET', route('books.index'), [
-            'category' => CategoryEnum::HistoricalFiction->value,
-            'language' => LanguageEnum::English->value,
-        ]);
-
-        $response->assertOk();
         $response->assertJsonStructure([
             ...$this->paginationStructure,
             ...$this->resourceMetaDataStructure,
@@ -51,12 +46,49 @@ class BookTest extends TestCase
                 '*' => $this->bookStructure,
             ],
         ]);
+    }
 
+    public function testBookIndex(): void
+    {
+        $response = $this->actingAs($this->user)->call(method: 'GET', uri: route('books.index'), parameters: [
+            'category' => CategoryEnum::HistoricalFiction->value,
+            'language' => LanguageEnum::English->value,
+        ]);
+
+        $response->assertOk();
+
+        $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
         $this->assertSlugs(...$response->json('books.*.slug'));
     }
 
-    public function testBookShow(): void
+    public function testBookIndexByCategory()
+    {
+        $response = $this->actingAs($this->user)->get(route('categories.books.index', [
+            'category' => CategoryEnum::HistoricalFiction->value,
+        ]));
+
+        $response->assertOk();
+
+        $this->assertBooksStructure($response);
+        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertSlugs(...$response->json('books.*.slug'));
+    }
+
+    public function testBookIndexByLanguage()
+    {
+        $response = $this->actingAs($this->user)->get(route('languages.books.index', [
+            'language' => LanguageEnum::English->value,
+        ]));
+
+        $response->assertOk();
+
+        $this->assertBooksStructure($response);
+        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertSlugs(...$response->json('books.*.slug'));
+    }
+
+    public function testShowBook(): void
     {
         $response = $this->actingAs($this->user)->get(route('books.show', ['book' => 1984]));
 
@@ -68,6 +100,19 @@ class BookTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
         $this->assertSlugs($response->json('book.slug'));
+    }
+
+    public function testUnauthorizedShowBook()
+    {
+        $response = $this->get(route('books.show', ['book' => 1984]));
+
+        $response->assertUnauthorized();
+        $response->assertJsonStructure([
+            ...$this->resourceMetaDataStructure,
+            'detail',
+        ]);
+
+        $this->assertResourceMetaData($response, Response::HTTP_UNAUTHORIZED);
     }
 
     public function testBookNotFound(): void
