@@ -1,5 +1,5 @@
-### Get user information
-GET {{$dotenv APP_URL}}api/user HTTP/1.1
+### Get all books
+GET {{$dotenv APP_URL}}api/books HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
 Content-Type: application/json

@@ -1,0 +1,29 @@
+### Generate user token
+POST {{$dotenv APP_URL}}api/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "token_name": "Mobile Phone Token",
+    "email": "{{$dotenv USER_EMAIL}}",
+    "password": "{{$dotenv USER_PASSWORD}}",
+    "expired_at": "2022-02-21"
+}
+
+### Revoke current user token
+POST {{$dotenv APP_URL}}api/logout HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
+Content-Type: application/json
+
+### Register new user
+POST {{$dotenv APP_URL}}api/register HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "{{$dotenv USER_NAME}}",
+    "email": "{{$dotenv USER_EMAIL}}",
+    "password": "{{$dotenv USER_PASSWORD}}",
+    "password_confirmation": "{{$dotenv USER_PASSWORD}}"
+}
