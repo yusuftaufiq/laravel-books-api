@@ -32,7 +32,7 @@ use App\Http\Controllers\Api\UserController;
     \Route::get('search/{keyword}', SearchController::class)->name('search');
 
     \Route::apiResource('books', BookController::class)->only(['index', 'show']);
-    \Route::apiResource('books.details', BookDetailController::class)->shallow()->only(['index']);
+    \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);
 
     \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
     \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
