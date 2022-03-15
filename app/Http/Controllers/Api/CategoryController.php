@@ -17,7 +17,7 @@ final class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return CategoryCollection
      */
     final public function index(): CategoryCollection
     {
@@ -27,7 +27,9 @@ final class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param CategoryInterface $category
+     *
+     * @return CategoryResource
      */
     final public function show(CategoryInterface $category): CategoryResource
     {

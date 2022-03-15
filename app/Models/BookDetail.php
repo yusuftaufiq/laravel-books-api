@@ -32,7 +32,8 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      */
     private function getDetailOf(string $part): string
     {
-        return $this->crawler->filter(".switch_content.sc_2 td:contains(\"$part\")")
+        return $this->crawler
+            ->filter(".switch_content.sc_2 td:contains(\"$part\")")
             ->closest('tr')
             ->filter('td')
             ->last()

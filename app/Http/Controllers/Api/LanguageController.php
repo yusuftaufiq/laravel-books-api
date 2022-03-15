@@ -17,7 +17,7 @@ final class LanguageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return LanguageCollection
      */
     final public function index(): LanguageCollection
     {
@@ -27,8 +27,9 @@ final class LanguageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contracts\LanguageInterface  $language
-     * @return \Illuminate\Http\Response
+     * @param  LanguageInterface  $language
+     *
+     * @return LanguageResource
      */
     final public function show(LanguageInterface $language): LanguageResource
     {

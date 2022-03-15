@@ -2,7 +2,6 @@
 
 namespace App\Contracts;
 
-
 /**
  * @property ?string $slug
  * @property ?string $name
