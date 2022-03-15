@@ -7,13 +7,13 @@ use App\Enums\LanguageEnum;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\ResourcePattern;
+use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
 
 class BookTest extends TestCase
 {
-    use ResourcePattern;
+    use ResourceAssertion;
     use ResourceStructure;
     use WithFaker;
 

@@ -5,7 +5,7 @@ namespace Tests;
 use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-trait ResourcePattern
+trait ResourceAssertion
 {
     private function assertSlugs(string ...$slugs): void
     {
