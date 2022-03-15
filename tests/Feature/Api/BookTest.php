@@ -4,18 +4,19 @@ namespace Tests\Api\Feature;
 
 use App\Enums\CategoryEnum;
 use App\Enums\LanguageEnum;
-use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
+use Tests\WithUser;
 
 class BookTest extends TestCase
 {
     use ResourceAssertion;
     use ResourceStructure;
     use WithFaker;
+    use WithUser;
 
     private array $bookStructure = [
         'image',
@@ -27,13 +28,10 @@ class BookTest extends TestCase
         'slug',
     ];
 
-    private User $user;
-
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->user = User::factory()->create();
+        $this->setUpUser();
     }
 
     public function testBookIndex(): void
