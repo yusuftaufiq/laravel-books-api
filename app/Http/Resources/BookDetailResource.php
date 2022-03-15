@@ -26,12 +26,12 @@ final class BookDetailResource extends JsonResource
     {
         /** @var \App\Contracts\BookDetailInterface|static $this */
         return [
-            'releaseDate' => $this->releaseDate,
+            'release_date' => $this->releaseDate,
             'description' => $this->description,
             'language' => $this->language,
             'country' => $this->country,
             'publisher' => $this->publisher,
-            'pageCount' => $this->pageCount,
+            'page_count' => $this->pageCount,
             'category' => $this->category,
         ];
     }

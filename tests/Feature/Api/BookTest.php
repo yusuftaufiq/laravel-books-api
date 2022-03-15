@@ -23,7 +23,7 @@ class BookTest extends TestCase
         'title',
         'author',
         'price',
-        'originalUrl',
+        'original_url',
         'url',
         'slug',
     ];

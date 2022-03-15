@@ -30,7 +30,7 @@ final class BookResource extends JsonResource
             'title' => $this->title,
             'author' => $this->author,
             'price' => $this->when($this->price !== null, $this->price),
-            'originalUrl' => $this->originalUrl,
+            'original_url' => $this->originalUrl,
             'url' => $this->url,
             'slug' => $this->slug,
             'detail' => $this->when($this->detail?->slug !== null, fn (): BookDetailResource => (
