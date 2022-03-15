@@ -4,6 +4,7 @@ namespace Tests\Api\Feature;
 
 use App\Enums\CategoryEnum;
 use App\Enums\LanguageEnum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourceAssertion;
@@ -13,6 +14,7 @@ use Tests\WithUser;
 
 class BookTest extends TestCase
 {
+    use RefreshDatabase;
     use ResourceAssertion;
     use ResourceStructure;
     use WithFaker;
