@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
             'email' => ['required', 'email'],
             'password' => ['required'],
             'token_name' => ['required'],
-            'expired_at' => ['required', 'date_format:Y-m-d'],
+            'expired_at' => ['required', 'date_format:Y-m-d', 'after_or_equal:today'],
         ];
     }
 }
