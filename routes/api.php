@@ -19,12 +19,12 @@ use App\Http\Controllers\Api\RegisterUserController;
 |
 */
 
-\Route::middleware('auth:sanctum')->get('/user', function (\Request $request) {
-    return $request->user();
-});
-
 \Route::post('/register', RegisterUserController::class)->name('register');
-\Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+\Route::controller(AuthController::class)->group(function () {
+    \Route::post('/login', 'login')->name('login');
+    \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
+});
 
 \Route::middleware('cache.response')->group(function () {
     \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);

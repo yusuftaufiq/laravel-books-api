@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
 
@@ -62,14 +63,19 @@ final class User extends Authenticatable implements UserInterface
     }
 
     /**
-     * Create a new personal access token for the user.
+     * Create a expirable new personal access token for the user.
      *
-     * @param  string  $name
-     * @param  array  $abilities
+     * @param string $name
+     * @param \DateTime $expiredAt
+     * @param array  $abilities
+     *
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    public function createToken(string $name, string $expiredAt, array $abilities = ['*'])
-    {
+    final public function createExpirableToken(
+        string $name,
+        \DateTime $expiredAt,
+        array $abilities = ['*']
+    ): NewAccessToken {
         $token = $this->tokens()->create([
             'name' => $name,
             'token' => hash('sha256', $plainTextToken = \Str::random(40)),
@@ -78,5 +84,29 @@ final class User extends Authenticatable implements UserInterface
         ]);
 
         return new NewAccessToken($token, "{$token->getKey()}|{$plainTextToken}");
+    }
+
+    /**
+     * Check if the user with the given email and password exists.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return self
+     */
+    final public function authenticate(string $email, string $password): self
+    {
+        $user = $this->whereEmail($email)->firstOrFail();
+
+        if (
+            $user instanceof User === false
+            || \Hash::check($password, $user->password) === false
+        ) {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        return $user;
     }
 }
