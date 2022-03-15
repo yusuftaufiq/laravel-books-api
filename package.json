@@ -10,7 +10,10 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@commitlint/cli": "^16.2.1",
+        "@commitlint/config-conventional": "^16.2.1",
         "axios": "^0.21",
+        "husky": "^7.0.4",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
