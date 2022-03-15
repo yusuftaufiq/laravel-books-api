@@ -33,7 +33,7 @@ class SearchBookTest extends TestCase
 
     public function testSearchBook()
     {
-        $response = $this->actingAs($this->user)->get(route('search', ['keyword' => 1984]));
+        $response = $this->actingAs($this->user)->get(route('books.search', ['keyword' => 1984]));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -50,7 +50,7 @@ class SearchBookTest extends TestCase
 
     public function testUnauthorizedSearchBook()
     {
-        $response = $this->get(route('search', ['keyword' => 1984]));
+        $response = $this->get(route('books.search', ['keyword' => 1984]));
 
         $response->assertUnauthorized();
         $response->assertJsonStructure([

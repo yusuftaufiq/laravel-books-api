@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
-use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\BookSearchController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\RegisterUserController;
@@ -29,7 +29,7 @@ use App\Http\Controllers\Api\UserController;
 
 \Route::middleware(['auth:sanctum', 'cache.response'])->group(function () {
     \Route::get('/user', UserController::class)->name('user')->withoutMiddleware('cache.response');
-    \Route::get('search/{keyword}', SearchController::class)->name('search');
+    \Route::get('search/{keyword}', BookSearchController::class)->name('books.search');
 
     \Route::apiResource('books', BookController::class)->only(['index', 'show']);
     \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);

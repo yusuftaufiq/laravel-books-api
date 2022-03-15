@@ -9,7 +9,7 @@ use App\Http\Resources\BookCollection;
 /**
  * @property \App\Models\Book $book
  */
-final class SearchController extends Controller
+final class BookSearchController extends Controller
 {
     final public function __construct(
         private BookInterface $book,
