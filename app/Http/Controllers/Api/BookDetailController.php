@@ -9,11 +9,6 @@ use App\Http\Resources\BookResource;
 
 final class BookDetailController extends Controller
 {
-    final public function __construct(
-        private BookDetailInterface $bookDetail,
-    ) {
-    }
-
     /**
      * Display a listing of the resource.
      *
