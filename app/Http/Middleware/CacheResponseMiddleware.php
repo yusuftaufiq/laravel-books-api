@@ -15,6 +15,10 @@ final class CacheResponseMiddleware
      */
     final public function handle(Request $request, \Closure $next)
     {
+        if ($request->isMethodCacheable() === false) {
+            return $next($request);
+        }
+
         return \Cache::remember(
             key: "{$request->method()}:{$request->getUri()}",
             ttl: now()->addSeconds(config('cache.ttl')),
