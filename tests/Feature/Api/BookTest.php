@@ -4,6 +4,7 @@ namespace Tests\Api\Feature;
 
 use App\Enums\CategoryEnum;
 use App\Enums\LanguageEnum;
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourcePattern;
@@ -26,9 +27,18 @@ class BookTest extends TestCase
         'slug',
     ];
 
+    private User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
     public function testBookIndex(): void
     {
-        $response = $this->call('GET', route('books.index'), [
+        $response = $this->actingAs($this->user)->call('GET', route('books.index'), [
             'category' => CategoryEnum::HistoricalFiction->value,
             'language' => LanguageEnum::English->value,
         ]);
@@ -48,7 +58,7 @@ class BookTest extends TestCase
 
     public function testBookShow(): void
     {
-        $response = $this->get(route('books.show', ['book' => 1984]));
+        $response = $this->actingAs($this->user)->get(route('books.show', ['book' => 1984]));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -62,7 +72,7 @@ class BookTest extends TestCase
 
     public function testBookNotFound(): void
     {
-        $response = $this->get(route('books.show', ['book' => $this->faker->md5()]));
+        $response = $this->actingAs($this->user)->get(route('books.show', ['book' => $this->faker->md5()]));
 
         $response->assertNotFound();
         $response->assertJsonStructure([

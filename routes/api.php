@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\RegisterUserController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +27,16 @@ use App\Http\Controllers\Api\RegisterUserController;
     \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
 });
 
-\Route::middleware('cache.response')->group(function () {
-    \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
-    \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
+\Route::middleware(['auth:sanctum', 'cache.response'])->group(function () {
+    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware('cache.response');
+    \Route::get('search/{keyword}', SearchController::class)->name('search');
 
     \Route::apiResource('books', BookController::class)->only(['index', 'show']);
     \Route::apiResource('books.details', BookDetailController::class)->shallow()->only(['index']);
 
+    \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+    \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
+
     \Route::apiResource('languages', LanguageController::class)->only(['index', 'show']);
     \Route::apiResource('languages.books', BookController::class)->shallow()->only(['index']);
-
-    \Route::get('search/{keyword}', SearchController::class)->name('search');
 });
