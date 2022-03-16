@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Enums\TokenStatusEnum;
+use App\Models\PersonalAccessToken;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,14 +40,14 @@ class LoginTest extends TestCase
 
     public function testLoginUser()
     {
-        $tokenName = $this->faker->sentence;
-        $expiredAt = $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d');
+        /** @var PersonalAccessToken */
+        $token = PersonalAccessToken::factory()->make();
 
         $response = $this->post(uri: route('login'), data: [
             'email' => $this->user->email,
             'password' => UserFactory::DEFAULT_PLAIN_TEXT_PASSWORD,
-            'token_name' => $tokenName,
-            'expired_at' => $expiredAt,
+            'token_name' => $token->name,
+            'expired_at' => $token->expired_at->format('Y-m-d'),
         ]);
 
         $response->assertCreated();
@@ -57,19 +58,19 @@ class LoginTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => (
             $json
-                ->where(key: 'token.name', expected: $tokenName)
+                ->where(key: 'token.name', expected: $token->name)
                 ->whereContains(key: 'token.abilities', expected: '*')
                 ->where(key: 'token.type', expected: 'Bearer')
                 ->where(key: 'token.status', expected: TokenStatusEnum::Active->value)
                 ->etc()
         ));
 
-        $this->assertStringContainsString(needle: $expiredAt, haystack: $response->json('token.expired_at'));
+        $this->assertStringContainsString(needle: $token->expired_at, haystack: $response->json('token.expired_at'));
         $this->assertResourceMetaData($response, statusCode: Response::HTTP_CREATED);
         $this->assertDatabaseHas(table: 'personal_access_tokens', data: [
             'tokenable_type' => User::class,
             'tokenable_id' => $this->user->id,
-            'name' => $tokenName,
+            'name' => $token->name,
         ]);
     }
 
