@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Enums\TokenStatusEnum;
 use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -13,7 +14,7 @@ use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class AuthTest extends TestCase
+class LoginTest extends TestCase
 {
     use RefreshDatabase;
     use ResourceAssertion;
@@ -43,7 +44,7 @@ class AuthTest extends TestCase
 
         $response = $this->post(uri: route('login'), data: [
             'email' => $this->user->email,
-            'password' => 12345678,
+            'password' => UserFactory::DEFAULT_PLAIN_TEXT_PASSWORD,
             'token_name' => $tokenName,
             'expired_at' => $expiredAt,
         ]);
