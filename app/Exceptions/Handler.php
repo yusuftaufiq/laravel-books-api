@@ -76,7 +76,9 @@ class Handler extends ExceptionHandler
         $this->renderable(function (ValidationException $e, Request $request) {
             if ($request->is('api/*')) {
                 $message = $e->getMessage() ?: 'The request could not be processed.';
-                $unprocessableEntityProblem = new UnprocessableEntityProblem($message);
+                $unprocessableEntityProblem = new HttpApiFormat(Response::HTTP_UNPROCESSABLE_ENTITY, [
+                    'detail' => $message,
+                ]);
 
                 return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
