@@ -9,7 +9,9 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Resources\PersonalAccessTokenResource;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class AuthController extends Controller
 {
@@ -37,13 +39,19 @@ final class AuthController extends Controller
             expiredAt: \DateTime::createFromFormat('Y-m-d H:i:s', "{$request->get('expired_at')} 23:59:59"),
         );
 
-        return (new PersonalAccessTokenResource($token->accessToken))->additional([
+        $tokenResource = new PersonalAccessTokenResource($token->accessToken);
+        $tokenResource->with['status'] = Response::HTTP_CREATED;
+        $tokenResource->with['title'] = Response::$statusTexts[$tokenResource->with['status']];
+        $tokenResource->withResponse($request, new JsonResponse(status: $tokenResource->with['status']));
+        $tokenResource->additional([
             'token' => [
                 'type' => 'Bearer',
                 'plain_text' => $token->plainTextToken,
                 'status' => TokenStatusEnum::Active,
             ],
         ]);
+
+        return $tokenResource;
     }
 
     /**
