@@ -6,7 +6,7 @@ use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+final class LoginRequest extends FormRequest
 {
     protected const MAX_ATTEMPTS = 5;
 
@@ -15,7 +15,7 @@ class LoginRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    final public function authorize()
     {
         return true;
     }
@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    final public function rules()
     {
         return [
             'email' => ['required', 'email'],
@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate()
+    final public function authenticateOrFail()
     {
         $this->ensureIsNotRateLimited();
 
@@ -64,7 +64,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function ensureIsNotRateLimited()
+    final public function ensureIsNotRateLimited()
     {
         if (\RateLimiter::tooManyAttempts($this->throttleKey(), static::MAX_ATTEMPTS) === false) {
             return;
@@ -87,7 +87,7 @@ class LoginRequest extends FormRequest
      *
      * @return string
      */
-    public function throttleKey()
+    final public function throttleKey()
     {
         return str()->lower("{$this->input('email')}|{$this->ip()}");
     }

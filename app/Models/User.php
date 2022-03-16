@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Contracts\UserInterface;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
 
@@ -51,14 +49,12 @@ final class User extends Authenticatable implements UserInterface
     /**
      * Set the user's hashed password.
      *
-     * @param string $value
-     *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    protected function password(): Attribute
+    final protected function password(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => \Hash::createArgon2idDriver()->make($value),
+            set: fn (string $value) => \Hash::createArgon2idDriver()->make($value),
         );
     }
 
@@ -73,12 +69,14 @@ final class User extends Authenticatable implements UserInterface
      */
     final public function createExpirableToken(
         string $name,
-        \DateTime $expiredAt,
+        string $expiredAt,
         array $abilities = ['*']
     ): NewAccessToken {
+        $plainTextToken = \Str::random(40);
+
         $token = $this->tokens()->create([
             'name' => $name,
-            'token' => hash('sha256', $plainTextToken = \Str::random(40)),
+            'token' => hash(algo: 'sha256', data: $plainTextToken),
             'abilities' => $abilities,
             'expired_at' => $expiredAt,
         ]);

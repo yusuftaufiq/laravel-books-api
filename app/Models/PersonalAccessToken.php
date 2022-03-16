@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Scopes\NotExpiredScope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
-class PersonalAccessToken extends SanctumPersonalAccessToken
+final class PersonalAccessToken extends SanctumPersonalAccessToken
 {
     use HasFactory;
 
@@ -38,8 +39,20 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
      *
      * @return void
      */
-    protected static function booted()
+    final protected static function booted()
     {
         static::addGlobalScope(new NotExpiredScope());
+    }
+
+    /**
+     * Set expiry date format.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    final public function expiredAt(): Attribute
+    {
+        return new Attribute(
+            set: fn (string $value) => \DateTime::createFromFormat('Y-m-d H:i:s', "$value 23:59:59"),
+        );
     }
 }

@@ -29,14 +29,14 @@ final class AuthController extends Controller
      */
     final public function login(LoginRequest $request): PersonalAccessTokenResource
     {
-        $request->authenticate();
+        $request->authenticateOrFail();
 
         /** @var User */
         $user = $request->user();
 
         $token = $user->createExpirableToken(
             name: $request->get('token_name'),
-            expiredAt: \DateTime::createFromFormat('Y-m-d H:i:s', "{$request->get('expired_at')} 23:59:59"),
+            expiredAt: $request->get('expired_at'),
         );
 
         $tokenResource = new PersonalAccessTokenResource($token->accessToken);
