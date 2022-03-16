@@ -27,7 +27,11 @@ final class AuthController extends Controller
      */
     final public function login(LoginRequest $request): PersonalAccessTokenResource
     {
-        $user = $this->user->authenticate($request->get('email'), $request->get('password'));
+        $request->authenticate();
+
+        /** @var User */
+        $user = $request->user();
+
         $token = $user->createExpirableToken(
             name: $request->get('token_name'),
             expiredAt: \DateTime::createFromFormat('Y-m-d H:i:s', "{$request->get('expired_at')} 23:59:59"),

@@ -85,28 +85,4 @@ final class User extends Authenticatable implements UserInterface
 
         return new NewAccessToken($token, "{$token->getKey()}|{$plainTextToken}");
     }
-
-    /**
-     * Check if the user with the given email and password exists.
-     *
-     * @param string $email
-     * @param string $password
-     *
-     * @return self
-     */
-    final public function authenticate(string $email, string $password): self
-    {
-        $user = $this->whereEmail($email)->firstOrFail();
-
-        if (
-            $user instanceof User === false
-            || \Hash::check($password, $user->password) === false
-        ) {
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
-        }
-
-        return $user;
-    }
 }

@@ -11,16 +11,6 @@ use Laravel\Sanctum\NewAccessToken;
 interface UserInterface extends Authorizable, Authenticatable, CanResetPassword, HasApiTokens
 {
     /**
-     * Check if the user with the given email and password exists.
-     *
-     * @param string $email
-     * @param string $password
-     *
-     * @return self
-     */
-    public function authenticate(string $email, string $password): self;
-
-    /**
      * Create a expirable new personal access token for the user.
      *
      * @param string $name
