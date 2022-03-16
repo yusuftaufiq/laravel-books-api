@@ -6,8 +6,10 @@ use App\Support\HttpApiFormat;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Phpro\ApiProblem\Http\NotFoundProblem;
 use Phpro\ApiProblem\Http\UnauthorizedProblem;
+use Phpro\ApiProblem\Http\UnprocessableEntityProblem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
@@ -42,10 +44,6 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
-
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 $message = $e->getMessage() ?: 'Page not found';
@@ -72,6 +70,15 @@ class Handler extends ExceptionHandler
                 $unauthorizedProblem = new UnauthorizedProblem($message);
 
                 return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
+            }
+        });
+
+        $this->renderable(function (ValidationException $e, Request $request) {
+            if ($request->is('api/*')) {
+                $message = $e->getMessage() ?: 'The request could not be processed.';
+                $unprocessableEntityProblem = new UnprocessableEntityProblem($message);
+
+                return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         });
     }
