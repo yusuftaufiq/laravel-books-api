@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\PersonalAccessToken;
 use App\Models\User;
 
 trait WithUser
@@ -10,6 +11,6 @@ trait WithUser
 
     private function setUpUser(): void
     {
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->has(PersonalAccessToken::factory(), 'tokens')->create();
     }
 }
