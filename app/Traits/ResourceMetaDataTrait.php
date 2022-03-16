@@ -14,6 +14,6 @@ trait ResourceMetaDataTrait
      */
     public function with($request)
     {
-        return (new HttpApiFormat())->toArray();
+        return (new HttpApiFormat(data: $this->with))->toArray();
     }
 }
