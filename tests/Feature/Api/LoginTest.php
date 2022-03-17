@@ -65,7 +65,7 @@ class LoginTest extends TestCase
                 ->etc()
         ));
 
-        $this->assertStringContainsString(needle: $token->expired_at, haystack: $response->json('token.expired_at'));
+        $this->assertStringContainsString(needle: $token->expired_at->format('Y-m-d'), haystack: $response->json('token.expired_at'));
         $this->assertResourceMetaData($response, statusCode: Response::HTTP_CREATED);
         $this->assertDatabaseHas(table: 'personal_access_tokens', data: [
             'tokenable_type' => User::class,
