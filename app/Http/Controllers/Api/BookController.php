@@ -8,6 +8,7 @@ use App\Contracts\LanguageInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
+use Illuminate\Http\Request;
 
 /**
  * @property \App\Models\Book $book
@@ -22,14 +23,18 @@ final class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @param CategoryInterface $category
      * @param LanguageInterface $language
      *
      * @return BookCollection
      */
-    final public function index(CategoryInterface $category, LanguageInterface $language): BookCollection
-    {
-        $page = request()?->query('page', 1);
+    final public function index(
+        Request $request,
+        CategoryInterface $category,
+        LanguageInterface $language,
+    ): BookCollection {
+        $page = $request->query('page', 1);
         $books = $this->book->withCategory($category)->withLanguage($language)->all($page);
 
         return new BookCollection($books);

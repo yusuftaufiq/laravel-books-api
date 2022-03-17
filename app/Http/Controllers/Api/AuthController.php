@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contracts\UserInterface;
 use App\Enums\TokenStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
@@ -15,11 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class AuthController extends Controller
 {
-    final public function __construct(
-        private UserInterface $user,
-    ) {
-    }
-
     /**
      * Create a new personal access token.
      *

@@ -177,7 +177,6 @@ return [
         App\Providers\QueryStringCategoryServiceProvider::class,
         App\Providers\QueryStringLanguageServiceProvider::class,
         App\Providers\GoutteServiceProvider::class,
-        // App\Providers\ApiResponseMacroServiceProvider::class,
     ],
 
     /*

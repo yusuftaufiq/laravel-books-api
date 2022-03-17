@@ -19,7 +19,7 @@ final class Language extends BaseModel implements LanguageInterface
 
     final public function all(): array
     {
-        $categories = collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum) => new self(
+        $categories = collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum): self => new self(
             slug: $languageEnum->value,
             name: $languageEnum->name,
             value: $languageEnum->value(),

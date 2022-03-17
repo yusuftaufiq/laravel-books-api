@@ -20,7 +20,7 @@ final class Category extends BaseModel implements CategoryInterface
 
     final public function all(): array
     {
-        $categories = collect(CategoryEnum::cases())->map(fn (CategoryEnum $categoryEnum) => new self(
+        $categories = collect(CategoryEnum::cases())->map(fn (CategoryEnum $categoryEnum): self => new self(
             slug: $categoryEnum->value,
             name: $categoryEnum->name(),
         ));
