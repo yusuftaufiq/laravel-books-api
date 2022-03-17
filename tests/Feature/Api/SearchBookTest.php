@@ -31,7 +31,7 @@ class SearchBookTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testSearchBook()
+    public function testSearchBook(): void
     {
         $response = $this->actingAs($this->user)->get(route('books.search', ['keyword' => 1984]));
 
@@ -48,7 +48,7 @@ class SearchBookTest extends TestCase
         $this->assertSlugs(...$response->json('books.*.slug'));
     }
 
-    public function testUnauthorizedSearchBook()
+    public function testUnauthorizedSearchBook(): void
     {
         $response = $this->get(route('books.search', ['keyword' => 1984]));
 

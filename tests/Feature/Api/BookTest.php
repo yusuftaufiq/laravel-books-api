@@ -62,7 +62,7 @@ class BookTest extends TestCase
         $this->assertSlugs(...$response->json('books.*.slug'));
     }
 
-    public function testBookIndexByCategory()
+    public function testBookIndexByCategory(): void
     {
         $response = $this->actingAs($this->user)->get(route('categories.books.index', [
             'category' => CategoryEnum::HistoricalFiction->value,
@@ -75,7 +75,7 @@ class BookTest extends TestCase
         $this->assertSlugs(...$response->json('books.*.slug'));
     }
 
-    public function testBookIndexByLanguage()
+    public function testBookIndexByLanguage(): void
     {
         $response = $this->actingAs($this->user)->get(route('languages.books.index', [
             'language' => LanguageEnum::English->value,
@@ -102,7 +102,7 @@ class BookTest extends TestCase
         $this->assertSlugs($response->json('book.slug'));
     }
 
-    public function testUnauthorizedShowBook()
+    public function testUnauthorizedShowBook(): void
     {
         $response = $this->get(route('books.show', ['book' => 1984]));
 

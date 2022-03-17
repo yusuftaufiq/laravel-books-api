@@ -30,7 +30,7 @@ class CategoryTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testCategoryIndex()
+    public function testCategoryIndex(): void
     {
         $response = $this->actingAs($this->user)->get(route('categories.index'));
 
@@ -46,7 +46,7 @@ class CategoryTest extends TestCase
         $this->assertSlugs(...$response->json('categories.*.slug'));
     }
 
-    public function testShowCategory()
+    public function testShowCategory(): void
     {
         $response = $this->actingAs($this->user)->get(route('categories.show', [
             'category' => CategoryEnum::HistoricalFiction->value,
@@ -62,7 +62,7 @@ class CategoryTest extends TestCase
         $this->assertSlugs($response->json('category.slug'));
     }
 
-    public function testUnauthorizedShowCategory()
+    public function testUnauthorizedShowCategory(): void
     {
         $response = $this->get(route('categories.show', [
             'category' => CategoryEnum::HistoricalFiction->value,

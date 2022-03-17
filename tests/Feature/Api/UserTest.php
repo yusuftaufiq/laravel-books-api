@@ -27,7 +27,7 @@ class UserTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testShowCurrentUser()
+    public function testShowCurrentUser(): void
     {
         $response = $this->actingAs($this->user)->get(route('user'));
 
@@ -40,7 +40,7 @@ class UserTest extends TestCase
         $this->assertResourceMetaData($response, Response::HTTP_OK);
     }
 
-    public function testUnauthorizedShowCurrentUser()
+    public function testUnauthorizedShowCurrentUser(): void
     {
         $response = $this->get(route('user'));
 

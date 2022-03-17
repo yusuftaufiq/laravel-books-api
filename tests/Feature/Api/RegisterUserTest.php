@@ -21,7 +21,7 @@ class RegisterUserTest extends TestCase
         'email',
     ];
 
-    public function testRegisterUser()
+    public function testRegisterUser(): void
     {
         $name = $this->faker->name;
         $email = $this->faker->email;
@@ -51,7 +51,7 @@ class RegisterUserTest extends TestCase
         ]);
     }
 
-    public function testUnprocessableRegisterUser()
+    public function testUnprocessableRegisterUser(): void
     {
         $response = $this->post(route('register'));
 

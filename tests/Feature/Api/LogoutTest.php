@@ -35,7 +35,7 @@ class LogoutTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLogoutUser()
+    public function testLogoutUser(): void
     {
         /** @var \App\Models\PersonalAccessToken */
         $token = $this->user->tokens()->firstOrNew();
@@ -53,7 +53,7 @@ class LogoutTest extends TestCase
             'token' => $this->tokenStructure,
         ]);
 
-        $response->assertJson(fn (AssertableJson $json) => (
+        $response->assertJson(fn (AssertableJson $json): AssertableJson => (
             $json
                 ->where(key: 'token.name', expected: $token->name)
                 ->whereContains(key: 'token.abilities', expected: '*')
@@ -66,7 +66,7 @@ class LogoutTest extends TestCase
         $this->assertDatabaseCount(table: 'personal_access_tokens', count: 0);
     }
 
-    public function testUnauthorizedLogoutUser()
+    public function testUnauthorizedLogoutUser(): void
     {
         $response = $this->post(uri: route('logout'));
 

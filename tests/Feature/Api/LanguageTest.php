@@ -31,7 +31,7 @@ class LanguageTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLanguageIndex()
+    public function testLanguageIndex(): void
     {
         $response = $this->actingAs($this->user)->get(route('languages.index'));
 
@@ -47,7 +47,7 @@ class LanguageTest extends TestCase
         $this->assertSlugs(...$response->json('languages.*.slug'));
     }
 
-    public function testShowLanguage()
+    public function testShowLanguage(): void
     {
         $response = $this->actingAs($this->user)->get(route('languages.show', [
             'language' => LanguageEnum::English->value,
@@ -63,7 +63,7 @@ class LanguageTest extends TestCase
         $this->assertSlugs($response->json('language.slug'));
     }
 
-    public function testUnauthorizedShowLanguage()
+    public function testUnauthorizedShowLanguage(): void
     {
         $response = $this->get(route('languages.show', [
             'language' => LanguageEnum::English->value,

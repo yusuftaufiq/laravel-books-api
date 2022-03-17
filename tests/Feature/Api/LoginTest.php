@@ -38,7 +38,7 @@ class LoginTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLoginUser()
+    public function testLoginUser(): void
     {
         /** @var PersonalAccessToken */
         $token = PersonalAccessToken::factory()->make();
@@ -56,7 +56,7 @@ class LoginTest extends TestCase
             'token' => $this->tokenStructure,
         ]);
 
-        $response->assertJson(fn (AssertableJson $json) => (
+        $response->assertJson(fn (AssertableJson $json): AssertableJson => (
             $json
                 ->where(key: 'token.name', expected: $token->name)
                 ->whereContains(key: 'token.abilities', expected: '*')
@@ -74,7 +74,7 @@ class LoginTest extends TestCase
         ]);
     }
 
-    public function testUnprocessableLoginUser()
+    public function testUnprocessableLoginUser(): void
     {
         $response = $this->post(uri: route('login'));
 
