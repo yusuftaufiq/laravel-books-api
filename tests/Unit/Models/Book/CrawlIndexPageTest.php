@@ -73,6 +73,7 @@ class CrawlIndexPageTest extends TestCase
 
         $this->assertInstanceOf(expected: Paginator::class, actual: $books);
         $this->assertArrayHasKey(key: 0, array: $items);
+        $this->assertInstanceOf(expected: Book::class, actual: $books[0]);
 
         /** @var Book */
         $firstBook = $items[0];
