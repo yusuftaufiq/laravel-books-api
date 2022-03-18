@@ -19,7 +19,7 @@ final class Book extends BaseModel implements BookInterface
 
     final public const BOOKS_PER_PAGE = 24;
 
-    final public const SEARCH_PER_PAGE = 10;
+    final public const BOOKS_PER_SEARCH = 10;
 
     protected string $primaryKey = 'slug';
 
@@ -140,7 +140,7 @@ final class Book extends BaseModel implements BookInterface
             );
         });
 
-        $paginator = new Paginator($books, self::SEARCH_PER_PAGE, $page);
+        $paginator = new Paginator($books, self::BOOKS_PER_SEARCH, $page);
         $paginator->withPath(url(request()->fullUrlWithoutQuery('page')));
         $paginator->hasMorePagesWhen($crawler->filter('.paging .next')->count() > 0);
 
