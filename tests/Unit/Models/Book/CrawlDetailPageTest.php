@@ -119,13 +119,13 @@ class CrawlDetailPageTest extends TestCase
         </div>
     HTML;
 
-    public function testCrawlBookBySlug()
+    public function testCrawlBookBySlug(): void
     {
-        $crawler = new Crawler();
+        $crawler = new Crawler(uri: Book::BASE_URL . '/the-adventures-of-sherlock-holmes');
         $crawler->addContent($this->dummyHtmlContent);
 
         \Goutte::shouldReceive('request')
-            ->twice()
+            ->once()
             ->withAnyArgs()
             ->andReturn($crawler);
 

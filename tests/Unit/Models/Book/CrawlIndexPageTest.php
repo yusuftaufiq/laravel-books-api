@@ -56,7 +56,7 @@ class CrawlIndexPageTest extends TestCase
         </div>
     HTML;
 
-    public function testCrawlAllBooks()
+    public function testCrawlAllBooks(): void
     {
         $crawler = new Crawler();
         $crawler->addContent($this->dummyHtmlContent);
