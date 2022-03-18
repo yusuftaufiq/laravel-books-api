@@ -14,39 +14,45 @@ class CrawlIndexPageTest extends TestCase
             <div class="top">
                 <!-- -->
                 <div class="imgwrap">
-                    <div class="limit" style="height: auto; width: auto;"> <a
-                            href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
+                    <div class="limit" style="height: auto; width: auto;">
+                        <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
                             onclick="gtm_product_detail( 'The Man in the Brown Suit by Agatha Christie Digital Book', '63078', '149000.00', 'The Man in the Brown Suit')">
                             <img src="https://ebooks.gramedia.com/ebook-covers/20214/thumb_image_normal/ID_HCO2015MTH01TMITBS.jpeg"
                                 title="The Man in the Brown Suit by Agatha Christie Digital Book"
                                 alt="The Man in the Brown Suit by Agatha Christie Cover" class="tall" style="display: block;">
                         </a>
-                        <div class="rolloverbuild hide"> <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
+                        <div class="rolloverbuild hide">
+                            <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
                                 class="blkbg"
-                                onclick="gtm_product_detail('The Man in the Brown Suit by Agatha Christie Digital Book', '63078', '149000.00', 'The Man in the Brown Suit')"></a>
-                            <div class="wrap"> <a href="https://ebooks.gramedia.com/cart/add/63078?code=36647"
-                                    class="auto_trigger subs_trigger" "="" id=" p_cart_63078">Add to Cart</a> <a
-                                    href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
+                                onclick="gtm_product_detail('The Man in the Brown Suit by Agatha Christie Digital Book', '63078', '149000.00', 'The Man in the Brown Suit')">
+                            </a>
+                            <div class="wrap">
+                                <a href="https://ebooks.gramedia.com/cart/add/63078?code=36647"
+                                    class="auto_trigger subs_trigger" "="" id=" p_cart_63078">Add to Cart</a>
+                                <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit"
                                     onclick="gtm_product_detail( 'The Man in the Brown Suit by Agatha Christie Digital Book', '63078', '149000.00', 'The Man in the Brown Suit')">DETAIL
-                                </a> </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="desc">
-                <h2 class="title"> <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit" class="limit"
+                <h2 class="title">
+                    <a href="https://ebooks.gramedia.com/books/the-man-in-the-brown-suit" class="limit"
                         onclick="gtm_product_detail('The Man in the Brown Suit by Agatha Christie Digital Book', '63078', '149000.00', 'The Man in the Brown Suit')">
-                        The Man in the Brown Suit </a> </h2>
+                        The Man in the Brown Suit
+                    </a>
+                </h2>
                 <div class="date">Agatha Christie</div>
                 <div class="price"> <span>Rp</span> 149.000 </div>
             </div>
         </div>
         <div class="paging left">
-            <a class="active">1</a><a
-                href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=2">2</a><a
-                href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=3">3</a><a
-                class="next"
-                href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=2">&gt;</a>
+            <a class="active">1</a>
+            <a href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=2">2</a>
+            <a href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=3">3</a>
+            <a class="next" href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=2">&gt;</a>
         </div>
     HTML;
 
