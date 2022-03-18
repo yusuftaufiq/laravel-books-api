@@ -28,16 +28,22 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      *
      * @param  string  $part    Part of the book details.
      *
-     * @return string
+     * @return ?string
      */
-    private function getDetailOf(string $part): string
+    private function getDetailOf(string $part): ?string
     {
-        return $this->crawler
-            ->filter(".switch_content.sc_2 td:contains(\"$part\")")
-            ->closest('tr')
-            ->filter('td')
-            ->last()
-            ->text();
+        try {
+            $result = $this->crawler
+                ->filter(".switch_content.sc_2 td:contains(\"$part\")")
+                ->closest('tr')
+                ->filter('td')
+                ->last()
+                ->text();
+        } catch (\Exception $e) {
+            $result = null;
+        } finally {
+            return $result;
+        }
     }
 
     final public function find(string $slug): self
