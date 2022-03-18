@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-class CrawlAllTest extends TestCase
+class CrawlIndexPageTest extends TestCase
 {
     private string $dummyHtmlContent  = <<<'HTML'
         <div class="oubox_list rollover left">
@@ -52,7 +52,7 @@ class CrawlAllTest extends TestCase
 
     public function testCrawlAllBooks()
     {
-        $crawler = new Crawler(uri: Book::BASE_URL);
+        $crawler = new Crawler();
         $crawler->addContent($this->dummyHtmlContent);
 
         \Goutte::shouldReceive('request')
@@ -65,8 +65,8 @@ class CrawlAllTest extends TestCase
         $books = $book->all();
         $items = $books->items();
 
-        $this->assertInstanceOf(Paginator::class, $books);
-        $this->assertArrayHasKey(0, $items);
+        $this->assertInstanceOf(expected: Paginator::class, actual: $books);
+        $this->assertArrayHasKey(key: 0, array: $items);
 
         /** @var Book */
         $firstBook = $items[0];
