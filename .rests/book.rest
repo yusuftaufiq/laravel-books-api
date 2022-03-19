@@ -3,3 +3,9 @@ GET {{$dotenv APP_URL}}api/books HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
 Content-Type: application/json
+
+### Get a book by slug
+GET {{$dotenv APP_URL}}api/search/ready-player-one HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
+Content-Type: application/json
