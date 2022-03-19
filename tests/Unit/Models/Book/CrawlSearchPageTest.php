@@ -73,7 +73,7 @@ class CrawlSearchPageTest extends TestCase
             ->andReturn($crawler);
 
         /** @var Book */
-        $book = app(Book::class);
+        $book = $this->app->make(abstract: Book::class);
         $books = $book->like(keyword: 'Ready Player One');
         $items = $books->items();
 

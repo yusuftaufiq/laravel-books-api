@@ -6,14 +6,14 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-final class RegisterUserRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    final public function authorize()
+    public function authorize()
     {
         return true;
     }
@@ -23,7 +23,7 @@ final class RegisterUserRequest extends FormRequest
      *
      * @return array
      */
-    final public function rules()
+    public function rules()
     {
         return [
             'name' => ['required', 'string', 'max:255'],

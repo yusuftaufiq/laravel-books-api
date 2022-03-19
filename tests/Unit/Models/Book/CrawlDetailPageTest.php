@@ -130,8 +130,9 @@ class CrawlDetailPageTest extends TestCase
             ->andReturn($crawler);
 
         /** @var Book */
-        $book = app(Book::class);
-        $book = $book->find(slug: 'the-adventures-of-sherlock-holmes')->loadDetail();
+        $book = tap($this->app->make(abstract: Book::class), function (Book $book): void {
+            $book->find(slug: 'the-adventures-of-sherlock-holmes')->loadDetail();
+        });
 
         $this->assertInstanceOf(expected: Book::class, actual: $book);
         $this->assertInstanceOf(expected: BookDetail::class, actual: $book->detail);

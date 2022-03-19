@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Feature;
+namespace Tests\Feature\Api;
 
 use App\Enums\CategoryEnum;
 use App\Enums\LanguageEnum;

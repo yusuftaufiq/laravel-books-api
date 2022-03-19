@@ -67,7 +67,7 @@ class CrawlIndexPageTest extends TestCase
             ->andReturn($crawler);
 
         /** @var Book */
-        $book = app(Book::class);
+        $book = $this->app->make(abstract: Book::class);
         $books = $book->all();
         $items = $books->items();
 

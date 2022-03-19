@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contracts\BookDetailInterface;
 use App\Contracts\BookInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookResource;
