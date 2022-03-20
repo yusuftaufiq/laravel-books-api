@@ -32,9 +32,7 @@ final class RegisterUserController extends Controller
         $user = $this->user->create($request->validated());
 
         $userResource = new UserResource($user);
-        $userResource->with['status'] = Response::HTTP_CREATED;
-        $userResource->with['title'] = Response::$statusTexts[$userResource->with['status']];
-        $userResource->withResponse($request, new JsonResponse(status: $userResource->with['status']));
+        $userResource->withResponse($request, new JsonResponse(status: Response::HTTP_CREATED));
 
         return $userResource;
     }

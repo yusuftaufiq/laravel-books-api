@@ -34,9 +34,7 @@ final class AuthController extends Controller
         );
 
         $tokenResource = new PersonalAccessTokenResource($token->accessToken);
-        $tokenResource->with['status'] = Response::HTTP_CREATED;
-        $tokenResource->with['title'] = Response::$statusTexts[$tokenResource->with['status']];
-        $tokenResource->withResponse($request, new JsonResponse(status: $tokenResource->with['status']));
+        $tokenResource->withResponse($request, new JsonResponse(status: Response::HTTP_CREATED));
         $tokenResource->additional([
             'token' => [
                 'type' => 'Bearer',
