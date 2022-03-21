@@ -6,7 +6,6 @@ use App\Support\HttpApiFormat;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
 use Phpro\ApiProblem\Http\NotFoundProblem;
 use Phpro\ApiProblem\Http\UnauthorizedProblem;
@@ -37,40 +36,48 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    public function handleApiNotFoundHttpException(NotFoundHttpException $e, Request $request): HttpResponse
+    public function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
     {
-        $message = $e->getMessage() ?: 'Page not found';
-        $notFoundProblem = new NotFoundProblem($message);
+        if ($request->is('api/*')) {
+            $message = $e->getMessage() ?: 'Page not found';
+            $notFoundProblem = new NotFoundProblem($message);
 
-        return response($notFoundProblem->toArray(), $e->getStatusCode());
+            return response($notFoundProblem->toArray(), $e->getStatusCode());
+        }
     }
 
-    public function handleApiTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request): HttpResponse
+    public function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
     {
-        $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
-        $tooManyRequestsProblem = new HttpApiFormat($e->getStatusCode(), [
-            'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
-        ]);
+        if ($request->is('api/*')) {
+            $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
+            $tooManyRequestsProblem = new HttpApiFormat($e->getStatusCode(), [
+                'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
+            ]);
 
-        return response($tooManyRequestsProblem->toArray());
+            return response($tooManyRequestsProblem->toArray());
+        }
     }
 
-    public function handleApiAuthenticationException(AuthenticationException $e, Request $request): HttpResponse
+    public function handleAuthenticationException(AuthenticationException $e, Request $request)
     {
-        $message = $e->getMessage() ?: 'You are not authorized to perform this action.';
-        $unauthorizedProblem = new UnauthorizedProblem($message);
+        if ($request->is('api/*')) {
+            $message = $e->getMessage() ?: 'You are not authorized to perform this action.';
+            $unauthorizedProblem = new UnauthorizedProblem($message);
 
-        return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
+            return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
+        }
     }
 
-    public function handleApiValidationException(ValidationException $e, Request $request): HttpResponse
+    public function handleValidationException(ValidationException $e, Request $request)
     {
-        $message = $e->getMessage() ?: 'The request could not be processed.';
-        $unprocessableEntityProblem = new HttpApiFormat(Response::HTTP_UNPROCESSABLE_ENTITY, [
-            'detail' => $message,
-        ]);
+        if ($request->is('api/*')) {
+            $message = $e->getMessage() ?: 'The request could not be processed.';
+            $unprocessableEntityProblem = new HttpApiFormat(Response::HTTP_UNPROCESSABLE_ENTITY, [
+                'detail' => $message,
+            ]);
 
-        return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     /**
@@ -80,28 +87,9 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable(function (NotFoundHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return $this->handleApiNotFoundHttpException($e, $request);
-            }
-        });
-
-        $this->renderable(function (TooManyRequestsHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return $this->handleApiTooManyRequestsHttpException($e, $request);
-            }
-        });
-
-        $this->renderable(function (AuthenticationException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return $this->handleApiAuthenticationException($e, $request);
-            }
-        });
-
-        $this->renderable(function (ValidationException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return $this->handleApiValidationException($e, $request);
-            }
-        });
+        $this->renderable($this->handleNotFoundHttpException(...));
+        $this->renderable($this->handleTooManyRequestsHttpException(...));
+        $this->renderable($this->handleAuthenticationException(...));
+        $this->renderable($this->handleValidationException(...));
     }
 }
