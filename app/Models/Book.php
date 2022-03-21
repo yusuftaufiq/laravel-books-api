@@ -13,16 +13,50 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class Book extends BaseModel implements BookInterface
 {
+    /**
+     * The base url of the site provides the list of books.
+     */
     final public const BASE_URL = 'https://ebooks.gramedia.com/books/';
 
+    /**
+     * The search url of the site provides the list of books.
+     */
     final public const SEARCH_URL = 'https://ebooks.gramedia.com/search/';
 
+    /**
+     * The number of books per index page.
+     */
     final public const BOOKS_PER_PAGE = 24;
 
+    /**
+     * The number of books per search page.
+     */
     final public const BOOKS_PER_SEARCH = 10;
 
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
     protected string $primaryKey = 'slug';
 
+    /**
+     * Create a new book instance.
+     *
+     * @param ?string $image
+     * @param ?string $title
+     * @param ?string $author
+     * @param ?string $price
+     * @param ?string $originalUrl
+     * @param ?string $url
+     * @param ?string $slug
+     * @param ?Crawler $crawler
+     * @param ?BookDetailInterface $detail
+     * @param ?CategoryInterface $category
+     * @param ?LanguageInterface $language
+     *
+     * @return void
+     */
     final public function __construct(
         public ?string $image = null,
         public ?string $title = null,
@@ -38,6 +72,11 @@ final class Book extends BaseModel implements BookInterface
     ) {
     }
 
+    /**
+     * Get all books in the current page.
+     *
+     * @return Paginator
+     */
     final public function all(int $page = 1): PaginatorContract
     {
         $crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . '?' . \Arr::query([
@@ -70,6 +109,13 @@ final class Book extends BaseModel implements BookInterface
         return $paginator;
     }
 
+    /**
+     * Get a book by its slug.
+     *
+     * @param string $slug
+     *
+     * @return self
+     */
     final public function find(string $slug): self
     {
         $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
@@ -89,6 +135,11 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
+    /**
+     * Set the book category.
+     *
+     * @return self
+     */
     final public function withCategory(CategoryInterface $category): self
     {
         $this->category = $category;
@@ -96,6 +147,11 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
+    /**
+     * Set the book language.
+     *
+     * @return self
+     */
     final public function withLanguage(LanguageInterface $language): self
     {
         $this->language = $language;
@@ -103,6 +159,11 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
+    /**
+     * Load a book detail.
+     *
+     * @return self
+     */
     final public function loadDetail(): self
     {
         if ($this->detail->crawler->getUri() === null) {
@@ -116,6 +177,11 @@ final class Book extends BaseModel implements BookInterface
         return $this;
     }
 
+    /**
+     * Get all books by keyword in current page.
+     *
+     * @return Paginator
+     */
     final public function like(string $keyword, int $page = 1): PaginatorContract
     {
         $crawler = \Goutte::request(method: 'GET', uri: self::SEARCH_URL . '?' . \Arr::query([

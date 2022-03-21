@@ -11,9 +11,11 @@ class GoutteServiceProvider extends ServiceProvider
     private const HTTP_TIMEOUT = 60;
 
     /**
-     * Register services.
+     * Register Goutte Facade into service container.
      *
      * @return void
+     *
+     * @see \App\Facades\GoutteFacade
      */
     public function register()
     {

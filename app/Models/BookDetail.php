@@ -9,6 +9,22 @@ final class BookDetail extends BaseModel implements BookDetailInterface
 {
     protected string $primaryKey = 'slug';
 
+    /**
+     * Create a new book detail instance.
+     *
+     * @param ?string $releaseDate
+     * @param ?string $description
+     * @param ?string $language
+     * @param ?string $country
+     * @param ?string $publisher
+     * @param ?int $pageCount
+     * @param ?string $category
+     * @param ?string $categorySlug
+     * @param ?string $slug
+     * @param ?Crawler $crawler
+     *
+     * @return void
+     */
     final public function __construct(
         public ?string $releaseDate = null,
         public ?string $description = null,
@@ -46,6 +62,13 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         }
     }
 
+    /**
+     * Get a book detail by its slug.
+     *
+     * @param string $slug
+     *
+     * @return self
+     */
     final public function find(string $slug): self
     {
         if ($this->crawler->getUri() === null) {

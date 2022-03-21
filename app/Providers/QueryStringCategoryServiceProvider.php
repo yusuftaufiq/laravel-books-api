@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider;
 class QueryStringCategoryServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
-     * Register services.
+     * Change the query string "?category={slug}" into the category model & register it as a service.
      *
      * @return void
      */

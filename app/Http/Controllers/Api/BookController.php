@@ -22,6 +22,10 @@ final class BookController extends Controller
 
     /**
      * Display a listing of the resource.
+     * The "$category" and "$language" parameter may contain a value based on the query string.
+     *
+     * @see \App\Providers\QueryStringCategoryServiceProvider
+     * @see \App\Providers\QueryStringLanguageServiceProvider
      *
      * @param Request $request
      * @param CategoryInterface $category

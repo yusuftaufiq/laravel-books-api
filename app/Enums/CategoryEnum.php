@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
+/**
+ * Enumeration for book category. Backed values contain category slugs.
+ */
 enum CategoryEnum: string
 {
     case AdultFiction = 'adult-fiction';
@@ -46,6 +49,11 @@ enum CategoryEnum: string
     case TeenYoungAdultFiction = 'teen-young-adult-fiction';
     case Travel = 'travel';
 
+    /**
+     * Get readable category name.
+     *
+     * @return string
+     */
     final public function name(): string
     {
         return match ($this) {

@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 class QueryStringLanguageServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
-     * Register services.
+     * Change the query string "?language={slug}" into the language model & register it as a service.
      *
      * @return void
      */

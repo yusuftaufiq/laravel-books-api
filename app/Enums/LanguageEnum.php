@@ -24,6 +24,11 @@ enum LanguageEnum: string
     case Spanish = 'es';
     case Thai = 'th';
 
+    /**
+     * Get query string parameter value.
+     *
+     * @return int
+     */
     final public function value(): int
     {
         return match ($this) {
