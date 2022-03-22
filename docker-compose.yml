@@ -1,0 +1,113 @@
+version: '3'
+
+networks:
+    laravel:
+        driver: bridge
+
+volumes:
+    mysql:
+        driver: local
+    redis:
+        driver: local
+
+services:
+    site:
+        build:
+            context: ./dockerfiles
+            dockerfile: nginx.dockerfile
+            args:
+                - UID=${UID:-1000}
+                - GID=${GID:-1000}
+        container_name: nginx
+        ports:
+            - '${DOCKER_FORWARD_APP_PORT:-80}:80'
+        volumes:
+            - ./:/var/www/html:delegated
+        depends_on:
+            - php
+            - redis
+            - mysql
+        networks:
+            - laravel
+
+    mysql:
+        image: mariadb:10.6
+        container_name: mysql
+        restart: unless-stopped
+        tty: true
+        ports:
+            - '${DOCKER_FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        networks:
+            - laravel
+        volumes:
+            - mysql:/var/lib/mysql
+
+    php:
+        build:
+            context: ./dockerfiles
+            dockerfile: php.dockerfile
+            args:
+                - UID=${UID:-1000}
+                - GID=${GID:-1000}
+        container_name: php
+        volumes:
+            - ./:/var/www/html:delegated
+        networks:
+            - laravel
+        environment:
+            RESPONSE_CACHE_DRIVER: '${DOCKER_RESPONSE_CACHE_DRIVER:-redis}'
+
+    redis:
+        image: redis:alpine
+        container_name: redis
+        restart: unless-stopped
+        ports:
+            - '${DOCKER_FORWARD_REDIS_PORT:-6379}:6379'
+        networks:
+            - laravel
+        volumes:
+            - redis:/data
+
+    composer:
+        build:
+            context: ./dockerfiles
+            dockerfile: composer.dockerfile
+            args:
+                - UID=${UID:-1000}
+                - GID=${GID:-1000}
+        container_name: composer
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        depends_on:
+            - php
+        user: laravel
+        entrypoint: [ 'composer', '--ignore-platform-reqs' ]
+        networks:
+            - laravel
+
+    artisan:
+        build:
+            context: ./dockerfiles
+            dockerfile: php.dockerfile
+            args:
+                - UID=${UID:-1000}
+                - GID=${GID:-1000}
+        container_name: artisan
+        volumes:
+            - ./:/var/www/html:delegated
+        depends_on:
+            - mysql
+        working_dir: /var/www/html
+        entrypoint: [ 'php', '/var/www/html/artisan' ]
+        networks:
+            - laravel
