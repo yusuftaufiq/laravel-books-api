@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\RegisterUserController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Middleware\CacheResponseMiddleware;
+use Spatie\ResponseCache\Middlewares\CacheResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +27,13 @@ use App\Http\Middleware\CacheResponseMiddleware;
 
 \Route::post('/register', RegisterUserController::class)->name('register');
 
-\Route::controller(AuthController::class)->group(function () {
+\Route::controller(AuthController::class)->group(function (): void {
     \Route::post('/login', 'login')->name('login');
     \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
 });
 
-\Route::middleware(['auth:sanctum', CacheResponseMiddleware::class])->group(function () {
-    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware(CacheResponseMiddleware::class);
+\Route::middleware(['auth:sanctum', CacheResponse::class])->group(function (): void {
+    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware(CacheResponse::class);
     \Route::get('search/{keyword}', BookSearchController::class)->name('books.search');
 
     /**
