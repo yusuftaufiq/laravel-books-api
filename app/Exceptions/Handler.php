@@ -36,7 +36,19 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    public function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
+    /**
+     * List of methods for handling exceptions.
+     *
+     * @var array<string>
+     */
+    protected array $exceptionHandlers = [
+        'handleNotFoundHttpException',
+        'handleTooManyRequestsHttpException',
+        'handleAuthenticationException',
+        'handleValidationException',
+    ];
+
+    protected function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
             $message = $e->getMessage() ?: 'Page not found';
@@ -46,7 +58,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    public function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
+    protected function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
             $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
@@ -58,7 +70,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    public function handleAuthenticationException(AuthenticationException $e, Request $request)
+    protected function handleAuthenticationException(AuthenticationException $e, Request $request)
     {
         if ($request->is('api/*')) {
             $message = $e->getMessage() ?: 'You are not authorized to perform this action.';
@@ -68,7 +80,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    public function handleValidationException(ValidationException $e, Request $request)
+    protected function handleValidationException(ValidationException $e, Request $request)
     {
         if ($request->is('api/*')) {
             $message = $e->getMessage() ?: 'The request could not be processed.';
@@ -87,9 +99,8 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable($this->handleNotFoundHttpException(...));
-        $this->renderable($this->handleTooManyRequestsHttpException(...));
-        $this->renderable($this->handleAuthenticationException(...));
-        $this->renderable($this->handleValidationException(...));
+        collect($this->exceptionHandlers)->each(function ($handler) {
+            $this->renderable([$this, $handler](...));
+        });
     }
 }
