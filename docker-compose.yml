@@ -65,6 +65,7 @@ services:
             - laravel
         environment:
             RESPONSE_CACHE_DRIVER: '${DOCKER_RESPONSE_CACHE_DRIVER:-redis}'
+            DB_HOST: mysql
 
     redis:
         image: redis:alpine
