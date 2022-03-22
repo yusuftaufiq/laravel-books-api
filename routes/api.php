@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\RegisterUserController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Middleware\CacheResponseMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
+/**
+ * @see \App\Providers\AppServiceProvider   for a list of implemented interfaces
+ */
+
 \Route::post('/register', RegisterUserController::class)->name('register');
 
 \Route::controller(AuthController::class)->group(function () {
@@ -27,10 +32,16 @@ use App\Http\Controllers\Api\UserController;
     \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
 });
 
-\Route::middleware(['auth:sanctum', 'cache.response'])->group(function () {
-    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware('cache.response');
+\Route::middleware(['auth:sanctum', CacheResponseMiddleware::class])->group(function () {
+    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware(CacheResponseMiddleware::class);
     \Route::get('search/{keyword}', BookSearchController::class)->name('books.search');
 
+    /**
+     * All classes that extend \App\Models\BaseModel have their own
+     * route model binding implementation, see here for more details.
+     *
+     * @see \App\Models\BaseModel
+     */
     \Route::apiResource('books', BookController::class)->only(['index', 'show']);
     \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);
 
