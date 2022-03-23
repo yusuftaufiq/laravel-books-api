@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker-compose build site
+    - name: Install composer dependencies
+      run: docker-compose run composer install --no-interaction
+    - name: Run features and unit tests
+      run: docker-compose run artisan test
