@@ -14,9 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Copy environment
+      run: sudo cp .env.example .env
     - name: Build the Docker image
       run: docker-compose up -d --build site
     - name: Install composer dependencies
-      run: docker-compose run --rm composer install --no-interaction
+      run: sudo docker-compose run --rm composer install --no-interaction
     - name: Run features and unit tests
       run: docker-compose run --rm artisan test
