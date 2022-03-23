@@ -112,3 +112,5 @@ services:
         entrypoint: [ 'php', '/var/www/html/artisan' ]
         networks:
             - laravel
+        environment:
+            DB_HOST: mysql
