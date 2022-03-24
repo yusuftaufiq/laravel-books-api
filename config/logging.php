@@ -101,7 +101,7 @@ return [
         ],
 
         'errorlog' => [
-            'driver' => env('ERROR_LOG_DRIVER', 'errorlog'),
+            'driver' => 'errorlog',
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
