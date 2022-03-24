@@ -20,11 +20,12 @@ final class LanguageResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     *
+     * @return array<string, null|int|string>
      */
     final public function toArray($request)
     {
-        /** @var \App\Contracts\LanguageInterface|static $this */
+        /** @var \App\Models\Language|static $this */
         return [
             'slug' => $this->slug,
             'name' => $this->name,

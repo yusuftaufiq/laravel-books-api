@@ -20,11 +20,12 @@ final class UserResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     *
+     * @return array<string, string>
      */
     final public function toArray($request)
     {
-        /** @var \App\Contracts\UserInterface|static $this */
+        /** @var \App\Models\User|static $this */
         return [
             'name' => $this->name,
             'email' => $this->email,

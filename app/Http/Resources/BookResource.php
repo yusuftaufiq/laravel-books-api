@@ -20,11 +20,12 @@ final class BookResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     *
+     * @return array<string, mixed>
      */
     final public function toArray($request)
     {
-        /** @var \App\Contracts\BookInterface|static $this */
+        /** @var \App\Models\Book|static $this */
         return [
             'image' => $this->image,
             'title' => $this->title,

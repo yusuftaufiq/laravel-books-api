@@ -44,6 +44,7 @@ final class Language extends BaseModel implements LanguageInterface
             value: $languageEnum->value(),
         ));
 
+        /* @phpstan-ignore-next-line */
         return $categories->toArray();
     }
 

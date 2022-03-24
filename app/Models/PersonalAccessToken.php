@@ -47,12 +47,12 @@ final class PersonalAccessToken extends SanctumPersonalAccessToken
     /**
      * Set expiry date format.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<mixed, mixed>
      */
     final public function expiredAt(): Attribute
     {
         return new Attribute(
-            set: fn (string $value) => \DateTime::createFromFormat('Y-m-d H:i:s', "$value 23:59:59"),
+            set: fn (string $value): \DateTime|bool => \DateTime::createFromFormat('Y-m-d H:i:s', "$value 23:59:59"),
         );
     }
 }

@@ -20,11 +20,12 @@ final class BookDetailResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     *
+     * @return array<string, int|null|string>
      */
     final public function toArray($request)
     {
-        /** @var \App\Contracts\BookDetailInterface|static $this */
+        /** @var \App\Models\BookDetail|static $this */
         return [
             'release_date' => $this->releaseDate,
             'description' => $this->description,

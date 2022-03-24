@@ -43,6 +43,7 @@ final class Category extends BaseModel implements CategoryInterface
             name: $categoryEnum->name(),
         ));
 
+        /* @phpstan-ignore-next-line */
         return $categories->toArray();
     }
 

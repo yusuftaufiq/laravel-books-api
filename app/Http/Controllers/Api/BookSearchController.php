@@ -27,7 +27,7 @@ final class BookSearchController extends Controller
      */
     final public function __invoke(Request $request, string $keyword): BookCollection
     {
-        $page = $request->query('page', 1);
+        $page = (int) $request->query('page', '1');
         $books = $this->book->like($keyword, $page);
 
         return new BookCollection($books);

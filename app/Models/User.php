@@ -49,7 +49,7 @@ final class User extends Authenticatable implements UserInterface
     /**
      * Set the user's hashed password.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<mixed, mixed>
      */
     final protected function password(): Attribute
     {
@@ -62,7 +62,7 @@ final class User extends Authenticatable implements UserInterface
      * Create a expirable new personal access token for the user.
      *
      * @param string $name
-     * @param \DateTime $expiredAt
+     * @param string $expiredAt
      * @param array  $abilities
      *
      * @return \Laravel\Sanctum\NewAccessToken
@@ -74,6 +74,7 @@ final class User extends Authenticatable implements UserInterface
     ): NewAccessToken {
         $plainTextToken = \Str::random(40);
 
+        /** @var \Laravel\Sanctum\PersonalAccessToken */
         $token = $this->tokens()->create([
             'name' => $name,
             'token' => hash(algo: 'sha256', data: $plainTextToken),
@@ -81,6 +82,7 @@ final class User extends Authenticatable implements UserInterface
             'expired_at' => $expiredAt,
         ]);
 
+        /* @phpstan-ignore-next-line */
         return new NewAccessToken($token, "{$token->getKey()}|{$plainTextToken}");
     }
 }

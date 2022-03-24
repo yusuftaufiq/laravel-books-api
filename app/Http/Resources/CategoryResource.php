@@ -20,11 +20,12 @@ final class CategoryResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     *
+     * @return array<string, ?string>
      */
     final public function toArray($request)
     {
-        /** @var \App\Contracts\CategoryInterface|static $this */
+        /** @var \App\Models\Category|static $this */
         return [
             'slug' => $this->slug,
             'name' => $this->name,

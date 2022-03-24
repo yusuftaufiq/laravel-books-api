@@ -50,15 +50,15 @@ final class BookDetail extends BaseModel implements BookDetailInterface
     {
         try {
             $result = $this->crawler
-                ->filter(".switch_content.sc_2 td:contains(\"$part\")")
-                ->closest('tr')
-                ->filter('td')
-                ->last()
-                ->text();
+                ?->filter(".switch_content.sc_2 td:contains(\"$part\")")
+                ?->closest('tr')
+                ?->filter('td')
+                ?->last()
+                ?->text();
         } catch (\Exception $e) {
             $result = null;
         } finally {
-            return $result;
+            return $result ?? null;
         }
     }
 
@@ -71,21 +71,23 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      */
     final public function find(string $slug): self
     {
-        if ($this->crawler->getUri() === null) {
+        if ($this->crawler?->getUri() === null) {
             $this->crawler = \Goutte::request(method: 'GET', uri: Book::BASE_URL . $slug);
         }
 
-        $this->releaseDate = str($this->crawler->filter('.switch_content.sc_1')->text())
+        $this->releaseDate = \Str::of($this->crawler->filter('.switch_content.sc_1')->text())
             ->after(search: 'Release Date: ')
             ->before(search: '.');
         $this->description = $this->crawler->filter('[itemprop="description"]')->text();
         $this->language = $this->getDetailOf('Language');
         $this->country = $this->getDetailOf('Country');
         $this->publisher = $this->getDetailOf('Publisher');
-        $this->pageCount = $this->getDetailOf('Page Count');
+        $this->pageCount = (int) $this->getDetailOf('Page Count');
         $this->category = $this->crawler->filter('[itemprop="title"]')->eq(2)->text();
-        $this->categorySlug = str($this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href'))
-            ->afterLast(search: Category::BASE_URL);
+        $this->categorySlug = \Str::afterLast(
+            subject: $this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href') ?: '',
+            search: Category::BASE_URL,
+        );
         $this->slug = $slug;
 
         return $this;

@@ -38,7 +38,7 @@ final class BookController extends Controller
         CategoryInterface $category,
         LanguageInterface $language,
     ): BookCollection {
-        $page = $request->query('page', 1);
+        $page = (int) $request->query('page', '1');
         $books = $this->book->withCategory($category)->withLanguage($language)->all($page);
 
         return new BookCollection($books);

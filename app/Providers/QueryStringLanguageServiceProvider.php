@@ -18,13 +18,14 @@ class QueryStringLanguageServiceProvider extends ServiceProvider implements Defe
     public function register()
     {
         $request = request();
-        $currentRoute = $request?->route();
-        $queryStringLanguage = $request?->query('language');
+        $currentRoute = $request->route();
+        /** @var string */
+        $queryStringLanguage = $request->query('language');
 
         if (
             $currentRoute?->hasParameter('language') === false
-            && $currentRoute?->getController()::class === BookController::class
-            && $currentRoute?->getActionMethod() === 'index'
+            && $currentRoute->getControllerClass() === BookController::class
+            && $currentRoute->getActionMethod() === 'index'
             && $queryStringLanguage !== null
         ) {
             $this->app->bind(LanguageInterface::class, fn () => (

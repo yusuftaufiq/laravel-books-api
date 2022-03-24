@@ -29,6 +29,7 @@ final class RegisterUserController extends Controller
      */
     final public function __invoke(RegisterUserRequest $request): UserResource
     {
+        /** @phpstan-ignore-next-line */
         $user = $this->user->create($request->validated());
 
         $userResource = new UserResource($user);

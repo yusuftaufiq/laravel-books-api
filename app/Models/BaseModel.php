@@ -42,19 +42,30 @@ abstract class BaseModel implements BaseModelInterface
      */
     public function getRouteKeyName(): string
     {
-        return $this->getAttribute($this->getRouteKeyName());
+        return $this->getKeyName();
+    }
+
+    /**
+     * Get the primary key for the model.
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        return $this->primaryKey;
     }
 
     /**
      * Retrieve the model for a bound value.
      *
-     * @param  mixed  $value
+     * @param  string  $value
      * @param  string|null  $field
      *
-     * @return static
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding(mixed $value, $field = null): static
+    public function resolveRouteBinding($value, $field = null)
     {
+        /** @phpstan-ignore-next-line */
         return $this->find($value);
     }
 
@@ -67,7 +78,7 @@ abstract class BaseModel implements BaseModelInterface
      *
      * @throws \Exception
      */
-    public function resolveChildRouteBinding($childType, $value, $field): void
+    public function resolveChildRouteBinding($childType, $value, $field)
     {
         throw new \Exception(self::class . ' does not support child bindings.');
     }

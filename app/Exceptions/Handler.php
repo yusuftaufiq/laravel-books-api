@@ -37,17 +37,8 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * List of methods for handling exceptions.
-     *
-     * @var array<string>
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
      */
-    protected array $exceptionHandlers = [
-        'handleNotFoundHttpException',
-        'handleTooManyRequestsHttpException',
-        'handleAuthenticationException',
-        'handleValidationException',
-    ];
-
     protected function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
@@ -58,6 +49,9 @@ class Handler extends ExceptionHandler
         }
     }
 
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
     protected function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
@@ -70,6 +64,9 @@ class Handler extends ExceptionHandler
         }
     }
 
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
     protected function handleAuthenticationException(AuthenticationException $e, Request $request)
     {
         if ($request->is('api/*')) {
@@ -80,6 +77,9 @@ class Handler extends ExceptionHandler
         }
     }
 
+    /**
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
+     */
     protected function handleValidationException(ValidationException $e, Request $request)
     {
         if ($request->is('api/*')) {
@@ -99,8 +99,9 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        collect($this->exceptionHandlers)->each(function ($handler) {
-            $this->renderable([$this, $handler](...));
-        });
+        $this->renderable($this->handleNotFoundHttpException(...));
+        $this->renderable($this->handleTooManyRequestsHttpException(...));
+        $this->renderable($this->handleAuthenticationException(...));
+        $this->renderable($this->handleValidationException(...));
     }
 }

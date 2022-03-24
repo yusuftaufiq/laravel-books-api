@@ -89,6 +89,7 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return str()->lower("{$this->input('email')}|{$this->ip()}");
+        /** @phpstan-ignore-next-line */
+        return \Str::lower("{$this->input('email')}|{$this->ip()}");
     }
 }

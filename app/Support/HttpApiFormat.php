@@ -8,6 +8,9 @@ use Phpro\ApiProblem\Http\HttpApiProblem;
 
 class HttpApiFormat extends HttpApiProblem
 {
+    /**
+     * @var \Illuminate\Support\Collection<string, mixed>
+     */
     protected Collection $data;
 
     public function __construct(int $statusCode = Response::HTTP_OK, array $data = [])

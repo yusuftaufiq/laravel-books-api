@@ -29,8 +29,8 @@ final class AuthController extends Controller
         $user = $request->user();
 
         $token = $user->createExpirableToken(
-            name: $request->get('token_name'),
-            expiredAt: $request->get('expired_at'),
+            name: $request->get('token_name'), /** @phpstan-ignore-line */
+            expiredAt: $request->get('expired_at'), /** @phpstan-ignore-line */
         );
 
         $tokenResource = new PersonalAccessTokenResource($token->accessToken);

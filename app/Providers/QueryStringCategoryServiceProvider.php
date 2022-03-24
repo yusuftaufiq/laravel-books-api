@@ -18,13 +18,14 @@ class QueryStringCategoryServiceProvider extends ServiceProvider implements Defe
     public function register()
     {
         $request = request();
-        $currentRoute = $request?->route();
-        $queryStringCategory = $request?->query('category');
+        $currentRoute = $request->route();
+        /** @var string */
+        $queryStringCategory = $request->query('category');
 
         if (
             $currentRoute?->hasParameter('category') === false
-            && $currentRoute?->getController()::class === BookController::class
-            && $currentRoute?->getActionMethod() === 'index'
+            && $currentRoute->getControllerClass() === BookController::class
+            && $currentRoute->getActionMethod() === 'index'
             && $queryStringCategory !== null
         ) {
             $this->app->bind(CategoryInterface::class, fn () => (

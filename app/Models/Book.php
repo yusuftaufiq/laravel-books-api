@@ -11,6 +11,10 @@ use Illuminate\Pagination\Paginator;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+  * @property \App\Models\Category $category
+  * @property \App\Models\Language $language
+ */
 final class Book extends BaseModel implements BookInterface
 {
     /**
@@ -81,14 +85,14 @@ final class Book extends BaseModel implements BookInterface
     {
         $crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . '?' . \Arr::query([
             'page' => $page,
-            'category' => $this->category->slug,
-            'language' => $this->language->value,
+            'category' => $this->category?->slug,
+            'language' => $this->language?->value,
         ]));
 
         $books = $crawler->filter('.oubox_list')->each(function (Crawler $node) use ($crawler): self {
             $title = $node->filter('.title a');
-            $originalUrl = $title->attr('href');
-            $slug = str($originalUrl)->substr(start: str()->length(self::BASE_URL));
+            $originalUrl = $title->attr('href') ?: '';
+            $slug = \Str::substr(string: $originalUrl, start: \Str::length(self::BASE_URL));
 
             return new self(
                 image: $node->filter('.imgwrap img')->attr('src'),
@@ -120,14 +124,17 @@ final class Book extends BaseModel implements BookInterface
     {
         $this->crawler = \Goutte::request(method: 'GET', uri: self::BASE_URL . $slug);
 
-        if (str($this->crawler->getUri())->contains(needles: '?ref')) {
+        if (\Str::contains(haystack: $this->crawler->getUri() ?: '', needles: '?ref')) {
             throw new NotFoundHttpException("The book with slug $slug could not be found.");
         }
 
         $this->image = $this->crawler->filter('#zoom img')->attr('src');
         $this->title = $this->crawler->filter('#big')->text();
         $this->author = $this->crawler->filter('.auth a')->text();
-        $this->price = str($this->crawler->filter('#content_data_trigger .plan_list div')->text())->afterLast(search: ')');
+        $this->price = \Str::afterLast(
+            subject: $this->crawler->filter('#content_data_trigger .plan_list div')->text(),
+            search: ')',
+        );
         $this->originalUrl = self::BASE_URL . $slug;
         $this->url = route('books.show', ['book' => $slug]);
         $this->slug = $slug;
@@ -166,12 +173,12 @@ final class Book extends BaseModel implements BookInterface
      */
     final public function loadDetail(): self
     {
-        if ($this->detail->crawler->getUri() === null) {
+        if ($this->detail instanceof BookDetailInterface && $this->detail->crawler?->getUri() === null) {
             $this->detail->crawler = $this->crawler;
         }
 
-        if ($this->detail->slug !== $this->slug) {
-            $this->detail->find($this->slug);
+        if ($this->detail?->slug !== $this->slug) {
+            $this->detail?->find($this->slug ?: '');
         }
 
         return $this;
@@ -192,8 +199,8 @@ final class Book extends BaseModel implements BookInterface
 
         $books = $crawler->filter('.search_list')->each(function (Crawler $node) use ($crawler): self {
             $title = $node->filter('.title a');
-            $originalUrl = $title->attr('href');
-            $slug = str($originalUrl)->substr(start: str()->length(self::BASE_URL));
+            $originalUrl = $title->attr('href') ?: '';
+            $slug = \Str::substr(string: $originalUrl, start: \Str::length(self::BASE_URL));
 
             return new self(
                 image: $node->filter('.limit img')->attr('src'),
