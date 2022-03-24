@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\LanguageInterface;
+use App\Http\Controllers\Api\BookController;
 use App\Models\Language;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
