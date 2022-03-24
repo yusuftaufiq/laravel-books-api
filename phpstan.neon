@@ -1,0 +1,12 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+    paths:
+        - app
+    level: 9
+    excludePaths:
+        - ./app/Providers/RouteServiceProvider.php
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#^Access to an undefined property App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:\$(\w*)#'
+        - '#^Call to an undefined method App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:(\w*)#'
