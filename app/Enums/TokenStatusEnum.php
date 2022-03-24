@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum TokenStatusEnum: string
 {
-    case Active = 'active';
-    case Expired = 'expired';
-    case Revoked = 'revoked';
+    case Active = 'Active';
+    case Expired = 'Expired';
+    case Revoked = 'Revoked';
 }
