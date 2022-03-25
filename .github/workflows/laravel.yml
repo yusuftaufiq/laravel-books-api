@@ -15,6 +15,7 @@ jobs:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
+        tools: phpstan, phpcs
     - uses: actions/checkout@v2
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -32,4 +33,8 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
+      run: php artisan test
+    - name: Run PHPStan
+      run: phpstan analyze -q --error-format=checkstyle --configuration=/github/workspace/phpstan.neon --memory-limit=256M | cs2pr
+    - name: Run PHPCS
+      run: phpcs -q --standard=/github/workspace/phpcs.xml --report=checkstyle | cs2pr
