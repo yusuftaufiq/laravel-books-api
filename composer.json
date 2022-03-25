@@ -51,6 +51,10 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "code-analyze": [
+            "./vendor/bin/phpstan",
+            "./vendor/bin/phpcs --standard=./phpcs.xml"
         ]
     },
     "extra": {
