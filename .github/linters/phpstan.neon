@@ -1,0 +1,13 @@
+includes:
+    - /github/workspace/vendor/nunomaduro/larastan/extension.neon
+parameters:
+    paths:
+        - /github/workspace/app
+        - /github/workspace/routes/api.php
+    level: 9
+    excludePaths:
+        - /github/workspace/app/Providers/RouteServiceProvider.php
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#^Access to an undefined property App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:\$(\w*)#'
+        - '#^Call to an undefined method App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:(\w*)#'
