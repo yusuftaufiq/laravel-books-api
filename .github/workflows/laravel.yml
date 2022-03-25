@@ -35,6 +35,6 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: php artisan test
     - name: Run PHPStan
-      run: phpstan analyze -q --error-format=checkstyle --configuration=/github/workspace/phpstan.neon --memory-limit=256M | cs2pr
+      run: phpstan analyze --configuration=/github/workspace/phpstan.neon --memory-limit=256M
     - name: Run PHPCS
-      run: phpcs -q --standard=/github/workspace/phpcs.xml --report=checkstyle | cs2pr
+      run: phpcs --standard=/github/workspace/phpcs.xml
