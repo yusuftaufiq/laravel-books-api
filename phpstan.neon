@@ -2,7 +2,8 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 parameters:
     paths:
-        - app
+        - ./app
+        - ./routes/api.php
     level: 9
     excludePaths:
         - ./app/Providers/RouteServiceProvider.php

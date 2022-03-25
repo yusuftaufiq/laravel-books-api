@@ -22,12 +22,14 @@ jobs:
           fetch-depth: 0
 
       - name: Copy the linter configuration to Github Actions
-        run: mkdir ./.github/linters/ && cp ./phpstan.neon ./.github/linters/
+        run: mkdir -p ./.github/linters/ && cp ./phpstan.neon ./.github/linters/ && cp ./phpcs.xml ./.github/linters/
 
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: true
-          VALIDATE_PHP_PSALM: false
+          VALIDATE_PHP: true
+          VALIDATE_PHP_PHPCS: true
+          VALIDATE_PHP_PHPSTAN: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
