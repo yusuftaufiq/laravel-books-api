@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @see \App\Providers\AppServiceProvider for a list of implemented interfaces
+ */
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
@@ -20,10 +24,6 @@ use Spatie\ResponseCache\Middlewares\CacheResponse;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-/**
- * @see \App\Providers\AppServiceProvider   for a list of implemented interfaces
- */
 
 \Route::post('/register', RegisterUserController::class)->name('register');
 
