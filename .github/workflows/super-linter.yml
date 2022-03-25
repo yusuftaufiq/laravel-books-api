@@ -24,6 +24,9 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
+          FILTER_REGEX_INCLUDE: .*app/.*
+          FILTER_REGEX_EXCLUDE: .*app/Enums/.*
+          LINTER_RULES_PATH: /github/workspace/
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_PHP: true
           VALIDATE_PHP_PHPCS: true
