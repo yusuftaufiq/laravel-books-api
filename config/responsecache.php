@@ -13,13 +13,13 @@ return [
      *  You can provide your own class given that it implements the
      *  CacheProfile interface.
      */
-    'cache_profile' => Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests::class,
+    'cache_profile' => \App\Support\CacheAllSuccessfulGetRequests::class,
 
     /*
      * When using the default CacheRequestFilter this setting controls the
      * default number of seconds responses must be cached.
      */
-    'cache_lifetime_in_seconds' => env('RESPONSE_CACHE_LIFETIME', 60 * 60 * 24 * 7),
+    'cache_lifetime_in_seconds' => env('RESPONSE_CACHE_LIFETIME', 60 * 60 * 24),
 
     /*
      * This setting determines if a http header named with the cache time
