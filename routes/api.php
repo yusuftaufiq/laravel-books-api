@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @see \App\Providers\AppServiceProvider for a list of implemented interfaces
- */
-
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
@@ -24,6 +20,14 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
+// phpcs:ignore
+/**
+ * For a list of implementations of interfaces into concrete
+ * classes, see $bindings in \App\Providers\AppServiceProvider.
+ *
+ * @see \App\Providers\AppServiceProvider
+ */
+
 \Route::post('/register', RegisterUserController::class)->name('register');
 
 \Route::controller(AuthController::class)->group(function (): void {
@@ -42,7 +46,8 @@ use App\Http\Controllers\Api\UserController;
     \Route::get('/user', UserController::class)->name('user');
 
     \Route::middleware([
-        sprintf('cache.headers:public;max_age=%d;etag', config('responsecache.cache_lifetime_in_seconds')),
+        /** @phpstan-ignore-next-line */
+        sprintf('cache.headers:public;max_age=%d;etag', (int) config('responsecache.cache_lifetime_in_seconds')),
         'cache.response',
     ])->group(function (): void {
         \Route::get('search/{keyword}', BookSearchController::class)->name('books.search');
