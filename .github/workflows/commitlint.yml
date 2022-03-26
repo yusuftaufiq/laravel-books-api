@@ -9,11 +9,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  commitlint:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
 
       - name: Commit Linter
-        uses: wagoid/commitlint-github-action@v2
+        uses: wagoid/commitlint-github-action@v4
