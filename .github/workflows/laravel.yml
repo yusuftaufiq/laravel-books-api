@@ -35,6 +35,6 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: php artisan test
     - name: Run PHPStan
-      run: phpstan analyze --configuration=/github/workspace/phpstan.neon --memory-limit=256M
+      run: phpstan analyze --configuration=phpstan.neon --memory-limit=256M
     - name: Run PHPCS
-      run: phpcs --standard=/github/workspace/phpcs.xml
+      run: phpcs --standard=phpcs.xml
