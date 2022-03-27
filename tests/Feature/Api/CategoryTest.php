@@ -43,7 +43,11 @@ class CategoryTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('categories.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('categories.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testShowCategory(): void
@@ -59,7 +63,11 @@ class CategoryTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs($response->json('category.slug'));
+
+        /** @var string */
+        $slug = $response->json('category.slug');
+
+        $this->assertSlugs($slug);
     }
 
     public function testUnauthorizedShowCategory(): void

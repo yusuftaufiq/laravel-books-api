@@ -82,7 +82,9 @@ final class User extends Authenticatable implements UserInterface
             'expired_at' => $expiredAt,
         ]);
 
-        /* @phpstan-ignore-next-line */
-        return new NewAccessToken($token, "{$token->getKey()}|{$plainTextToken}");
+        /** @var string */
+        $tokenKey = $token->getKey();
+
+        return new NewAccessToken($token, "{$tokenKey}|{$plainTextToken}");
     }
 }

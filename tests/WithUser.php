@@ -11,6 +11,6 @@ trait WithUser
 
     private function setUpUser(): void
     {
-        $this->user = User::factory()->has(PersonalAccessToken::factory(), 'tokens')->create();
+        $this->user = User::factory()->has(PersonalAccessToken::factory(), 'tokens')->createOne();
     }
 }

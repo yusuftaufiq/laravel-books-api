@@ -22,6 +22,7 @@ class AuthControllerTest extends TestCase
         $tokenName = $this->faker->sentence;
         $expiredAt = $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d');
 
+        /** @var PersonalAccessToken */
         $tokenMock = \Mockery::mock(PersonalAccessToken::class);
         $userMock = \Mockery::mock(UserInterface::class, function (MockInterface $mock) use (
             $tokenName,
@@ -41,8 +42,8 @@ class AuthControllerTest extends TestCase
         ): void {
             $mock->shouldReceive('authenticateOrFail')->once()->withNoArgs()->andReturn();
             $mock->shouldReceive('user')->once()->withNoArgs()->andReturn($userMock);
-            $mock->shouldReceive('get')->once()->with('token_name')->andReturn($tokenName);
-            $mock->shouldReceive('get')->once()->with('expired_at')->andReturn($expiredAt);
+            $mock->shouldReceive('input')->once()->with('token_name')->andReturn($tokenName);
+            $mock->shouldReceive('input')->once()->with('expired_at')->andReturn($expiredAt);
         });
 
         /** @var AuthController */

@@ -8,6 +8,7 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourceAssertion;
@@ -42,12 +43,13 @@ class LoginTest extends TestCase
     {
         /** @var PersonalAccessToken */
         $token = PersonalAccessToken::factory()->make();
+        $expiredAt = $token->expired_at instanceof Carbon ? $token->expired_at->format('Y-m-d') : '';
 
         $response = $this->post(uri: route('login'), data: [
             'email' => $this->user->email,
             'password' => UserFactory::DEFAULT_PLAIN_TEXT_PASSWORD,
             'token_name' => $token->name,
-            'expired_at' => $token->expired_at->format('Y-m-d'),
+            'expired_at' => $expiredAt,
         ]);
 
         $response->assertCreated();
@@ -65,7 +67,13 @@ class LoginTest extends TestCase
                 ->etc()
         ));
 
-        $this->assertStringContainsString(needle: $token->expired_at->format('Y-m-d'), haystack: $response->json('token.expired_at'));
+        /** @var string */
+        $actualExpiredAt = $response->json('token.expired_at');
+
+        $this->assertStringContainsString(
+            needle: $expiredAt,
+            haystack: $actualExpiredAt,
+        );
         $this->assertResourceMetaData($response, statusCode: Response::HTTP_CREATED);
         $this->assertDatabaseHas(table: 'personal_access_tokens', data: [
             'tokenable_type' => User::class,

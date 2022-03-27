@@ -3,6 +3,8 @@ includes:
 parameters:
     paths:
         - ./app
+        - ./database
+        - ./tests
         - ./routes/api.php
     level: 9
     excludePaths:
@@ -11,3 +13,4 @@ parameters:
     ignoreErrors:
         - '#^Access to an undefined property App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:\$(\w*)#'
         - '#^Call to an undefined method App\\Models\\(\w*)\|static\(App\\Http\\Resources\\(\w*)\)\:\:(\w*)#'
+        - '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage\:\:(\w*)#'

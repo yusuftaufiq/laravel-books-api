@@ -29,8 +29,11 @@ final class RegisterUserController extends Controller
      */
     final public function __invoke(RegisterUserRequest $request): UserResource
     {
+        /** @var array */
+        $validated = $request->validated();
+
         /** @phpstan-ignore-next-line */
-        $user = $this->user->create($request->validated());
+        $user = $this->user->create($validated);
 
         $userResource = new UserResource($user);
         $userResource->withResponse($request, new JsonResponse(status: Response::HTTP_CREATED));

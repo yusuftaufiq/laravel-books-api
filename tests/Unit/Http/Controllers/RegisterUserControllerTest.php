@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class RegisterUserControllerTest extends TestCase
 {
-    public function testRegisterNewUser()
+    public function testRegisterNewUser(): void
     {
         $this->mock(UserInterface::class, function (MockInterface $mock): void {
             $mock->shouldReceive('create')->once()->with([])->andReturnSelf();
@@ -20,6 +20,7 @@ class RegisterUserControllerTest extends TestCase
             $mock->shouldReceive('validated')->once()->withNoArgs()->andReturn([]);
         });
 
+        /** @var RegisterUserController */
         $registerUserController = $this->app->make(abstract: RegisterUserController::class);
         $user = $this->app->call($registerUserController);
 

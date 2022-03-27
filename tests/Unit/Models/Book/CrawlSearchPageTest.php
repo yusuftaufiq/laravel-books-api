@@ -9,6 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlSearchPageTest extends TestCase
 {
+    /** phpcs:disable Generic.Files.LineLength.TooLong */
     private string $dummyHtmlContent  = <<<'HTML'
         <div class="search_list clearfix">
             <div class="count left">1.</div>
@@ -61,8 +62,9 @@ class CrawlSearchPageTest extends TestCase
             <a class="next" href="https://ebooks.gramedia.com/search?s=ready+player+one&amp;page=2">&gt;</a>
         </div>
     HTML;
+    /** phpcs:enable Generic.Files.LineLength.TooLong */
 
-    public function testCrawlBooksByKeyword()
+    public function testCrawlBooksByKeyword(): void
     {
         $crawler = new Crawler();
         $crawler->addContent($this->dummyHtmlContent);
@@ -85,13 +87,17 @@ class CrawlSearchPageTest extends TestCase
         $firstBook = $items[0];
 
         $this->assertSame(
+            // phpcs:ignore
             expected: 'https://s3-ap-southeast-1.amazonaws.com/ebook-covers/42028/thumb_image_normal/ID_GPU2018MTH04RPON.jpg',
             actual: $firstBook->image,
         );
         $this->assertSame(expected: 'Ready Player One', actual: $firstBook->title);
         $this->assertSame(expected: 'Ernest Cline', actual: $firstBook->author);
-        $this->assertSame(expected: 'https://ebooks.gramedia.com/books/ready-player-one', actual: $firstBook->originalUrl);
-        $this->assertStringContainsString(needle: 'api/books/ready-player-one', haystack: $firstBook->url);
+        $this->assertSame(
+            expected: 'https://ebooks.gramedia.com/books/ready-player-one',
+            actual: $firstBook->originalUrl,
+        );
+        $this->assertStringContainsString(needle: 'api/books/ready-player-one', haystack: $firstBook->url ?: '');
         $this->assertSame(expected: 'ready-player-one', actual: $firstBook->slug);
     }
 }

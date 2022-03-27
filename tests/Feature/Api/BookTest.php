@@ -37,7 +37,7 @@ class BookTest extends TestCase
         $this->setUpUser();
     }
 
-    private function assertBooksStructure(TestResponse $response)
+    private function assertBooksStructure(TestResponse $response): void
     {
         $response->assertJsonStructure([
             ...$this->paginationStructure,
@@ -59,7 +59,11 @@ class BookTest extends TestCase
 
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('books.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('books.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testBookIndexByCategory(): void
@@ -72,7 +76,11 @@ class BookTest extends TestCase
 
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('books.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('books.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testBookIndexByLanguage(): void
@@ -85,7 +93,11 @@ class BookTest extends TestCase
 
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('books.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('books.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testShowBook(): void
@@ -99,7 +111,11 @@ class BookTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs($response->json('book.slug'));
+
+        /** @var string */
+        $slug = $response->json('book.slug');
+
+        $this->assertSlugs($slug);
     }
 
     public function testUnauthorizedShowBook(): void

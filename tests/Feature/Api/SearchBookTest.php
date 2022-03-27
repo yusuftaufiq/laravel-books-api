@@ -33,7 +33,9 @@ class SearchBookTest extends TestCase
 
     public function testSearchBook(): void
     {
-        $response = $this->actingAs($this->user)->get(route('books.search', ['keyword' => 1984]));
+        $response = $this->actingAs($this->user)->call(method: 'GET', uri: route('books.index'), parameters: [
+            'keyword' => 1984,
+        ]);
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -45,7 +47,11 @@ class SearchBookTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('books.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('books.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testUnauthorizedSearchBook(): void

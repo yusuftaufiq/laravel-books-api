@@ -50,7 +50,7 @@ use App\Http\Controllers\Api\UserController;
         sprintf('cache.headers:public;max_age=%d;etag', (int) config('responsecache.cache_lifetime_in_seconds')),
         'cache.response',
     ])->group(function (): void {
-        \Route::get('search/{keyword}', BookSearchController::class)->name('books.search');
+        \Route::get('books/search', BookSearchController::class)->name('books.search');
 
         /**
          * All classes that extend \App\Models\BaseModel have their own

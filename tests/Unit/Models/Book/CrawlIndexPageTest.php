@@ -9,6 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlIndexPageTest extends TestCase
 {
+    /** phpcs:disable Generic.Files.LineLength.TooLong */
     private string $dummyHtmlContent  = <<<'HTML'
         <div class="oubox_list rollover left">
             <div class="top">
@@ -55,6 +56,7 @@ class CrawlIndexPageTest extends TestCase
             <a class="next" href="https://ebooks.gramedia.com/books?language=1&amp;category=historical-fiction&amp;page=2">&gt;</a>
         </div>
     HTML;
+    /** phpcs:enable Generic.Files.LineLength.TooLong */
 
     public function testCrawlAllBooks(): void
     {
@@ -85,8 +87,14 @@ class CrawlIndexPageTest extends TestCase
         $this->assertSame(expected: 'The Man in the Brown Suit', actual: $firstBook->title);
         $this->assertSame(expected: 'Agatha Christie', actual: $firstBook->author);
         $this->assertSame(expected: 'Rp 149.000', actual: $firstBook->price);
-        $this->assertSame(expected: 'https://ebooks.gramedia.com/books/the-man-in-the-brown-suit', actual: $firstBook->originalUrl);
-        $this->assertStringContainsString(needle: 'api/books/the-man-in-the-brown-suit', haystack: $firstBook->url);
+        $this->assertSame(
+            expected: 'https://ebooks.gramedia.com/books/the-man-in-the-brown-suit',
+            actual: $firstBook->originalUrl,
+        );
+        $this->assertStringContainsString(
+            needle: 'api/books/the-man-in-the-brown-suit',
+            haystack: $firstBook->url ?: '',
+        );
         $this->assertSame(expected: 'the-man-in-the-brown-suit', actual: $firstBook->slug);
     }
 }

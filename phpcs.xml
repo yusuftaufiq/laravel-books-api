@@ -5,7 +5,11 @@
     <rule ref="PSR12" />
 
     <exclude-pattern>*Enum.php</exclude-pattern>
+    <exclude-pattern>*/database/migrations/*</exclude-pattern>
 
     <file>./app/</file>
+    <file>./config/</file>
+    <file>./database/</file>
+    <file>./tests/</file>
     <file>./routes/api.php</file>
 </ruleset>

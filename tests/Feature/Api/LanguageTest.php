@@ -44,7 +44,11 @@ class LanguageTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs(...$response->json('languages.*.slug'));
+
+        /** @var array */
+        $slugs = $response->json('languages.*.slug');
+
+        $this->assertSlugs(...$slugs);
     }
 
     public function testShowLanguage(): void
@@ -60,7 +64,11 @@ class LanguageTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
-        $this->assertSlugs($response->json('language.slug'));
+
+        /** @var string */
+        $slug = $response->json('language.slug');
+
+        $this->assertSlugs($slug);
     }
 
     public function testUnauthorizedShowLanguage(): void

@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 class CrawlDetailPageTest extends TestCase
 {
+    /** phpcs:disable Generic.Files.LineLength.TooLong */
     private string $dummyHtmlContent = <<<'HTML'
         <div id="breadcrumb" class="center center-breadcrumb clearfix">
             <div class="left">
@@ -118,6 +119,7 @@ class CrawlDetailPageTest extends TestCase
             </div>
         </div>
     HTML;
+    /** phpcs:enable Generic.Files.LineLength.TooLong */
 
     public function testCrawlBookBySlug(): void
     {
@@ -130,9 +132,8 @@ class CrawlDetailPageTest extends TestCase
             ->andReturn($crawler);
 
         /** @var Book */
-        $book = tap($this->app->make(abstract: Book::class), function (Book $book): void {
-            $book->find(slug: 'the-adventures-of-sherlock-holmes')->loadDetail();
-        });
+        $book = $this->app->make(abstract: Book::class);
+        $book->find(slug: 'the-adventures-of-sherlock-holmes')->loadDetail();
 
         $this->assertInstanceOf(expected: Book::class, actual: $book);
         $this->assertInstanceOf(expected: BookDetail::class, actual: $book->detail);
@@ -144,18 +145,24 @@ class CrawlDetailPageTest extends TestCase
         $this->assertSame(expected: 'The Adventures of Sherlock Holmes', actual: $book->title);
         $this->assertSame(expected: 'Arthur F. Carmazzi', actual: $book->author);
         $this->assertSame(expected: 'Rp 29.000', actual: $book->price);
-        $this->assertSame(expected: 'https://ebooks.gramedia.com/books/the-adventures-of-sherlock-holmes', actual: $book->originalUrl);
-        $this->assertStringContainsString(needle: 'api/books/the-adventures-of-sherlock-holmes', haystack: $book->url);
+        $this->assertSame(
+            expected: 'https://ebooks.gramedia.com/books/the-adventures-of-sherlock-holmes',
+            actual: $book->originalUrl,
+        );
+        $this->assertStringContainsString(
+            needle: 'api/books/the-adventures-of-sherlock-holmes',
+            haystack: $book->url ?: '',
+        );
         $this->assertSame(expected: 'the-adventures-of-sherlock-holmes', actual: $book->slug);
-
-        $this->assertSame(expected: '26 June 2015', actual: $book->detail->releaseDate);
+        $this->assertInstanceOf(expected: BookDetail::class, actual: $book->detail);
+        $this->assertSame(expected: '26 June 2015', actual: $book->detail?->releaseDate ?: '');
         $this->assertStringContainsString(
             needle: 'The first collection of stories featuring the legendary detective Sherlock Holmes',
-            haystack: $book->detail->description,
+            haystack: $book->detail?->description ?: '',
         );
-        $this->assertSame(expected: 'English', actual: $book->detail->language);
-        $this->assertSame(expected: 'Indonesia', actual: $book->detail->country);
-        $this->assertSame(expected: 'Harper Collins', actual: $book->detail->publisher);
-        $this->assertSame(expected: 'Mystery, Thriller & Suspense', actual: $book->detail->category);
+        $this->assertSame(expected: 'English', actual: $book->detail?->language ?: '');
+        $this->assertSame(expected: 'Indonesia', actual: $book->detail?->country ?: '');
+        $this->assertSame(expected: 'Harper Collins', actual: $book->detail?->publisher ?: '');
+        $this->assertSame(expected: 'Mystery, Thriller & Suspense', actual: $book->detail?->category ?: '');
     }
 }
