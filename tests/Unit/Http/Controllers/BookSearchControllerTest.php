@@ -27,13 +27,15 @@ class BookSearchControllerTest extends TestCase
                 ->andReturn(new Paginator([], 0));
         });
 
-        $this->mock(Request::class, function (MockInterface $mock) use ($page): void {
+        $this->mock(Request::class, function (MockInterface $mock) use ($page, $keyword): void {
+            $mock->shouldReceive('validate')->once();
             $mock->shouldReceive('query')->once()->withSomeOfArgs('page')->andReturn($page);
+            $mock->shouldReceive('query')->once()->with('keyword')->andReturn($keyword);
         });
 
         /** @var BookSearchController */
         $bookSearchController = $this->app->make(abstract: BookSearchController::class);
-        $books = $this->app->call($bookSearchController, parameters: ['keyword' => $keyword]);
+        $books = $this->app->call($bookSearchController);
 
         $this->assertInstanceOf(expected: BookCollection::class, actual: $books);
     }

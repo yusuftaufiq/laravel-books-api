@@ -21,13 +21,16 @@ final class BookSearchController extends Controller
      * Handle the incoming request.
      *
      * @param Request $request
-     * @param string $keyword
      *
      * @return \App\Http\Resources\BookCollection
      */
-    final public function __invoke(Request $request, string $keyword): BookCollection
+    final public function __invoke(Request $request): BookCollection
     {
+        $request->validate(['keyword' => ['required']]);
+
         $page = (int) $request->query('page', '1');
+        /** @var string */
+        $keyword = $request->query('keyword');
         $books = $this->book->like($keyword, $page);
 
         return new BookCollection($books);

@@ -11,7 +11,7 @@ Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
 Content-Type: application/json
 
 ### Search books by keyword
-GET {{$dotenv APP_URL}}api/search/1984 HTTP/1.1
+GET {{$dotenv APP_URL}}api/books/search?keyword=1984 HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{$dotenv PERSONAL_ACCESS_TOKEN}}
 Content-Type: application/json
