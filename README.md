@@ -1,5 +1,14 @@
 <h1 align="center"> Laravel Books API </h1>
 
+<p align="center">
+    <a href="https://github.com/yusuftaufiq/laravel-books-api/actions">
+        <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Run%20Laravel%20Tests%20&%20Lint%20Codebase?style=for-the-badge">
+    </a>
+    <a href="https://github.com/yusuftaufiq/laravel-books-api/blob/main/LICENSE">
+        <img alt="GitHub" src="https://img.shields.io/github/license/yt2951/laravel-books-api?style=for-the-badge">
+    </a>
+</p>
+
 ## Introduction
 This app provides a list of books in a RESTful API. Source of data obtained from [Gramedia](https://ebooks.gramedia.com) by using the [web scraping](https://en.wikipedia.org/wiki/Web_scraping) technique.
 
@@ -32,11 +41,11 @@ In addition to the [official documentation](https://laravel.com/docs/9.x/) from 
 You can read the API documentation on the following page https://documenter.getpostman.com/view/14291055/UVyoVcj5.
 
 ## Installation
-### Manual Installation
+### Manual installation
 Requirements: PHP 8.1, Composer, RDBMS (such as: MySQL, SQLite, PostgreSQL, etc).
 
 Installation steps:
-- Clone this repository `git clone https://github.com/yt2951/laravel-books-api.git`
+- Clone this repository `git clone https://github.com/yusuftaufiq/laravel-books-api.git`
 - Change directory `cd laravel-books-api`
 - Copy environment file `cp .env.example .env`
 - Set the database configuration you are using in `.env`
@@ -50,7 +59,7 @@ Installation steps:
 Requirements: Docker
 
 Installation steps:
-- Clone this repository `git clone https://github.com/yt2951/laravel-books-api.git`
+- Clone this repository `git clone https://github.com/yusuftaufiq/laravel-books-api.git`
 - Change directory `cd laravel-books-api`
 - Copy environment file `cp .env.example .env`
 - You may want to change `DOCKER_FORWARD_*` in `.env` to prevent port conflicts
