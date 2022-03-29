@@ -18,10 +18,10 @@ Apart from providing a booklist API, this app was created primarily to learn how
 - [Eloquent](https://laravel.com/docs/9.x/eloquent)
     - [API Resources](https://laravel.com/docs/9.x/eloquent-resources)
     - [Mutators](https://laravel.com/docs/9.x/eloquent-mutators)
+    - [Query Scopes](https://laravel.com/docs/9.x/eloquent#query-scopes)
 - [Error Handling](https://laravel.com/docs/9.x/errors)
 - [Facades](https://laravel.com/docs/9.x/facades)
 - [Form Request Validation](https://laravel.com/docs/9.x/validation#form-request-validation)
-- [Query Scopes](https://laravel.com/docs/9.x/eloquent#query-scopes)
 - [Sanctum](https://laravel.com/docs/9.x/sanctum)
 - [Service Providers](https://laravel.com/docs/9.x/providers)
 - [Testing](https://laravel.com/docs/9.x/testing)
@@ -32,7 +32,7 @@ Apart from providing a booklist API, this app was created primarily to learn how
 If you are interested in exploring this app, you can check to start from [`routes/api.php`](./routes/api.php), [`app/`](./app/) folder & [`tests/`](./tests/) folder.
 
 ## Further reading
-In addition to the [official documentation](https://laravel.com/docs/9.x/) from Laravel, the following is a reference article that helps the development of this application and may be of interest to you:
+In addition to the [official documentation](https://laravel.com/docs/9.x/) from Laravel, here are some reference articles that help the development of this application and may be of interest to you:
 - https://ashallendesign.co.uk/blog/how-to-make-your-laravel-app-more-testable
 - https://www.larashout.com/creating-custom-facades-in-laravel
 - https://timacdonald.me/using-laravels-policies-route-model-binding-without-eloquent/
