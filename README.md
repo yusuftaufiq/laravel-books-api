@@ -1,11 +1,11 @@
 <h1 align="center"> Laravel Books API </h1>
 
 <p align="center">
-    <a href="https://github.com/yusuftaufiq/laravel-books-api/actions">
+    <a href="https://github.com/yusuftaufiq/laravel-books-api/actions/workflows/laravel.yml">
         <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Run%20Laravel%20Tests%20&%20Lint%20Codebase?style=for-the-badge">
     </a>
     <a href="https://github.com/yusuftaufiq/laravel-books-api/blob/main/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/yt2951/laravel-books-api?style=for-the-badge">
+        <img alt="License" src="https://img.shields.io/github/license/yt2951/laravel-books-api?style=for-the-badge">
     </a>
 </p>
 
@@ -38,7 +38,7 @@ In addition to the [official documentation](https://laravel.com/docs/9.x/) from 
 - https://timacdonald.me/using-laravels-policies-route-model-binding-without-eloquent/
 
 ## API documentation
-You can read the API documentation on the following page https://documenter.getpostman.com/view/14291055/UVyoVcj5.
+You can read the API documentation on the [following page](https://documenter.getpostman.com/view/14291055/UVyoVcj5).
 
 ## Installation
 ### Manual installation
