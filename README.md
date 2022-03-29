@@ -1,66 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1 align="center"> Laravel Books API </h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
+This app provides a list of books in a RESTful API. Source of data obtained from [Gramedia](https://ebooks.gramedia.com) by using the [web scraping](https://en.wikipedia.org/wiki/Web_scraping) technique.
 
-## About Laravel
+## Purpose
+Apart from providing a booklist API, this app was created primarily to learn how to write unit-testable code in Laravel and also presents use cases of framework features such as:
+- [Cache Control](https://laravel.com/docs/9.x/responses#cache-control-middleware)
+- [Eloquent](https://laravel.com/docs/9.x/eloquent)
+    - [API Resources](https://laravel.com/docs/9.x/eloquent-resources)
+    - [Mutators](https://laravel.com/docs/9.x/eloquent-mutators)
+- [Error Handling](https://laravel.com/docs/9.x/errors)
+- [Facades](https://laravel.com/docs/9.x/facades)
+- [Form Request Validation](https://laravel.com/docs/9.x/validation#form-request-validation)
+- [Query Scopes](https://laravel.com/docs/9.x/eloquent#query-scopes)
+- [Sanctum](https://laravel.com/docs/9.x/sanctum)
+- [Service Providers](https://laravel.com/docs/9.x/providers)
+- [Testing](https://laravel.com/docs/9.x/testing)
+    - [Database Testing](https://laravel.com/docs/9.x/database-testing)
+    - [HTTP Tests](https://laravel.com/docs/9.x/http-tests)
+    - [Mocking](https://laravel.com/docs/9.x/mocking)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+If you are interested in exploring this app, you can check to start from [`routes/api.php`](./routes/api.php), [`app/`](./app/) folder & [`tests/`](./tests/) folder.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Further reading
+In addition to the [official documentation](https://laravel.com/docs/9.x/) from Laravel, the following is a reference article that helps the development of this application and may be of interest to you:
+- https://ashallendesign.co.uk/blog/how-to-make-your-laravel-app-more-testable
+- https://www.larashout.com/creating-custom-facades-in-laravel
+- https://timacdonald.me/using-laravels-policies-route-model-binding-without-eloquent/
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## API documentation
+You can read the API documentation on the following page https://documenter.getpostman.com/view/14291055/UVyoVcj5.
 
-## Learning Laravel
+## Installation
+### Manual Installation
+Requirements: PHP 8.1, Composer, RDBMS (such as: MySQL, SQLite, PostgreSQL, etc).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Installation steps:
+- Clone this repository `git clone https://github.com/yt2951/laravel-books-api.git`
+- Change directory `cd laravel-books-api`
+- Copy environment file `cp .env.example .env`
+- Set the database configuration you are using in `.env`
+- If you don't have SQLite installed, also set the database configuration in the file `.env.testing`
+- Make sure you have created the database according to the `DB_DATABASE` environment value you set
+- Install composer dependencies `composer install`
+- Run the migration using `php artisan migrate`
+- Run the application using `php artisan serve`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Via Docker
+Requirements: Docker
 
-## Laravel Sponsors
+Installation steps:
+- Clone this repository `git clone https://github.com/yt2951/laravel-books-api.git`
+- Change directory `cd laravel-books-api`
+- Copy environment file `cp .env.example .env`
+- You may want to change `DOCKER_FORWARD_*` in `.env` to prevent port conflicts
+- Build container with `docker-compose up -d --build site`
+- Install composer dependencies `docker-compose run --rm composer install`
+- Run the migration using `docker-compose run --rm artisan migrate`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Useful commands
+- `composer run code-analyze`: run static code analyzer using [PHPStan](https://github.com/phpstan/phpstan) and check code style using [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
+- `php artisan test --testsuite=Unit`: run unit tests
+- `php artisan test --testsuite=Feature`: run feature tests
+- `php artisan responsecache:clear && php artisan cache:clear`: clear cache completely
 
-### Premium Partners
+## Limitation
+Since this app is currently hosted on Heroku using a [free plan](https://www.heroku.com/free), there is no guarantee that this app will be accessible at any time.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+## Tech stack
+- [**Laravel 9**](https://laravel.com/docs/9.x/) - Core framework
+- [**PHP 8.1**](https://www.php.net/releases/8.1/en.php) - Language syntax
+- [**Docker**](https://www.docker.com/) - Container platform
+- [**Github Actions**](https://docs.github.com/en/actions) - CI/CD platform
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Credits
+- Greatly inspired by https://github.com/guillaumebriday/laravel-blog
+- Thanks to https://github.com/aschmelyun/docker-compose-laravel for the `docker-compose` configuration
+- Index page created with https://devdojo.com/tails/app
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This application is licensed under the [MIT license](http://opensource.org/licenses/MIT).
