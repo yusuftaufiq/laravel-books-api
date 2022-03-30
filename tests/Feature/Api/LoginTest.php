@@ -6,6 +6,7 @@ use App\Enums\TokenStatusEnum;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use Database\Factories\UserFactory;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -82,6 +83,24 @@ class LoginTest extends TestCase
         ]);
     }
 
+    public function testUserNotExist(): void
+    {
+        $response = $this->post(uri: route('login'), data: [
+            'email' => $this->faker->email,
+            'password' => $this->faker->randomAscii,
+            'token_name' => $this->faker->word,
+            'expired_at' => $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d'),
+        ]);
+
+        $response->assertUnprocessable();
+        $response->assertJsonStructure([
+            ...$this->resourceMetaDataStructure,
+            'detail',
+        ]);
+
+        $this->assertResourceMetaData($response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
     public function testUnprocessableLoginUser(): void
     {
         $response = $this->post(uri: route('login'));
@@ -93,5 +112,35 @@ class LoginTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testTooManyRequests(): void
+    {
+        /** @var RateLimiter */
+        $rateLimiter = $this->app->make(abstract: RateLimiter::class);
+        $throttleKey = \Str::lower("{$this->user->email}|") . \Request::ip();
+
+        collect(range(1, 5))->each(function () use ($rateLimiter, $throttleKey): void {
+            $this->app->call(callback: [$rateLimiter, 'hit'], parameters: ['key' => $throttleKey]);
+        });
+
+        /** @var PersonalAccessToken */
+        $token = PersonalAccessToken::factory()->make();
+        $expiredAt = $token->expired_at instanceof Carbon ? $token->expired_at->format('Y-m-d') : '';
+
+        $response = $this->post(uri: route('login'), data: [
+            'email' => $this->user->email,
+            'password' => UserFactory::DEFAULT_PLAIN_TEXT_PASSWORD,
+            'token_name' => $token->name,
+            'expired_at' => $expiredAt,
+        ]);
+
+        $response->assertStatus(Response::HTTP_TOO_MANY_REQUESTS);
+        $response->assertJsonStructure([
+            ...$this->resourceMetaDataStructure,
+            'detail',
+        ]);
+
+        $this->assertResourceMetaData($response, statusCode: Response::HTTP_TOO_MANY_REQUESTS);
     }
 }
