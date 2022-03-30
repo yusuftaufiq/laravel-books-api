@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
                 'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
             ]);
 
-            return response($tooManyRequestsProblem->toArray());
+            return response($tooManyRequestsProblem->toArray(), Response::HTTP_TOO_MANY_REQUESTS);
         }
     }
 
