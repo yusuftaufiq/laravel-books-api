@@ -18,6 +18,7 @@ jobs:
       with:
         php-version: '8.1'
         tools: phpstan, phpcs
+        coverage: xdebug
 
     - uses: actions/checkout@v3
 
@@ -42,10 +43,19 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      run: php artisan test --coverage-clover=./coverage.xml
 
     - name: Run PHPStan
       run: phpstan analyze --configuration=phpstan.neon --memory-limit=256M
 
     - name: Run PHPCS
       run: phpcs --standard=phpcs.xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        files: ./coverage.xml
+        directory: ./coverage/reports/
+        flags: unittests, featuretests
+        fail_ci_if_error: true
+        verbose: true
