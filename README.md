@@ -4,6 +4,9 @@
     <a href="https://github.com/yusuftaufiq/laravel-books-api/actions/workflows/laravel.yml">
         <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Run%20Laravel%20Tests%20&%20Lint%20Codebase?style=for-the-badge">
     </a>
+    <a href="https://codecov.io/gh/yusuftaufiq/laravel-books-api">
+        <img alt="Code Coverage" src="https://img.shields.io/codecov/c/github/yusuftaufiq/laravel-books-api?style=for-the-badge">
+    </a>
     <a href="https://github.com/yusuftaufiq/laravel-books-api/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/github/license/yt2951/laravel-books-api?style=for-the-badge">
     </a>
