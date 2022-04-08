@@ -2,10 +2,13 @@
 
 <p align="center">
     <a href="https://github.com/yusuftaufiq/laravel-books-api/actions/workflows/test.yml">
-        <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Run%20Laravel%20Tests?style=for-the-badge">
+        <img alt="Tests Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Run%20Laravel%20Tests?label=tests&logo=github&style=for-the-badge">
+    </a>
+    <a href="https://github.com/yusuftaufiq/laravel-books-api/actions/workflows/lint.yml">
+        <img alt="Lint Codebase Workflow Status" src="https://img.shields.io/github/workflow/status/yusuftaufiq/laravel-books-api/Lint%20Codebase?label=lint%20codebase&logo=github&style=for-the-badge">
     </a>
     <a href="https://codecov.io/gh/yusuftaufiq/laravel-books-api">
-        <img alt="Code Coverage" src="https://img.shields.io/codecov/c/github/yusuftaufiq/laravel-books-api?style=for-the-badge">
+        <img alt="Code Coverage" src="https://img.shields.io/codecov/c/github/yusuftaufiq/laravel-books-api?logo=codecov&style=for-the-badge">
     </a>
     <a href="https://github.com/yusuftaufiq/laravel-books-api/blob/main/LICENSE">
         <img alt="License" src="https://img.shields.io/github/license/yt2951/laravel-books-api?style=for-the-badge">
