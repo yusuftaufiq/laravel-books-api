@@ -71,10 +71,9 @@ Installation steps:
 - Run the migration using `docker-compose run --rm artisan migrate`
 
 ## Useful commands
-- `composer run code-analyze`: run static code analyzer using [PHPStan](https://github.com/phpstan/phpstan) and check code style using [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
-- `php artisan test --testsuite=Unit`: run unit tests
-- `php artisan test --testsuite=Feature`: run feature tests
-- `php artisan responsecache:clear && php artisan cache:clear`: clear cache completely
+- `composer cache:clear`: clear app cache
+- `composer code:analyze`: run static code analyzer using [PHPStan](https://github.com/phpstan/phpstan) and check code style using [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
+- `php artisan test`: run feature & unit tests
 
 ## Limitation
 Since this app is currently hosted on Heroku using a [free plan](https://www.heroku.com/free), there is no guarantee that this app will be accessible at any time.

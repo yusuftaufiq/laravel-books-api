@@ -52,9 +52,13 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "code-analyze": [
+        "code:analyze": [
             "./vendor/bin/phpstan --memory-limit=256M --configuration=./phpstan.neon",
             "./vendor/bin/phpcs --standard=./phpcs.xml"
+        ],
+        "cache:clear": [
+            "@php artisan responsecache:clear",
+            "@php artisan cache:clear"
         ]
     },
     "extra": {
