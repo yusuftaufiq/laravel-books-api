@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Here is a quick note about some important parts of this app.
+ *
+ * For a list of interface implementations into concrete classes that
+ * have been used in controllers, see $bindings in AppServiceProvider.
+ * @see \App\Providers\AppServiceProvider
+ *
+ * Middleware auth:sanctum, cache.headers & cache.response refers to
+ * $routeMiddleware in \App\Http\Kernel. Please see here for more details.
+ * @see \App\Http\Kernel
+ *
+ * Book, BookDetail, Category & Language have their own route model binding
+ * implementation, see here for more details.
+ * @see \App\Models\BaseModel
+ */
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookDetailController;
@@ -20,14 +36,6 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-// phpcs:ignore
-/**
- * For a list of implementations of interfaces into concrete
- * classes, see $bindings in \App\Providers\AppServiceProvider.
- *
- * @see \App\Providers\AppServiceProvider
- */
-
 \Route::post('/register', RegisterUserController::class)->name('register');
 
 \Route::controller(AuthController::class)->group(function (): void {
@@ -35,13 +43,6 @@ use App\Http\Controllers\Api\UserController;
     \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
 });
 
-/**
- * Middleware auth:sanctum, cache.headers & cache.response
- * refers to $routeMiddleware in \App\Http\Kernel. Please
- * see here for more details.
- *
- * @see \App\Http\Kernel
- */
 \Route::middleware('auth:sanctum')->group(function (): void {
     \Route::get('/user', UserController::class)->name('user');
 
@@ -52,12 +53,6 @@ use App\Http\Controllers\Api\UserController;
     ])->group(function (): void {
         \Route::get('books/search', BookSearchController::class)->name('books.search');
 
-        /**
-         * All classes that extend \App\Models\BaseModel have their own
-         * route model binding implementation, see here for more details.
-         *
-         * @see \App\Models\BaseModel
-         */
         \Route::apiResource('books', BookController::class)->only(['index', 'show']);
         \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);
 
