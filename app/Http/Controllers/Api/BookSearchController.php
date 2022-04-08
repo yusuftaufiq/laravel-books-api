@@ -28,9 +28,10 @@ final class BookSearchController extends Controller
     {
         $request->validate(['keyword' => ['required']]);
 
-        $page = (int) $request->query('page', '1');
         /** @var string $keyword */
         $keyword = $request->query('keyword');
+        $page = (int) $request->query('page', '1');
+
         $books = $this->book->like($keyword, $page);
 
         return new BookCollection($books);

@@ -25,11 +25,13 @@ final class AuthController extends Controller
     {
         $request->authenticateOrFail();
 
-        /** @var User */
+        /** @var User $user */
         $user = $request->user();
-        /** @var string */
+
+        /** @var string $tokenName */
         $tokenName = $request->input('token_name');
-        /** @var string */
+
+        /** @var string $expiredAt */
         $expiredAt = $request->input('expired_at');
 
         $token = $user->createExpirableToken(name: $tokenName, expiredAt: $expiredAt);
