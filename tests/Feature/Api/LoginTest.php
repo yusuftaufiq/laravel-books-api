@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Enums\TokenStatusEnum;
+use App\Http\Requests\LoginRequest;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use Database\Factories\UserFactory;
@@ -120,7 +121,7 @@ class LoginTest extends TestCase
         $rateLimiter = $this->app->make(abstract: RateLimiter::class);
         $throttleKey = \Str::lower("{$this->user->email}|") . \Request::ip();
 
-        collect(range(1, 5))->each(function () use ($rateLimiter, $throttleKey): void {
+        collect(range(1, LoginRequest::MAX_ATTEMPTS))->each(function () use ($rateLimiter, $throttleKey): void {
             $this->app->call(callback: [$rateLimiter, 'hit'], parameters: ['key' => $throttleKey]);
         });
 

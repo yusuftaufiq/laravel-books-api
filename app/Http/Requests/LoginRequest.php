@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 class LoginRequest extends FormRequest
 {
-    protected const MAX_ATTEMPTS = 5;
+    public const MAX_ATTEMPTS = 5;
 
     /**
      * Determine if the user is authorized to make this request.
