@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\NotExpiredScope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
 final class PersonalAccessToken extends SanctumPersonalAccessToken
@@ -42,7 +43,7 @@ final class PersonalAccessToken extends SanctumPersonalAccessToken
     public function expiredAt(): Attribute
     {
         return new Attribute(
-            set: fn (string $value): \DateTime|bool => \DateTime::createFromFormat('Y-m-d H:i:s', "${value} 23:59:59"),
+            set: fn (Carbon $value): Carbon => $value->setHour(23)->setMinute(59)->setSecond(59),
         );
     }
 

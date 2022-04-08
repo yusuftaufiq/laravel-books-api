@@ -48,7 +48,7 @@ class SearchBookTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('books.*.slug');
 
         $this->assertSlugs(...$slugs);

@@ -37,7 +37,7 @@ class LogoutTest extends TestCase
 
     public function testLogoutUser(): void
     {
-        /** @var \App\Models\PersonalAccessToken */
+        /** @var \App\Models\PersonalAccessToken $token */
         $token = $this->user->tokens()->firstOrNew();
 
         $this->assertDatabaseCount(table: 'personal_access_tokens', count: 1);
@@ -53,14 +53,12 @@ class LogoutTest extends TestCase
             'token' => $this->tokenStructure,
         ]);
 
-        $response->assertJson(fn (AssertableJson $json): AssertableJson => (
-            $json
-                ->where(key: 'token.name', expected: $token->name)
-                ->whereContains(key: 'token.abilities', expected: '*')
-                ->where(key: 'token.type', expected: 'Bearer')
-                ->where(key: 'token.status', expected: TokenStatusEnum::Revoked->value)
-                ->etc()
-        ));
+        $response->assertJson(fn (AssertableJson $json): AssertableJson => $json
+            ->where(key: 'token.name', expected: $token->name)
+            ->whereContains(key: 'token.abilities', expected: '*')
+            ->where(key: 'token.type', expected: 'Bearer')
+            ->where(key: 'token.status', expected: TokenStatusEnum::Revoked->value)
+            ->etc());
 
         $this->assertResourceMetaData($response, statusCode: Response::HTTP_OK);
         $this->assertDatabaseCount(table: 'personal_access_tokens', count: 0);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
 
@@ -50,15 +51,15 @@ final class User extends Authenticatable implements UserInterface
      * Create a expirable new personal access token for the user.
      *
      * @param string $name
-     * @param string $expiredAt
+     * @param \Illuminate\Support\Carbon|null $expiredAt
      * @param array  $abilities
      *
      * @return \Laravel\Sanctum\NewAccessToken
      */
     public function createExpirableToken(
         string $name,
-        string $expiredAt,
-        array $abilities = ['*']
+        ?Carbon $expiredAt,
+        array $abilities = ['*'],
     ): NewAccessToken {
         $plainTextToken = \Str::random(40);
 
@@ -73,7 +74,7 @@ final class User extends Authenticatable implements UserInterface
         /** @var string $tokenKey */
         $tokenKey = $token->getKey();
 
-        return new NewAccessToken($token, "{$tokenKey}|{$plainTextToken}");
+        return new NewAccessToken($token, "${tokenKey}|${plainTextToken}");
     }
 
     /**

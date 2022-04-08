@@ -20,7 +20,7 @@ class RegisterUserControllerTest extends TestCase
             $mock->shouldReceive('validated')->once()->withNoArgs()->andReturn([]);
         });
 
-        /** @var RegisterUserController */
+        /** @var RegisterUserController $registerUserController */
         $registerUserController = $this->app->make(abstract: RegisterUserController::class);
         $user = $this->app->call($registerUserController);
 

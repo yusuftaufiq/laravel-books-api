@@ -45,7 +45,7 @@ class LanguageTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('languages.*.slug');
 
         $this->assertSlugs(...$slugs);
@@ -65,7 +65,7 @@ class LanguageTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var string */
+        /** @var string $slug */
         $slug = $response->json('language.slug');
 
         $this->assertSlugs($slug);

@@ -16,7 +16,7 @@
  * Book, BookDetail, Category & Language have their own route model binding
  * implementation, see here for more details.
  *
- * @see \App\Models\BaseModel
+ * @see \App\Models\AbstractBaseModel
  */
 
 use App\Http\Controllers\Api\AuthController;

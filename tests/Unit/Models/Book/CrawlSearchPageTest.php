@@ -4,13 +4,13 @@ namespace Tests\Unit\Models\Book;
 
 use App\Models\Book;
 use Illuminate\Contracts\Pagination\Paginator;
-use Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\TestCase;
 
 class CrawlSearchPageTest extends TestCase
 {
     /** phpcs:disable Generic.Files.LineLength.TooLong */
-    private string $dummyHtmlContent  = <<<'HTML'
+    private string $dummyHtmlContent = <<<'HTML'
         <div class="search_list clearfix">
             <div class="count left">1.</div>
             <a href="https://ebooks.gramedia.com/books/ready-player-one" class="left">
@@ -74,7 +74,7 @@ class CrawlSearchPageTest extends TestCase
             ->withAnyArgs()
             ->andReturn($crawler);
 
-        /** @var Book */
+        /** @var Book $book */
         $book = $this->app->make(abstract: Book::class);
         $books = $book->like(keyword: 'Ready Player One');
         $items = $books->items();
@@ -83,7 +83,7 @@ class CrawlSearchPageTest extends TestCase
         $this->assertArrayHasKey(key: 0, array: $items);
         $this->assertInstanceOf(expected: Book::class, actual: $books[0]);
 
-        /** @var Book */
+        /** @var Book $firstBook */
         $firstBook = $items[0];
 
         $this->assertSame(
@@ -97,7 +97,7 @@ class CrawlSearchPageTest extends TestCase
             expected: 'https://ebooks.gramedia.com/books/ready-player-one',
             actual: $firstBook->originalUrl,
         );
-        $this->assertStringContainsString(needle: 'api/books/ready-player-one', haystack: $firstBook->url ?: '');
+        $this->assertStringContainsString(needle: 'api/books/ready-player-one', haystack: $firstBook->url ?? '');
         $this->assertSame(expected: 'ready-player-one', actual: $firstBook->slug);
     }
 }

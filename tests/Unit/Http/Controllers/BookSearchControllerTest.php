@@ -33,7 +33,7 @@ class BookSearchControllerTest extends TestCase
             $mock->shouldReceive('query')->once()->with('keyword')->andReturn($keyword);
         });
 
-        /** @var BookSearchController */
+        /** @var BookSearchController $bookSearchController */
         $bookSearchController = $this->app->make(abstract: BookSearchController::class);
         $books = $this->app->call($bookSearchController);
 

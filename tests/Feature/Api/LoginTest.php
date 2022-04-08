@@ -43,7 +43,7 @@ class LoginTest extends TestCase
 
     public function testLoginUser(): void
     {
-        /** @var PersonalAccessToken */
+        /** @var PersonalAccessToken $token */
         $token = PersonalAccessToken::factory()->make();
         $expiredAt = $token->expired_at instanceof Carbon ? $token->expired_at->format('Y-m-d') : '';
 
@@ -60,16 +60,14 @@ class LoginTest extends TestCase
             'token' => $this->tokenStructure,
         ]);
 
-        $response->assertJson(fn (AssertableJson $json): AssertableJson => (
-            $json
-                ->where(key: 'token.name', expected: $token->name)
-                ->whereContains(key: 'token.abilities', expected: '*')
-                ->where(key: 'token.type', expected: 'Bearer')
-                ->where(key: 'token.status', expected: TokenStatusEnum::Active->value)
-                ->etc()
-        ));
+        $response->assertJson(fn (AssertableJson $json): AssertableJson => $json
+            ->where(key: 'token.name', expected: $token->name)
+            ->whereContains(key: 'token.abilities', expected: '*')
+            ->where(key: 'token.type', expected: 'Bearer')
+            ->where(key: 'token.status', expected: TokenStatusEnum::Active->value)
+            ->etc());
 
-        /** @var string */
+        /** @var string $actualExpiredAt */
         $actualExpiredAt = $response->json('token.expired_at');
 
         $this->assertStringContainsString(
@@ -90,7 +88,7 @@ class LoginTest extends TestCase
             'email' => $this->faker->email,
             'password' => $this->faker->randomAscii,
             'token_name' => $this->faker->word,
-            'expired_at' => $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d'),
+            'expired_at' => Carbon::createFromInterface($this->faker->dateTimeBetween('today', '+1 month')),
         ]);
 
         $response->assertUnprocessable();
@@ -117,7 +115,7 @@ class LoginTest extends TestCase
 
     public function testTooManyRequests(): void
     {
-        /** @var RateLimiter */
+        /** @var RateLimiter $rateLimiter */
         $rateLimiter = $this->app->make(abstract: RateLimiter::class);
         $throttleKey = \Str::lower("{$this->user->email}|") . \Request::ip();
 
@@ -125,7 +123,7 @@ class LoginTest extends TestCase
             $this->app->call(callback: [$rateLimiter, 'hit'], parameters: ['key' => $throttleKey]);
         });
 
-        /** @var PersonalAccessToken */
+        /** @var PersonalAccessToken $token */
         $token = PersonalAccessToken::factory()->make();
         $expiredAt = $token->expired_at instanceof Carbon ? $token->expired_at->format('Y-m-d') : '';
 

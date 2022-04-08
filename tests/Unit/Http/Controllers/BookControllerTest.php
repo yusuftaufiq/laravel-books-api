@@ -32,7 +32,7 @@ class BookControllerTest extends TestCase
                 ->andReturn($page);
         });
 
-        /** @var BookController */
+        /** @var BookController $bookController */
         $bookController = $this->app->make(abstract: BookController::class);
         $books = $this->app->call([$bookController, 'index']);
 

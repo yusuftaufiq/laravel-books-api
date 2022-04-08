@@ -16,7 +16,7 @@ class BookDetailControllerTest extends TestCase
             $mock->shouldReceive('loadDetail')->once()->withNoArgs()->andReturnSelf();
         });
 
-        /** @var BookDetailController */
+        /** @var BookDetailController $bookDetailController */
         $bookDetailController = $this->app->make(abstract: BookDetailController::class);
         $bookWithDetail = $this->app->call([$bookDetailController, 'index']);
 

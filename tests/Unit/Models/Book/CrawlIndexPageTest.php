@@ -4,13 +4,13 @@ namespace Tests\Unit\Models\Book;
 
 use App\Models\Book;
 use Illuminate\Contracts\Pagination\Paginator;
-use Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\TestCase;
 
 class CrawlIndexPageTest extends TestCase
 {
     /** phpcs:disable Generic.Files.LineLength.TooLong */
-    private string $dummyHtmlContent  = <<<'HTML'
+    private string $dummyHtmlContent = <<<'HTML'
         <div class="oubox_list rollover left">
             <div class="top">
                 <!-- -->
@@ -68,7 +68,7 @@ class CrawlIndexPageTest extends TestCase
             ->withAnyArgs()
             ->andReturn($crawler);
 
-        /** @var Book */
+        /** @var Book $book */
         $book = $this->app->make(abstract: Book::class);
         $books = $book->all();
         $items = $books->items();
@@ -77,7 +77,7 @@ class CrawlIndexPageTest extends TestCase
         $this->assertArrayHasKey(key: 0, array: $items);
         $this->assertInstanceOf(expected: Book::class, actual: $books[0]);
 
-        /** @var Book */
+        /** @var Book $firstBook */
         $firstBook = $items[0];
 
         $this->assertSame(
@@ -93,7 +93,7 @@ class CrawlIndexPageTest extends TestCase
         );
         $this->assertStringContainsString(
             needle: 'api/books/the-man-in-the-brown-suit',
-            haystack: $firstBook->url ?: '',
+            haystack: $firstBook->url ?? '',
         );
         $this->assertSame(expected: 'the-man-in-the-brown-suit', actual: $firstBook->slug);
     }

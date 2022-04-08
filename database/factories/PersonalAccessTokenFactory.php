@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonalAccessToken>
@@ -22,7 +23,7 @@ class PersonalAccessTokenFactory extends Factory
             'name' => $this->faker->sentence,
             'token' => hash(algo: 'sha256', data: static::DEFAULT_PLAIN_TEXT_TOKEN),
             'abilities' => ['*'],
-            'expired_at' => $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d'),
+            'expired_at' => Carbon::createFromInterface($this->faker->dateTimeBetween('today', '+1 month')),
         ];
     }
 }

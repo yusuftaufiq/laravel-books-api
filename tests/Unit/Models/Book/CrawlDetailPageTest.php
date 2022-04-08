@@ -131,7 +131,7 @@ class CrawlDetailPageTest extends TestCase
             ->withAnyArgs()
             ->andReturn($crawler);
 
-        /** @var Book */
+        /** @var Book $book */
         $book = $this->app->make(abstract: Book::class);
         $book->find(slug: 'the-adventures-of-sherlock-holmes')->loadDetail();
 
@@ -151,18 +151,18 @@ class CrawlDetailPageTest extends TestCase
         );
         $this->assertStringContainsString(
             needle: 'api/books/the-adventures-of-sherlock-holmes',
-            haystack: $book->url ?: '',
+            haystack: $book->url ?? '',
         );
         $this->assertSame(expected: 'the-adventures-of-sherlock-holmes', actual: $book->slug);
         $this->assertInstanceOf(expected: BookDetail::class, actual: $book->detail);
-        $this->assertSame(expected: '26 June 2015', actual: $book->detail?->releaseDate ?: '');
+        $this->assertSame(expected: '26 June 2015', actual: $book->detail?->releaseDate ?? '');
         $this->assertStringContainsString(
             needle: 'The first collection of stories featuring the legendary detective Sherlock Holmes',
-            haystack: $book->detail?->description ?: '',
+            haystack: $book->detail?->description ?? '',
         );
-        $this->assertSame(expected: 'English', actual: $book->detail?->language ?: '');
-        $this->assertSame(expected: 'Indonesia', actual: $book->detail?->country ?: '');
-        $this->assertSame(expected: 'Harper Collins', actual: $book->detail?->publisher ?: '');
-        $this->assertSame(expected: 'Mystery, Thriller & Suspense', actual: $book->detail?->category ?: '');
+        $this->assertSame(expected: 'English', actual: $book->detail?->language ?? '');
+        $this->assertSame(expected: 'Indonesia', actual: $book->detail?->country ?? '');
+        $this->assertSame(expected: 'Harper Collins', actual: $book->detail?->publisher ?? '');
+        $this->assertSame(expected: 'Mystery, Thriller & Suspense', actual: $book->detail?->category ?? '');
     }
 }

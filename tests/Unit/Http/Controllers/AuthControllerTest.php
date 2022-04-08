@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Resources\PersonalAccessTokenResource;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use Mockery\MockInterface;
@@ -20,9 +21,9 @@ class AuthControllerTest extends TestCase
     public function testLoginUser(): void
     {
         $tokenName = $this->faker->sentence;
-        $expiredAt = $this->faker->dateTimeBetween('today', '+1 month')->format('Y-m-d');
+        $expiredAt = Carbon::createFromInterface($this->faker->dateTimeBetween('today', '+1 month'));
 
-        /** @var PersonalAccessToken */
+        /** @var PersonalAccessToken $tokenMock */
         $tokenMock = \Mockery::mock(PersonalAccessToken::class);
         $userMock = \Mockery::mock(UserInterface::class, function (MockInterface $mock) use (
             $tokenName,
@@ -40,13 +41,13 @@ class AuthControllerTest extends TestCase
             $expiredAt,
             $userMock,
         ): void {
-            $mock->shouldReceive('authenticateOrFail')->once()->withNoArgs()->andReturn();
+            $mock->shouldReceive('authenticateOrFail')->once()->withNoArgs();
             $mock->shouldReceive('user')->once()->withNoArgs()->andReturn($userMock);
             $mock->shouldReceive('input')->once()->with('token_name')->andReturn($tokenName);
-            $mock->shouldReceive('input')->once()->with('expired_at')->andReturn($expiredAt);
+            $mock->shouldReceive('date')->once()->withSomeOfArgs('expired_at')->andReturn($expiredAt);
         });
 
-        /** @var AuthController */
+        /** @var AuthController $authController */
         $authController = $this->app->make(abstract: AuthController::class);
         $token = $this->app->call([$authController, 'login']);
 
@@ -66,7 +67,7 @@ class AuthControllerTest extends TestCase
             $mock->shouldReceive('user')->once()->withNoArgs()->andReturn($userMock);
         });
 
-        /** @var AuthController */
+        /** @var AuthController $authController */
         $authController = $this->app->make(abstract: AuthController::class);
         $token = $this->app->call([$authController, 'logout']);
 

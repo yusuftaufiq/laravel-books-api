@@ -30,9 +30,7 @@ final class AuthController extends Controller
 
         /** @var string $tokenName */
         $tokenName = $request->input('token_name');
-
-        /** @var string $expiredAt */
-        $expiredAt = $request->input('expired_at');
+        $expiredAt = $request->date(key: 'expired_at', format: 'Y-m-d');
 
         $token = $user->createExpirableToken(name: $tokenName, expiredAt: $expiredAt);
 

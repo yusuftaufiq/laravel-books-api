@@ -37,17 +37,6 @@ class BookTest extends TestCase
         $this->setUpUser();
     }
 
-    private function assertBooksStructure(TestResponse $response): void
-    {
-        $response->assertJsonStructure([
-            ...$this->paginationStructure,
-            ...$this->resourceMetaDataStructure,
-            'books' => [
-                '*' => $this->bookStructure,
-            ],
-        ]);
-    }
-
     public function testBookIndex(): void
     {
         $response = $this->actingAs($this->user)->call(method: 'GET', uri: route('books.index'), parameters: [
@@ -60,7 +49,7 @@ class BookTest extends TestCase
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('books.*.slug');
 
         $this->assertSlugs(...$slugs);
@@ -77,7 +66,7 @@ class BookTest extends TestCase
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('books.*.slug');
 
         $this->assertSlugs(...$slugs);
@@ -94,7 +83,7 @@ class BookTest extends TestCase
         $this->assertBooksStructure($response);
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('books.*.slug');
 
         $this->assertSlugs(...$slugs);
@@ -112,7 +101,7 @@ class BookTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var string */
+        /** @var string $slug */
         $slug = $response->json('book.slug');
 
         $this->assertSlugs($slug);
@@ -142,5 +131,16 @@ class BookTest extends TestCase
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_NOT_FOUND);
+    }
+
+    private function assertBooksStructure(TestResponse $response): void
+    {
+        $response->assertJsonStructure([
+            ...$this->paginationStructure,
+            ...$this->resourceMetaDataStructure,
+            'books' => [
+                '*' => $this->bookStructure,
+            ],
+        ]);
     }
 }

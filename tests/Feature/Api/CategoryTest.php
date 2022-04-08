@@ -44,7 +44,7 @@ class CategoryTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var array */
+        /** @var array $slugs */
         $slugs = $response->json('categories.*.slug');
 
         $this->assertSlugs(...$slugs);
@@ -64,7 +64,7 @@ class CategoryTest extends TestCase
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
-        /** @var string */
+        /** @var string $slug */
         $slug = $response->json('category.slug');
 
         $this->assertSlugs($slug);
