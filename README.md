@@ -72,7 +72,8 @@ Installation steps:
 
 ## Useful commands
 - `composer cache:clear`: clear app cache
-- `composer code:analyze`: run static code analyzer using [PHPStan](https://github.com/phpstan/phpstan) and check code style using [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
+- `composer code:analyze`: run static code analyzer using [PHP Stan](https://github.com/phpstan/phpstan) and check code style using [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- `php artisan insights`: analyze code quality using [PHP Insights](https://github.com/nunomaduro/phpinsights)
 - `php artisan test`: run feature & unit tests
 
 ## Limitation
