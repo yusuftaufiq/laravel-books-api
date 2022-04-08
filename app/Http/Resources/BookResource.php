@@ -23,7 +23,7 @@ final class BookResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    final public function toArray($request)
+    public function toArray($request)
     {
         /** @var \App\Models\Book|static $this */
         return [
@@ -34,9 +34,10 @@ final class BookResource extends JsonResource
             'original_url' => $this->originalUrl,
             'url' => $this->url,
             'slug' => $this->slug,
-            'detail' => $this->when($this->detail?->slug !== null, fn (): BookDetailResource => (
-                new BookDetailResource($this->detail)
-            )),
+            'detail' => $this->when(
+                condition: $this->detail?->slug !== null,
+                value: fn (): BookDetailResource => (new BookDetailResource($this->detail)),
+            ),
         ];
     }
 }

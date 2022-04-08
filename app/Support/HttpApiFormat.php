@@ -9,7 +9,7 @@ use Phpro\ApiProblem\Http\HttpApiProblem;
 class HttpApiFormat extends HttpApiProblem
 {
     /**
-     * @var \Illuminate\Support\Collection<string, mixed>
+     * @var \Illuminate\Support\Collection<string, (int|string)>
      */
     protected Collection $data;
 
@@ -17,8 +17,8 @@ class HttpApiFormat extends HttpApiProblem
     {
         $this->data = collect([
             'status' => $statusCode,
-            'type' => static::TYPE_HTTP_RFC,
-            'title' => static::getTitleForStatusCode($statusCode),
+            'type' => self::TYPE_HTTP_RFC,
+            'title' => self::getTitleForStatusCode($statusCode),
         ])->merge($data);
     }
 

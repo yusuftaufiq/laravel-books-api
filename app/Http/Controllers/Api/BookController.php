@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
  */
 final class BookController extends Controller
 {
-    final public function __construct(
+    public function __construct(
         private BookInterface $book,
     ) {
     }
@@ -33,7 +33,7 @@ final class BookController extends Controller
      *
      * @return BookCollection
      */
-    final public function index(
+    public function index(
         Request $request,
         CategoryInterface $category,
         LanguageInterface $language,
@@ -51,7 +51,7 @@ final class BookController extends Controller
      *
      * @return BookResource
      */
-    final public function show(BookInterface $book): BookResource
+    public function show(BookInterface $book): BookResource
     {
         return new BookResource($book);
     }

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class RegisterUserController extends Controller
 {
-    final public function __construct(
+    public function __construct(
         private UserInterface $user,
     ) {
     }
@@ -27,9 +27,9 @@ final class RegisterUserController extends Controller
      *
      * @return \App\Http\Resources\UserResource
      */
-    final public function __invoke(RegisterUserRequest $request): UserResource
+    public function __invoke(RegisterUserRequest $request): UserResource
     {
-        /** @var array */
+        /** @var array $validated */
         $validated = $request->validated();
 
         /** @phpstan-ignore-next-line */

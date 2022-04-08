@@ -11,6 +11,7 @@ trait ResourceMetaDataTrait
      * Get additional data that should be returned with the resource array.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function with($request)
@@ -23,6 +24,7 @@ trait ResourceMetaDataTrait
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Http\JsonResponse  $response
+     *
      * @return void
      */
     final public function withResponse($request, $response)

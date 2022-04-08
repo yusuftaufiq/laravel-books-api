@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Contracts\BookDetailInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
-final class BookDetail extends BaseModel implements BookDetailInterface
+final class BookDetail extends AbstractBaseModel implements BookDetailInterface
 {
     protected string $primaryKey = 'slug';
 
@@ -25,7 +25,7 @@ final class BookDetail extends BaseModel implements BookDetailInterface
      *
      * @return void
      */
-    final public function __construct(
+    public function __construct(
         public ?string $releaseDate = null,
         public ?string $description = null,
         public ?string $language = null,
@@ -40,36 +40,13 @@ final class BookDetail extends BaseModel implements BookDetailInterface
     }
 
     /**
-     * Get part of the book details.
-     *
-     * @param  string  $part    Part of the book details.
-     *
-     * @return ?string
-     */
-    private function getDetailOf(string $part): ?string
-    {
-        try {
-            $result = $this->crawler
-                ?->filter(".switch_content.sc_2 td:contains(\"$part\")")
-                ?->closest('tr')
-                ?->filter('td')
-                ?->last()
-                ?->text();
-        } catch (\Exception $e) {
-            $result = null;
-        } finally {
-            return $result ?? null;
-        }
-    }
-
-    /**
      * Get a book detail by its slug.
      *
      * @param string $slug
      *
      * @return self
      */
-    final public function find(string $slug): self
+    public function find(string $slug): self
     {
         if ($this->crawler?->getUri() === null) {
             $this->crawler = \Goutte::request(method: 'GET', uri: Book::BASE_URL . $slug);
@@ -85,11 +62,34 @@ final class BookDetail extends BaseModel implements BookDetailInterface
         $this->pageCount = (int) $this->getDetailOf('Page Count');
         $this->category = $this->crawler->filter('[itemprop="title"]')->eq(2)->text();
         $this->categorySlug = \Str::afterLast(
-            subject: $this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href') ?: '',
+            subject: $this->crawler->filter('[itemprop="url"].non')->eq(2)->attr('href') ?? '',
             search: Category::BASE_URL,
         );
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * Get part of the book details.
+     *
+     * @param  string  $part    Part of the book details.
+     *
+     * @return ?string
+     */
+    private function getDetailOf(string $part): ?string
+    {
+        try {
+            $result = $this->crawler
+                ?->filter(".switch_content.sc_2 td:contains(\"${part}\")")
+                ?->closest('tr')
+                ?->filter('td')
+                ?->last()
+                ?->text();
+        } catch (\Exception $e) {
+            $result = null;
+        } finally {
+            return $result ?? null;
+        }
     }
 }

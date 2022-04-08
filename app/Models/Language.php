@@ -6,7 +6,7 @@ use App\Contracts\LanguageInterface;
 use App\Enums\LanguageEnum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class Language extends BaseModel implements LanguageInterface
+final class Language extends AbstractBaseModel implements LanguageInterface
 {
     /**
      * The primary key for the model.
@@ -24,7 +24,7 @@ final class Language extends BaseModel implements LanguageInterface
      *
      * @return void
      */
-    final public function __construct(
+    public function __construct(
         public ?string $slug = null,
         public ?string $name = null,
         public ?int $value = null,
@@ -36,16 +36,14 @@ final class Language extends BaseModel implements LanguageInterface
      *
      * @return array<LanguageInterface>
      */
-    final public function all(): array
+    public function all(): array
     {
-        $categories = collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum): self => new self(
+        /** @var array<LanguageInterface> */
+        return collect(LanguageEnum::cases())->map(fn (LanguageEnum $languageEnum): self => new self(
             slug: $languageEnum->value,
             name: $languageEnum->name,
             value: $languageEnum->value(),
-        ));
-
-        /** @var array<LanguageInterface> */
-        return $categories->toArray();
+        ))->toArray();
     }
 
     /**
@@ -55,12 +53,12 @@ final class Language extends BaseModel implements LanguageInterface
      *
      * @return self
      */
-    final public function find(string $slug): self
+    public function find(string $slug): self
     {
         $languageEnum = LanguageEnum::tryFrom($slug);
 
         if ($languageEnum === null) {
-            throw new NotFoundHttpException("The language with slug $slug could not be found.");
+            throw new NotFoundHttpException("The language with slug ${slug} could not be found.");
         }
 
         $this->slug = $languageEnum->value;

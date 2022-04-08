@@ -15,7 +15,7 @@ final class BookDetailController extends Controller
      *
      * @return BookResource
      */
-    final public function index(BookInterface $book): BookResource
+    public function index(BookInterface $book): BookResource
     {
         return new BookResource($book->loadDetail());
     }

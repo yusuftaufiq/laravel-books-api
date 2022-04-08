@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
  */
 final class BookSearchController extends Controller
 {
-    final public function __construct(
+    public function __construct(
         private BookInterface $book,
     ) {
     }
@@ -24,12 +24,12 @@ final class BookSearchController extends Controller
      *
      * @return \App\Http\Resources\BookCollection
      */
-    final public function __invoke(Request $request): BookCollection
+    public function __invoke(Request $request): BookCollection
     {
         $request->validate(['keyword' => ['required']]);
 
         $page = (int) $request->query('page', '1');
-        /** @var string */
+        /** @var string $keyword */
         $keyword = $request->query('keyword');
         $books = $this->book->like($keyword, $page);
 

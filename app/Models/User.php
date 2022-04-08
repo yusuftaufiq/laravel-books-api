@@ -47,18 +47,6 @@ final class User extends Authenticatable implements UserInterface
     ];
 
     /**
-     * Set the user's hashed password.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute<mixed, mixed>
-     */
-    final protected function password(): Attribute
-    {
-        return new Attribute(
-            set: fn (string $value) => \Hash::createArgon2idDriver()->make($value),
-        );
-    }
-
-    /**
      * Create a expirable new personal access token for the user.
      *
      * @param string $name
@@ -67,14 +55,14 @@ final class User extends Authenticatable implements UserInterface
      *
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    final public function createExpirableToken(
+    public function createExpirableToken(
         string $name,
         string $expiredAt,
         array $abilities = ['*']
     ): NewAccessToken {
         $plainTextToken = \Str::random(40);
 
-        /** @var \Laravel\Sanctum\PersonalAccessToken */
+        /** @var \Laravel\Sanctum\PersonalAccessToken $token */
         $token = $this->tokens()->create([
             'name' => $name,
             'token' => hash(algo: 'sha256', data: $plainTextToken),
@@ -82,9 +70,21 @@ final class User extends Authenticatable implements UserInterface
             'expired_at' => $expiredAt,
         ]);
 
-        /** @var string */
+        /** @var string $tokenKey */
         $tokenKey = $token->getKey();
 
         return new NewAccessToken($token, "{$tokenKey}|{$plainTextToken}");
+    }
+
+    /**
+     * Set the user's hashed password.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute<mixed, mixed>
+     */
+    protected function password(): Attribute
+    {
+        return new Attribute(
+            set: fn (string $value) => \Hash::createArgon2idDriver()->make($value),
+        );
     }
 }

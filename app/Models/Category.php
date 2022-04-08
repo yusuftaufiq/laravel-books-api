@@ -6,9 +6,12 @@ use App\Contracts\CategoryInterface;
 use App\Enums\CategoryEnum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class Category extends BaseModel implements CategoryInterface
+final class Category extends AbstractBaseModel implements CategoryInterface
 {
-    final public const BASE_URL = 'https://ebooks.gramedia.com/books/categories/';
+    /**
+     * The base url of the site provides the list of books by category.
+     */
+    public const BASE_URL = 'https://ebooks.gramedia.com/books/categories/';
 
     /**
      * The primary key for the model.
@@ -36,15 +39,13 @@ final class Category extends BaseModel implements CategoryInterface
      *
      * @return array<CategoryInterface>
      */
-    final public function all(): array
+    public function all(): array
     {
-        $categories = collect(CategoryEnum::cases())->map(fn (CategoryEnum $categoryEnum): self => new self(
+        /** @var array<CategoryInterface> */
+        return collect(CategoryEnum::cases())->map(fn (CategoryEnum $categoryEnum): self => new self(
             slug: $categoryEnum->value,
             name: $categoryEnum->name(),
-        ));
-
-        /** @var array<CategoryInterface> */
-        return $categories->toArray();
+        ))->toArray();
     }
 
     /**
@@ -54,12 +55,12 @@ final class Category extends BaseModel implements CategoryInterface
      *
      * @return self
      */
-    final public function find(string $slug): self
+    public function find(string $slug): self
     {
         $categoryEnum = CategoryEnum::tryFrom($slug);
 
         if ($categoryEnum === null) {
-            throw new NotFoundHttpException("The category with slug $slug could not be found.");
+            throw new NotFoundHttpException("The category with slug ${slug} could not be found.");
         }
 
         $this->slug = $categoryEnum->value;

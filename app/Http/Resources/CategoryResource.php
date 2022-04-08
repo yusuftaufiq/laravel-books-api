@@ -23,7 +23,7 @@ final class CategoryResource extends JsonResource
      *
      * @return array<string, ?string>
      */
-    final public function toArray($request)
+    public function toArray($request)
     {
         /** @var \App\Models\Category|static $this */
         return [

@@ -38,17 +38,17 @@ interface BookInterface extends BaseModelInterface
      * @return void
      */
     public function __construct(
-        string $image = null,
-        string $title = null,
-        string $author = null,
-        string $price = null,
-        string $originalUrl = null,
-        string $url = null,
-        string $slug = null,
-        Crawler $crawler = null,
-        BookDetailInterface $detail = null,
-        CategoryInterface $category = null,
-        LanguageInterface $language = null,
+        ?string $image = null,
+        ?string $title = null,
+        ?string $author = null,
+        ?string $price = null,
+        ?string $originalUrl = null,
+        ?string $url = null,
+        ?string $slug = null,
+        ?Crawler $crawler = null,
+        ?BookDetailInterface $detail = null,
+        ?CategoryInterface $category = null,
+        ?LanguageInterface $language = null,
     );
 
     /**

@@ -35,24 +35,24 @@ final class PersonalAccessToken extends SanctumPersonalAccessToken
     ];
 
     /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    final protected static function booted()
-    {
-        static::addGlobalScope(new NotExpiredScope());
-    }
-
-    /**
      * Set expiry date format.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute<mixed, mixed>
      */
-    final public function expiredAt(): Attribute
+    public function expiredAt(): Attribute
     {
         return new Attribute(
-            set: fn (string $value): \DateTime|bool => \DateTime::createFromFormat('Y-m-d H:i:s', "$value 23:59:59"),
+            set: fn (string $value): \DateTime|bool => \DateTime::createFromFormat('Y-m-d H:i:s', "${value} 23:59:59"),
         );
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        self::addGlobalScope(new NotExpiredScope());
     }
 }

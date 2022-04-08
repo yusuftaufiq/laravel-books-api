@@ -23,7 +23,7 @@ final class PersonalAccessTokenResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    final public function toArray($request)
+    public function toArray($request)
     {
         /** @var \App\Models\PersonalAccessToken|static $this */
         return [

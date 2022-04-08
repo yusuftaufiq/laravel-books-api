@@ -9,7 +9,7 @@ use App\Http\Resources\CategoryResource;
 
 final class CategoryController extends Controller
 {
-    final public function __construct(
+    public function __construct(
         private CategoryInterface $category,
     ) {
     }
@@ -19,7 +19,7 @@ final class CategoryController extends Controller
      *
      * @return CategoryCollection
      */
-    final public function index(): CategoryCollection
+    public function index(): CategoryCollection
     {
         return new CategoryCollection($this->category->all());
     }
@@ -31,7 +31,7 @@ final class CategoryController extends Controller
      *
      * @return CategoryResource
      */
-    final public function show(CategoryInterface $category): CategoryResource
+    public function show(CategoryInterface $category): CategoryResource
     {
         return new CategoryResource($category);
     }

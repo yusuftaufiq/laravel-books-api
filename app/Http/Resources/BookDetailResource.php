@@ -21,9 +21,9 @@ final class BookDetailResource extends JsonResource
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return array<string, int|null|string>
+     * @return array<string, (int|string|null)>
      */
-    final public function toArray($request)
+    public function toArray($request)
     {
         /** @var \App\Models\BookDetail|static $this */
         return [

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Contracts\BaseModelInterface;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 
-abstract class BaseModel implements BaseModelInterface
+abstract class AbstractBaseModel implements BaseModelInterface
 {
     use HasAttributes;
 

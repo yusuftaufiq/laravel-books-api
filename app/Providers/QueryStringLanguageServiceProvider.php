@@ -19,7 +19,7 @@ class QueryStringLanguageServiceProvider extends ServiceProvider implements Defe
     {
         $request = request();
         $currentRoute = $request->route();
-        /** @var string */
+        /** @var string $queryStringLanguage */
         $queryStringLanguage = $request->query('language');
 
         if (
@@ -28,9 +28,10 @@ class QueryStringLanguageServiceProvider extends ServiceProvider implements Defe
             && $currentRoute->getActionMethod() === 'index'
             && $queryStringLanguage !== null
         ) {
-            $this->app->bind(LanguageInterface::class, fn () => (
-                (new Language())->resolveRouteBinding($queryStringLanguage)
-            ));
+            $this->app->bind(
+                abstract: LanguageInterface::class,
+                concrete: fn () => ((new Language())->resolveRouteBinding($queryStringLanguage)),
+            );
         }
     }
 

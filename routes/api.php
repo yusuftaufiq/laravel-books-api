@@ -5,14 +5,17 @@
  *
  * For a list of interface implementations into concrete classes that
  * have been used in controllers, see $bindings in AppServiceProvider.
+ *
  * @see \App\Providers\AppServiceProvider
  *
  * Middleware auth:sanctum, cache.headers & cache.response refers to
  * $routeMiddleware in \App\Http\Kernel. Please see here for more details.
+ *
  * @see \App\Http\Kernel
  *
  * Book, BookDetail, Category & Language have their own route model binding
  * implementation, see here for more details.
+ *
  * @see \App\Models\BaseModel
  */
 
@@ -43,23 +46,25 @@ use App\Http\Controllers\Api\UserController;
     \Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
 });
 
-\Route::middleware('auth:sanctum')->group(function (): void {
-    \Route::get('/user', UserController::class)->name('user');
-
-    \Route::middleware([
-        /** @phpstan-ignore-next-line */
-        sprintf('cache.headers:public;max_age=%d;etag', (int) config('responsecache.cache_lifetime_in_seconds')),
+\Route::middleware([
+    'auth:sanctum',
+    /** @phpstan-ignore-next-line */
+    sprintf('cache.headers:public;max_age=%d;etag', (int) config('responsecache.cache_lifetime_in_seconds')),
+    'cache.response',
+])->group(function (): void {
+    \Route::get('/user', UserController::class)->name('user')->withoutMiddleware([
+        'cache.headers',
         'cache.response',
-    ])->group(function (): void {
-        \Route::get('books/search', BookSearchController::class)->name('books.search');
+    ]);
 
-        \Route::apiResource('books', BookController::class)->only(['index', 'show']);
-        \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);
+    \Route::get('books/search', BookSearchController::class)->name('books.search');
 
-        \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
-        \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
+    \Route::apiResource('books', BookController::class)->only(['index', 'show']);
+    \Route::apiResource('books.detail', BookDetailController::class)->shallow()->only(['index']);
 
-        \Route::apiResource('languages', LanguageController::class)->only(['index', 'show']);
-        \Route::apiResource('languages.books', BookController::class)->shallow()->only(['index']);
-    });
+    \Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+    \Route::apiResource('categories.books', BookController::class)->shallow()->only(['index']);
+
+    \Route::apiResource('languages', LanguageController::class)->only(['index', 'show']);
+    \Route::apiResource('languages.books', BookController::class)->shallow()->only(['index']);
 });

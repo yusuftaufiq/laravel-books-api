@@ -9,7 +9,7 @@ use App\Http\Resources\LanguageResource;
 
 final class LanguageController extends Controller
 {
-    final public function __construct(
+    public function __construct(
         private LanguageInterface $language,
     ) {
     }
@@ -19,7 +19,7 @@ final class LanguageController extends Controller
      *
      * @return LanguageCollection
      */
-    final public function index(): LanguageCollection
+    public function index(): LanguageCollection
     {
         return new LanguageCollection($this->language->all());
     }
@@ -31,7 +31,7 @@ final class LanguageController extends Controller
      *
      * @return LanguageResource
      */
-    final public function show(LanguageInterface $language): LanguageResource
+    public function show(LanguageInterface $language): LanguageResource
     {
         return new LanguageResource($language);
     }

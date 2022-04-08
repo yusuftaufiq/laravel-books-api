@@ -15,7 +15,7 @@ final class UserController extends Controller
      *
      * @return \App\Http\Resources\UserResource
      */
-    final public function __invoke(Request $request)
+    public function __invoke(Request $request)
     {
         return new UserResource($request->user());
     }

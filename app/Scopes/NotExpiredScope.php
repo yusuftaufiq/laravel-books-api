@@ -13,6 +13,7 @@ class NotExpiredScope implements Scope
      *
      * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\PersonalAccessToken>  $builder
      * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model)

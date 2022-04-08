@@ -37,12 +37,25 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->renderable($this->handleNotFoundHttpException(...));
+        $this->renderable($this->handleTooManyRequestsHttpException(...));
+        $this->renderable($this->handleAuthenticationException(...));
+        $this->renderable($this->handleValidationException(...));
+    }
+
+    /**
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory|null
      */
     protected function handleNotFoundHttpException(NotFoundHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
-            $message = $e->getMessage() ?: 'Page not found';
+            $message = $e->getMessage();
             $notFoundProblem = new NotFoundProblem($message);
 
             return response($notFoundProblem->toArray(), $e->getStatusCode());
@@ -55,7 +68,7 @@ class Handler extends ExceptionHandler
     protected function handleTooManyRequestsHttpException(TooManyRequestsHttpException $e, Request $request)
     {
         if ($request->is('api/*')) {
-            $retryAfter = $e->getHeaders()['Retry-After'] ?? null;
+            $retryAfter = $e->getHeaders()['Retry-After'];
             $tooManyRequestsProblem = new HttpApiFormat($e->getStatusCode(), [
                 'detail' => "You have exceeded the rate limit. Please try again in {$retryAfter} seconds.",
             ]);
@@ -70,7 +83,7 @@ class Handler extends ExceptionHandler
     protected function handleAuthenticationException(AuthenticationException $e, Request $request)
     {
         if ($request->is('api/*')) {
-            $message = $e->getMessage() ?: 'You are not authorized to perform this action.';
+            $message = $e->getMessage();
             $unauthorizedProblem = new UnauthorizedProblem($message);
 
             return response($unauthorizedProblem->toArray(), Response::HTTP_UNAUTHORIZED);
@@ -83,25 +96,12 @@ class Handler extends ExceptionHandler
     protected function handleValidationException(ValidationException $e, Request $request)
     {
         if ($request->is('api/*')) {
-            $message = $e->getMessage() ?: 'The request could not be processed.';
+            $message = $e->getMessage();
             $unprocessableEntityProblem = new HttpApiFormat(Response::HTTP_UNPROCESSABLE_ENTITY, [
                 'detail' => $message,
             ]);
 
             return response($unprocessableEntityProblem->toArray(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-    }
-
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->renderable($this->handleNotFoundHttpException(...));
-        $this->renderable($this->handleTooManyRequestsHttpException(...));
-        $this->renderable($this->handleAuthenticationException(...));
-        $this->renderable($this->handleValidationException(...));
     }
 }

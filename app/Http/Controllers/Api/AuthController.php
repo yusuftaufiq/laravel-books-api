@@ -21,7 +21,7 @@ final class AuthController extends Controller
      *
      * @return \App\Http\Resources\PersonalAccessTokenResource
      */
-    final public function login(LoginRequest $request): PersonalAccessTokenResource
+    public function login(LoginRequest $request): PersonalAccessTokenResource
     {
         $request->authenticateOrFail();
 
@@ -54,12 +54,12 @@ final class AuthController extends Controller
      *
      * @return \App\Http\Resources\PersonalAccessTokenResource
      */
-    final public function logout(Request $request): PersonalAccessTokenResource
+    public function logout(Request $request): PersonalAccessTokenResource
     {
-        /** @var User */
+        /** @var User $user */
         $user = $request->user();
 
-        /** @var PersonalAccessToken */
+        /** @var PersonalAccessToken $token */
         $token = $user->currentAccessToken();
 
         $token->delete();

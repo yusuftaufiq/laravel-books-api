@@ -21,9 +21,9 @@ final class LanguageResource extends JsonResource
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return array<string, null|int|string>
+     * @return array<string, (int|string|null)>
      */
-    final public function toArray($request)
+    public function toArray($request)
     {
         /** @var \App\Models\Language|static $this */
         return [

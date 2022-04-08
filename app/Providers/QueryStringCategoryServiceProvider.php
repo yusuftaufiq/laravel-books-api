@@ -19,7 +19,7 @@ class QueryStringCategoryServiceProvider extends ServiceProvider implements Defe
     {
         $request = request();
         $currentRoute = $request->route();
-        /** @var string */
+        /** @var string $queryStringCategory */
         $queryStringCategory = $request->query('category');
 
         if (
@@ -28,9 +28,10 @@ class QueryStringCategoryServiceProvider extends ServiceProvider implements Defe
             && $currentRoute->getActionMethod() === 'index'
             && $queryStringCategory !== null
         ) {
-            $this->app->bind(CategoryInterface::class, fn () => (
-                (new Category())->resolveRouteBinding($queryStringCategory)
-            ));
+            $this->app->bind(
+                abstract: CategoryInterface::class,
+                concrete: fn () => ((new Category())->resolveRouteBinding($queryStringCategory)),
+            );
         }
     }
 
