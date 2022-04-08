@@ -1,4 +1,4 @@
-name: Run Laravel Tests & Lint Codebase
+name: Run Laravel Tests
 
 on:
   push:
@@ -17,7 +17,6 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
-        tools: phpstan, phpcs
         coverage: xdebug
 
     - uses: actions/checkout@v3
@@ -39,17 +38,11 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
 
-    - name: Execute tests (unit and feature tests) via PHPUnit
+    - name: Execute unit and feature tests via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test --coverage-clover=./coverage.xml
-
-    - name: Run PHPStan
-      run: phpstan analyze --configuration=phpstan.neon --memory-limit=256M
-
-    - name: Run PHPCS
-      run: phpcs --standard=phpcs.xml
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
