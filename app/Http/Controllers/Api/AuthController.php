@@ -17,7 +17,7 @@ final class AuthController extends Controller
 /**
  * Create a new personal access token.
  *
- * @param \Illuminate\Http\Request $request
+ * @param \App\Http\Requests\LoginRequest $request
  *
  * @return \App\Http\Resources\PersonalAccessTokenResource
  */
@@ -25,8 +25,10 @@ public function login(LoginRequest $request): PersonalAccessTokenResource
 {
 $request->authenticateOrFail();
 
+/** @var User $user */
 $user = $request->user();
 
+/** @var string $tokenName */
 $tokenName = $request->input('token_name');
 $expiredAt = $request->date(key: 'expired_at', format: 'Y-m-d');
 
@@ -54,8 +56,10 @@ return $tokenResource;
 */
 public function logout(Request $request): PersonalAccessTokenResource
 {
+/** @var User $user */
 $user = $request->user();
 
+/** @var PersonalAccessToken $token */
 $token = $user->currentAccessToken();
 
 $token->delete();
