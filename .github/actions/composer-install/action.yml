@@ -5,6 +5,7 @@ runs:
 
   steps:
     - name: Get composer cache directory
+      shell: bash
       id: composer-cache
       run: |
         echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -17,5 +18,6 @@ runs:
           ${{ runner.os }}-composer-
 
     - name: Install dependencies
+      shell: bash
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
