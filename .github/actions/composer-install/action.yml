@@ -4,20 +4,19 @@ runs:
   using: composite
 
   steps:
-    - name: Get composer cache directory
+    - name: Validate composer configuration
       shell: bash
-      id: composer-cache
-      run: |
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
+      run: composer validate
 
     - uses: actions/cache@v3
+      id: composer-cache
       with:
-        path: ${{ steps.composer-cache.outputs.dir }}
+        path: ./vendor/
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-
 
     - name: Install dependencies
-      shell: bash
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      shell: bash
+      run: composer install --quiet --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
