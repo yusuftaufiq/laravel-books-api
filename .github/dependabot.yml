@@ -1,18 +1,12 @@
 version: 2
 updates:
-  - package-ecosystem: "composer"
+  - package-ecosystem: composer
     directory: "/"
-    open-pull-requests-limit: 3
     schedule:
-      day: "saturday"
       time: "00:00"
-      interval: "weekly"
+      interval: daily
     ignore:
       - dependency-name: "laravel/framework"
         update-types: ["version-update:semver-major"]
       - dependency-name: "laravel/sanctum"
         update-types: ["version-update:semver-major"]
-    reviewers:
-      - yt2951
-    assignees:
-      - yt2951
