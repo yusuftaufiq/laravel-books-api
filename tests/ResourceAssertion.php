@@ -11,7 +11,7 @@ trait ResourceAssertion
     {
         collect($slugs)->each(function (string $slug) {
             /** @var \Tests\TestCase $this */
-            $this->assertMatchesRegularExpression(pattern: '/^[a-z0-9-]+$/', string: $slug);
+            $this->assertMatchesRegularExpression(pattern: '/^[a-z0-9-\']+$/', string: $slug);
         });
     }
 
