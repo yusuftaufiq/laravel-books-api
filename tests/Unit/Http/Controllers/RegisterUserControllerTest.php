@@ -11,7 +11,10 @@ use Tests\TestCase;
 
 class RegisterUserControllerTest extends TestCase
 {
-    public function testRegisterNewUser(): void
+    /**
+     * @test
+     */
+    public function itShouldBeInstanceOfUserResourceClassIfRequestSuccessful(): void
     {
         $this->mock(UserInterface::class, function (MockInterface $mock): void {
             $mock->shouldReceive('create')->once()->with([])->andReturnSelf();

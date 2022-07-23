@@ -6,23 +6,20 @@ use App\Enums\CategoryEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\CategoryStructure;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class CategoryTest extends TestCase
+class ShowCategoryTest extends TestCase
 {
+    use CategoryStructure;
     use RefreshDatabase;
     use ResourceAssertion;
     use ResourceStructure;
     use WithFaker;
     use WithUser;
-
-    private array $categoryStructure = [
-        'slug',
-        'name',
-    ];
 
     public function setUp(): void
     {
@@ -30,29 +27,12 @@ class CategoryTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testCategoryIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticatedAndResourceAvailable(): void
     {
-        $response = $this->actingAs($this->user)->get(route('categories.index'));
-
-        $response->assertOk();
-        $response->assertJsonStructure([
-            ...$this->resourceMetaDataStructure,
-            'categories' => [
-                '*' => $this->categoryStructure,
-            ],
-        ]);
-
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
-
-        /** @var array $slugs */
-        $slugs = $response->json('categories.*.slug');
-
-        $this->assertSlugs(...$slugs);
-    }
-
-    public function testShowCategory(): void
-    {
-        $response = $this->actingAs($this->user)->get(route('categories.show', [
+        $response = $this->actingAs($this->user)->get(route(name: 'categories.show', parameters: [
             'category' => CategoryEnum::HistoricalFiction->value,
         ]));
 
@@ -62,7 +42,7 @@ class CategoryTest extends TestCase
             'category' => $this->categoryStructure,
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_OK);
 
         /** @var string $slug */
         $slug = $response->json('category.slug');
@@ -70,9 +50,12 @@ class CategoryTest extends TestCase
         $this->assertSlugs($slug);
     }
 
-    public function testUnauthorizedShowCategory(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
-        $response = $this->get(route('categories.show', [
+        $response = $this->get(route(name: 'categories.show', parameters: [
             'category' => CategoryEnum::HistoricalFiction->value,
         ]));
 
@@ -82,12 +65,17 @@ class CategoryTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_UNAUTHORIZED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 
-    public function testCategoryNotFound(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnANotFoundResponseIfResourceNotAvailable(): void
     {
-        $response = $this->actingAs($this->user)->get(route('categories.show', ['category' => $this->faker->md5()]));
+        $response = $this->actingAs($this->user)->get(route(name: 'categories.show', parameters: [
+            'category' => $this->faker->md5(),
+        ]));
 
         $response->assertNotFound();
         $response->assertJsonStructure([
@@ -95,6 +83,6 @@ class CategoryTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_NOT_FOUND);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_NOT_FOUND);
     }
 }

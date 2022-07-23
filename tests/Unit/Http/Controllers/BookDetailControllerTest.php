@@ -10,7 +10,10 @@ use Tests\TestCase;
 
 class BookDetailControllerTest extends TestCase
 {
-    public function testIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldBeInstanceOfBookResourceClassIfRequestSuccessful(): void
     {
         $this->mock(BookInterface::class, function (MockInterface $mock): void {
             $mock->shouldReceive('loadDetail')->once()->withNoArgs()->andReturnSelf();

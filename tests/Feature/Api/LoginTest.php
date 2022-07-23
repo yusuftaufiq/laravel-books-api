@@ -41,7 +41,10 @@ class LoginTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLoginUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfTheGivenDataIsCorrect(): void
     {
         /** @var PersonalAccessToken $token */
         $token = PersonalAccessToken::factory()->make();
@@ -74,7 +77,7 @@ class LoginTest extends TestCase
             needle: $expiredAt,
             haystack: $actualExpiredAt,
         );
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_CREATED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_CREATED);
         $this->assertDatabaseHas(table: 'personal_access_tokens', data: [
             'tokenable_type' => User::class,
             'tokenable_id' => $this->user->id,
@@ -82,7 +85,10 @@ class LoginTest extends TestCase
         ]);
     }
 
-    public function testUserNotExist(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnprocessableResponseIfTheGivenDataIsIncorrect(): void
     {
         $response = $this->post(uri: route('login'), data: [
             'email' => $this->faker->email,
@@ -97,23 +103,13 @@ class LoginTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testUnprocessableLoginUser(): void
-    {
-        $response = $this->post(uri: route('login'));
-
-        $response->assertUnprocessable();
-        $response->assertJsonStructure([
-            ...$this->resourceMetaDataStructure,
-            'detail',
-        ]);
-
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    public function testTooManyRequests(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnATooManyRequestsResponseIfConsecutiveFailedLoginAttemptsOverTheRateLimiter(): void
     {
         /** @var RateLimiter $rateLimiter */
         $rateLimiter = $this->app->make(abstract: RateLimiter::class);
@@ -140,6 +136,6 @@ class LoginTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_TOO_MANY_REQUESTS);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_TOO_MANY_REQUESTS);
     }
 }

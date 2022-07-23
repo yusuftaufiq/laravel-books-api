@@ -8,26 +8,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
+use Tests\UserStructure;
 
 class RegisterUserTest extends TestCase
 {
     use ResourceAssertion;
     use ResourceStructure;
     use RefreshDatabase;
+    use UserStructure;
     use WithFaker;
 
-    private array $userStructure = [
-        'name',
-        'email',
-    ];
-
-    public function testRegisterUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfTheGivenDataIsCorrect(): void
     {
         $name = $this->faker->name;
         $email = $this->faker->email;
         $password = $this->faker->password(8);
 
-        $response = $this->post(route('register'), [
+        $response = $this->post(uri: route('register'), data: [
             'name' => $name,
             'email' => $email,
             'password' => $password,
@@ -39,19 +39,22 @@ class RegisterUserTest extends TestCase
             ...$this->resourceMetaDataStructure,
             'user' => $this->userStructure,
         ]);
-        $response->assertJsonPath('user', [
+        $response->assertJsonPath(path: 'user', expect: [
             'name' => $name,
             'email' => $email,
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_CREATED);
-        $this->assertDatabaseHas('users', [
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_CREATED);
+        $this->assertDatabaseHas(table: 'users', data: [
             'name' => $name,
             'email' => $email,
         ]);
     }
 
-    public function testUnprocessableRegisterUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnprocessableResponseIfTheGivenDataIsIncorrect(): void
     {
         $response = $this->post(route('register'));
 
@@ -61,6 +64,6 @@ class RegisterUserTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

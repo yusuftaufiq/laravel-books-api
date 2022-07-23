@@ -7,7 +7,7 @@ use App\Models\BookDetail;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\TestCase;
 
-class CrawlDetailPageTest extends TestCase
+class CrawlBookDetailPageTest extends TestCase
 {
     /** phpcs:disable Generic.Files.LineLength.TooLong */
     private string $dummyHtmlContent = <<<'HTML'
@@ -121,7 +121,10 @@ class CrawlDetailPageTest extends TestCase
     HTML;
     /** phpcs:enable Generic.Files.LineLength.TooLong */
 
-    public function testCrawlBookBySlug(): void
+    /**
+     * @test
+     */
+    public function itShouldBeAnInstanceOfTheBookClassAndHaveAnInstanceOfTheDetailBookClassOnTheDetailProperty(): Book
     {
         $crawler = new Crawler(uri: Book::BASE_URL . '/the-adventures-of-sherlock-holmes');
         $crawler->addContent($this->dummyHtmlContent);
@@ -138,6 +141,15 @@ class CrawlDetailPageTest extends TestCase
         $this->assertInstanceOf(expected: Book::class, actual: $book);
         $this->assertInstanceOf(expected: BookDetail::class, actual: $book->detail);
 
+        return $book;
+    }
+
+    /**
+     * @depends itShouldBeAnInstanceOfTheBookClassAndHaveAnInstanceOfTheDetailBookClassOnTheDetailProperty
+     * @test
+     */
+    public function itShouldHaveTheCorrectProperties(Book $book): void
+    {
         $this->assertSame(
             expected: 'https://ebooks.gramedia.com/ebook-covers/24943/big_covers/ID_HCO2015MTH06TAOSH_B.jpg',
             actual: $book->image,

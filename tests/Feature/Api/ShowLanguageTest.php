@@ -6,24 +6,20 @@ use App\Enums\LanguageEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\LanguageStructure;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class LanguageTest extends TestCase
+class ShowLanguageTest extends TestCase
 {
+    use LanguageStructure;
     use RefreshDatabase;
     use ResourceAssertion;
     use ResourceStructure;
     use WithFaker;
     use WithUser;
-
-    private array $languageStructure = [
-        'slug',
-        'name',
-        'value',
-    ];
 
     public function setUp(): void
     {
@@ -31,29 +27,12 @@ class LanguageTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLanguageIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticatedAndResourceAvailable(): void
     {
-        $response = $this->actingAs($this->user)->get(route('languages.index'));
-
-        $response->assertOk();
-        $response->assertJsonStructure([
-            ...$this->resourceMetaDataStructure,
-            'languages' => [
-                '*' => $this->languageStructure,
-            ],
-        ]);
-
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
-
-        /** @var array $slugs */
-        $slugs = $response->json('languages.*.slug');
-
-        $this->assertSlugs(...$slugs);
-    }
-
-    public function testShowLanguage(): void
-    {
-        $response = $this->actingAs($this->user)->get(route('languages.show', [
+        $response = $this->actingAs($this->user)->get(route(name: 'languages.show', parameters: [
             'language' => LanguageEnum::English->value,
         ]));
 
@@ -63,7 +42,7 @@ class LanguageTest extends TestCase
             'language' => $this->languageStructure,
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_OK);
 
         /** @var string $slug */
         $slug = $response->json('language.slug');
@@ -71,9 +50,12 @@ class LanguageTest extends TestCase
         $this->assertSlugs($slug);
     }
 
-    public function testUnauthorizedShowLanguage(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
-        $response = $this->get(route('languages.show', [
+        $response = $this->get(route(name: 'languages.show', parameters: [
             'language' => LanguageEnum::English->value,
         ]));
 
@@ -83,12 +65,17 @@ class LanguageTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_UNAUTHORIZED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 
-    public function testLanguageNotFound(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnANotFoundResponseIfResourceNotAvailable(): void
     {
-        $response = $this->actingAs($this->user)->get(route('languages.show', ['language' => $this->faker->md5()]));
+        $response = $this->actingAs($this->user)->get(route(name: 'languages.show', parameters: [
+            'language' => $this->faker->md5(),
+        ]));
 
         $response->assertNotFound();
         $response->assertJsonStructure([
@@ -96,6 +83,6 @@ class LanguageTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_NOT_FOUND);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_NOT_FOUND);
     }
 }

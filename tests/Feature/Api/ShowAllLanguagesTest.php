@@ -2,28 +2,24 @@
 
 namespace Tests\Feature\Api;
 
+use App\Enums\LanguageEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\LanguageStructure;
 use Tests\ResourceAssertion;
 use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class SearchBookTest extends TestCase
+class ShowAllLanguagesTest extends TestCase
 {
+    use LanguageStructure;
     use RefreshDatabase;
     use ResourceAssertion;
     use ResourceStructure;
+    use WithFaker;
     use WithUser;
-
-    private array $bookStructure = [
-        'image',
-        'title',
-        'author',
-        'original_url',
-        'url',
-        'slug',
-    ];
 
     public function setUp(): void
     {
@@ -31,32 +27,35 @@ class SearchBookTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testSearchBook(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticated(): void
     {
-        $response = $this->actingAs($this->user)->call(method: 'GET', uri: route('books.index'), parameters: [
-            'keyword' => 1984,
-        ]);
+        $response = $this->actingAs($this->user)->get(route('languages.index'));
 
         $response->assertOk();
         $response->assertJsonStructure([
-            ...$this->paginationStructure,
             ...$this->resourceMetaDataStructure,
-            'books' => [
-                '*' => $this->bookStructure,
+            'languages' => [
+                '*' => $this->languageStructure,
             ],
         ]);
 
         $this->assertResourceMetaData($response, Response::HTTP_OK);
 
         /** @var array $slugs */
-        $slugs = $response->json('books.*.slug');
+        $slugs = $response->json('languages.*.slug');
 
         $this->assertSlugs(...$slugs);
     }
 
-    public function testUnauthorizedSearchBook(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
-        $response = $this->get(route('books.search', ['keyword' => 1984]));
+        $response = $this->get(route('languages.index'));
 
         $response->assertUnauthorized();
         $response->assertJsonStructure([
@@ -64,6 +63,6 @@ class SearchBookTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_UNAUTHORIZED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 }

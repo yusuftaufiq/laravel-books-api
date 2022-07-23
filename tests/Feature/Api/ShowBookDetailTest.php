@@ -9,7 +9,7 @@ use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class BookDetailTest extends TestCase
+class ShowBookDetailTest extends TestCase
 {
     use RefreshDatabase;
     use ResourceAssertion;
@@ -32,9 +32,12 @@ class BookDetailTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testBookDetailIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticated(): void
     {
-        $response = $this->actingAs($this->user)->get(route('books.detail.index', ['book' => 1984]));
+        $response = $this->actingAs($this->user)->get(route(name: 'books.detail.index', parameters: ['book' => 1984]));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -44,6 +47,22 @@ class BookDetailTest extends TestCase
             ],
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_OK);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
+    {
+        $response = $this->get(route(name: 'books.detail.index', parameters: ['book' => 1984]));
+
+        $response->assertUnauthorized();
+        $response->assertJsonStructure([
+            ...$this->resourceMetaDataStructure,
+            'detail',
+        ]);
+
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 }

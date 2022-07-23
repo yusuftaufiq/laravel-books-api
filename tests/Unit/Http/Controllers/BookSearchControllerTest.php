@@ -15,7 +15,10 @@ class BookSearchControllerTest extends TestCase
 {
     use WithFaker;
 
-    public function testIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldBeInstanceOfBookCollectionClassIfRequestSuccessful(): void
     {
         $keyword = $this->faker->word;
         $page = $this->faker->randomDigitNotZero();

@@ -9,7 +9,7 @@ use Tests\ResourceStructure;
 use Tests\TestCase;
 use Tests\WithUser;
 
-class UserTest extends TestCase
+class ShowCurrentUserTest extends TestCase
 {
     use RefreshDatabase;
     use ResourceAssertion;
@@ -27,7 +27,10 @@ class UserTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testShowCurrentUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticated(): void
     {
         $response = $this->actingAs($this->user)->get(route('user'));
 
@@ -37,10 +40,13 @@ class UserTest extends TestCase
             'user' => $this->userStructure,
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_OK);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_OK);
     }
 
-    public function testUnauthorizedShowCurrentUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
         $response = $this->get(route('user'));
 
@@ -50,6 +56,6 @@ class UserTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, Response::HTTP_UNAUTHORIZED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -35,7 +35,10 @@ class LogoutTest extends TestCase
         $this->setUpUser();
     }
 
-    public function testLogoutUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnASuccessfulResponseIfAuthenticated(): void
     {
         /** @var \App\Models\PersonalAccessToken $token */
         $token = $this->user->tokens()->firstOrNew();
@@ -60,11 +63,14 @@ class LogoutTest extends TestCase
             ->where(key: 'token.status', expected: TokenStatusEnum::Revoked->value)
             ->etc());
 
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_OK);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_OK);
         $this->assertDatabaseCount(table: 'personal_access_tokens', count: 0);
     }
 
-    public function testUnauthorizedLogoutUser(): void
+    /**
+     * @test
+     */
+    public function itShouldReturnAnUnauthorizedResponseIfUnauthenticated(): void
     {
         $response = $this->post(uri: route('logout'));
 
@@ -74,6 +80,6 @@ class LogoutTest extends TestCase
             'detail',
         ]);
 
-        $this->assertResourceMetaData($response, statusCode: Response::HTTP_UNAUTHORIZED);
+        $this->assertResourceMetaData(response: $response, statusCode: Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -15,7 +15,10 @@ class BookControllerTest extends TestCase
 {
     use WithFaker;
 
-    public function testIndex(): void
+    /**
+     * @test
+     */
+    public function itShouldBeInstanceOfBookCollectionClassIfRequestSuccessful(): void
     {
         $page = $this->faker->randomDigitNotZero();
 

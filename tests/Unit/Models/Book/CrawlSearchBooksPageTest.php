@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\TestCase;
 
-class CrawlSearchPageTest extends TestCase
+class CrawlSearchBooksPageTest extends TestCase
 {
     /** phpcs:disable Generic.Files.LineLength.TooLong */
     private string $dummyHtmlContent = <<<'HTML'
@@ -64,7 +64,10 @@ class CrawlSearchPageTest extends TestCase
     HTML;
     /** phpcs:enable Generic.Files.LineLength.TooLong */
 
-    public function testCrawlBooksByKeyword(): void
+    /**
+     * @test
+     */
+    public function itShouldBeAnInstanceOfThePaginatorClassThatContainsTheBookClass(): Book
     {
         $crawler = new Crawler();
         $crawler->addContent($this->dummyHtmlContent);
@@ -86,6 +89,15 @@ class CrawlSearchPageTest extends TestCase
         /** @var Book $firstBook */
         $firstBook = $items[0];
 
+        return $firstBook;
+    }
+
+    /**
+     * @depends itShouldBeAnInstanceOfThePaginatorClassThatContainsTheBookClass
+     * @test
+     */
+    public function itShouldHaveTheCorrectProperties(Book $firstBook): void
+    {
         $this->assertSame(
             // phpcs:ignore
             expected: 'https://s3-ap-southeast-1.amazonaws.com/ebook-covers/42028/thumb_image_normal/ID_GPU2018MTH04RPON.jpg',
