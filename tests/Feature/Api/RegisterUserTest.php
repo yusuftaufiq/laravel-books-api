@@ -21,7 +21,7 @@ class RegisterUserTest extends TestCase
     /**
      * @test
      */
-    public function itShouldReturnASuccessfulResponseIfTheGivenDataIsCorrect(): void
+    public function itShouldReturnACreatedResponseIfTheGivenDataIsCorrect(): void
     {
         $name = $this->faker->name;
         $email = $this->faker->email;
