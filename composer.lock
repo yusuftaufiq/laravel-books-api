@@ -3133,16 +3133,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "7.4.0",
+            "version": "7.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "5bb27cdca4e491bdb8093fa41e03f1db200575e5"
+                "reference": "b9b5486b0843765c371ed9e47759504e92a79fef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/5bb27cdca4e491bdb8093fa41e03f1db200575e5",
-                "reference": "5bb27cdca4e491bdb8093fa41e03f1db200575e5",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/b9b5486b0843765c371ed9e47759504e92a79fef",
+                "reference": "b9b5486b0843765c371ed9e47759504e92a79fef",
                 "shasum": ""
             },
             "require": {
@@ -3200,7 +3200,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-responsecache/tree/7.4.0"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.4.1"
             },
             "funding": [
                 {
@@ -3212,7 +3212,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-01T11:56:27+00:00"
+            "time": "2022-08-09T07:24:23+00:00"
         },
         {
             "name": "symfony/browser-kit",
