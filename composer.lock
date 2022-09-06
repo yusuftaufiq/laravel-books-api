@@ -1911,16 +1911,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.62.0",
+            "version": "2.62.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "7507aec3d626797ce2123cf6c6556683be22b5f8"
+                "reference": "01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/7507aec3d626797ce2123cf6c6556683be22b5f8",
-                "reference": "7507aec3d626797ce2123cf6c6556683be22b5f8",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a",
+                "reference": "01bc4cdefe98ef58d1f9cb31bdbbddddf2a88f7a",
                 "shasum": ""
             },
             "require": {
@@ -2009,7 +2009,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T19:48:05+00:00"
+            "time": "2022-09-02T07:48:13+00:00"
         },
         {
             "name": "nette/schema",
@@ -3142,16 +3142,16 @@
         },
         {
             "name": "spatie/laravel-responsecache",
-            "version": "7.4.1",
+            "version": "7.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-responsecache.git",
-                "reference": "b9b5486b0843765c371ed9e47759504e92a79fef"
+                "reference": "370e53e225ef5391ccd28d07b41b300fb2279c89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/b9b5486b0843765c371ed9e47759504e92a79fef",
-                "reference": "b9b5486b0843765c371ed9e47759504e92a79fef",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/370e53e225ef5391ccd28d07b41b300fb2279c89",
+                "reference": "370e53e225ef5391ccd28d07b41b300fb2279c89",
                 "shasum": ""
             },
             "require": {
@@ -3209,7 +3209,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-responsecache/tree/7.4.1"
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.4.2"
             },
             "funding": [
                 {
@@ -3221,7 +3221,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-09T07:24:23+00:00"
+            "time": "2022-09-02T08:50:14+00:00"
         },
         {
             "name": "symfony/browser-kit",
